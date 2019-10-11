@@ -1,0 +1,112 @@
+/* Additional styles used in MultiStateButton.js and MultiStateSubButton.js */
+
+
+
+/* The general styling for every part of the button. */
+.multiButton {
+	display: inline-block;
+	border: 4px solid #666666;
+	color: #666666;
+	background-color: #cccccc;
+	width: 15%;
+	padding: 0;
+	vertical-align: top;
+	font-size: 40px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+/* The central big button doubles as a display and switches to list mode. */
+.multiButtonMain {
+	/* overwrite defaults */
+	padding: 2px 5px;
+	width: 50%;
+	font-size: 20px;
+	color: black;
+	height: 100%;
+	/* borders */
+	border-left: none;
+	border-right: none;
+	border-radius: 0;
+}
+
+/* The 'next' and 'previous' buttons need to be properly rounded and not have a side border for a smooth overall appearance. */
+.multiButtonNext {
+	/* borders */
+	border-radius: 0 15px 15px 0;
+	border-left: none;
+	height: 100%;
+}
+.multiButtonPrev {
+	/* borders */
+	border-right: none;
+	border-radius: 15px 0 0 15px;
+	height: 100%;
+}
+
+/* The 'next' and 'previous' buttons should react to being moused over. */
+.multiButtonNext:hover { color: black; }
+.multiButtonPrev:hover { color: black; }
+
+/* The text inside the button needs to be positioned properly to look well with the 'progress dots' below. */
+.multiButtonTitle {
+	margin: 0;
+	margin-bottom: 5px;
+	/* line height needs to be one smaller than font size to avoid the central part of the button getting bloated */
+	line-height: 19px;
+}
+
+/* The 'progress dots' should display in their proper place inside the main part of the button. */
+.multiButtonContainer {
+	position: relative;
+	margin: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	/* line height needs to be one smaller than dot height to avoid the central part of the button getting bloated */
+	line-height: 9px;
+}
+
+/* The 'progress dot' itself should be small but easily visible. Only one at a time will be active and differ in background color. */
+.multiButtonProgressDot {
+	width: 10px;
+	height: 10px;
+	border-radius: 25px;
+	border: 2px solid black;
+	margin: 0 2px;
+	display: inline-block;
+	cursor: pointer;
+	background-color: white;
+}
+.multiButtonProgressDotActive { background-color: black; }
+
+/* Occham would be proud: the 'progress dot' actually doubles as a list item when the mode is switched. */
+.multiListContainer {
+	margin: auto;
+	border: 4px solid #666666;
+	width: 70%;
+}
+
+/* The items of the list should look similar to a context menu. */
+.multiListItem {
+	width: 100%;
+	font-size: 20px;
+	font-size: 20px;
+	font-weight: bold;
+	cursor: pointer;
+	border-radius: 0;
+	padding: 10px;
+	color: #666666;
+	border: 0;
+	background-color: #eeeeee;
+}
+.multiListItem:hover {
+	color: black;
+	background-color: #adc2eb;
+}
+.multiListItemChosen {
+	color: black;
+	background-color: #adc2eb;
+}
+
+/* The div containing the multi needs this property to keep all its elements same height. */
+.multiCell { height: 100%; }

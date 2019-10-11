@@ -1,0 +1,27 @@
+/* Additional stylings used in YesNo.js */
+
+
+
+/* The button should look well in the application context. */
+.yesnoButton {
+	font-size: 20px;
+	font-weight: bold;
+   cursor: pointer;   
+	border-radius: 15px;
+	padding: 15px;
+	height: auto;
+	width: 50%;
+	margin: auto;
+}
+
+/* There should be an instinctive coloration and distinction between the Yes and No states. */
+.yesnoButtonYes {
+	color: #248f24;
+	border: 4px solid #248f24;
+	background-color: #ccffcc;
+}
+.yesnoButtonNo {
+	color: #cc3300;
+	border: 4px solid #cc3300;
+	background-color: #ffc6b3;
+}

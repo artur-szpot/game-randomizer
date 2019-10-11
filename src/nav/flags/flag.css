@@ -1,0 +1,47 @@
+/* Styling of the miniature flag images used for the language dropdown menu. 
+Adopted from flag-icon-css, a wonderful node module created by Panayiotis Lipiridis.
+GitHub page of the project: https://github.com/lipis/flag-icon-css
+*/
+
+
+
+/* The image serving as entry point for the menu needs to be moved a little down to look good. */
+#languageBoxIcon {
+   margin-top: 4px !important;
+}
+
+/* This ensures the flags behave like divs should. */
+.flag-wrapper {
+   display:block;
+}
+
+/* The flag's descriptory text needs to be positioned well. */
+.flag-label {
+   display:inline-block;
+   font-size: 1.2em;
+   font-weight: 600;
+   margin-left: 10px;
+}
+
+/* The most important stylings of the image. */
+.flag-icon
+{
+   background-size:contain;
+   background-position:50%;
+   background-repeat:no-repeat;
+   position:relative;
+   line-height:30px;
+   width:40px;
+   display:inline-block;
+	box-shadow: 0.3px 0.3px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* The tidbit necessary for displaying the SVG correctly. */
+.flag-icon:before
+{
+   content:"\00a0"
+}
+
+/* The different flags for languages that have been implemented. */
+.flag-icon-pl { background-image:url(../flags/3x4/pl.svg) }
+.flag-icon-us { background-image:url(../flags/3x4/us.svg) }

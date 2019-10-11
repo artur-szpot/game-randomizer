@@ -1,0 +1,43 @@
+/* Additional stylings used in Line.js */
+
+
+
+/* Big buttons should be big and have space around them. */
+.bigButton {
+	height: 60px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	width: 100%;
+}
+
+/* They should have vibrant colors and react to being hovered over. */
+.blue {
+	background-color: #ccebff;
+	border-color: #003d66;
+	color: #003d66;
+}
+.blue:hover {
+	background-color: #ffffff;
+	border-color: #005c99;
+	color: #005c99;
+}
+.green {
+	background-color: #b3ffb3;
+	border-color: #006600;
+	color: #006600;
+}
+.green:hover {
+	background-color: #e6ffe6;
+	border-color: #009900;
+	color: #009900;
+}
+.red {
+	background-color: #ff9999;
+	border-color: #660000;
+	color: #660000;
+}
+.red:hover {
+	background-color: #ffcccc;
+	border-color: #990000;
+	color: #990000;
+}

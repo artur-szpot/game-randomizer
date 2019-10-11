@@ -1,0 +1,40 @@
+/* Additional styles used in PlusMinus.js */
+
+
+
+/* The plus and minus buttons should be square. */
+.plusminusButton {
+	width: 55px;
+	height: 55px;
+	border-radius: 12px; 
+	border: 3px solid black;
+   font-weight: bold;
+}
+
+/* The +/- sign should be centered vertically and significant. */
+.plusminusButtonText {
+	margin-top: -12px;
+	font-size: 40px;
+}
+
+/* The button should differ clearly between the on and off states. */
+.plusminusButtonOn {
+	background-color: #ccebff;
+	border-color: #003d66;
+	color: #003d66;
+}
+.plusminusButtonOff {
+	color: #ababab;
+	border: 3px solid #ababab;
+	background-color: #dedede;
+	cursor: default;
+}
+
+/* The value between the +/- buttons should be well visible and centered. */
+.plusminusValue {
+	font-family: Arial;
+	font-size: 40px;
+	display: inline;
+	font-weight: bold;
+	margin: 0 20px;
+}

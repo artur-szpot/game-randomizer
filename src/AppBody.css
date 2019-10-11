@@ -1,0 +1,9 @@
+/* Additional styles used in AppBody.js */
+
+
+
+/* The main container should leave a little space between the navbar and the actual contents. */
+.mainContainer {
+	text-align: center;
+	padding-top: 20px;
+}

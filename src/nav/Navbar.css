@@ -1,0 +1,89 @@
+/* Additional stylings used in Navbar.js */
+
+
+
+/* The logo should be displayed properly in relation to the text and page borders. */
+.navbarBrandImage {
+	height: 50px;
+	width: auto;
+	margin-right: 10px;
+	transform: translateY(-5%);
+}
+/* When appropriate, it should have a border fitting the navbar color. */
+.navbarBrandImageBorder {
+	border: 2px solid darkblue;
+	border-radius: 5px;
+}
+/* The brand should look pretty, including a shadow. */
+.navbarBrandText {
+	color: white;
+	font-size: 125%;
+	text-shadow: 0.3px 0.3px 10px rgba(0, 0, 0, 0.9);
+	font-weight: 600;
+}
+/* The brand should appear centered vertically. */
+.navbarBrandContainer {
+	transform: translateY(5%);
+}
+
+/* The 'about' and 'settings' buttons use Fontello for their icons. */
+@font-face {
+	font-family: 'fontello';
+	src: url('../font/fontello.eot?87788062');
+	src: url('../font/fontello.eot?87788062#iefix') format('embedded-opentype'),
+		  url('../font/fontello.woff2?87788062') format('woff2'),
+		  url('../font/fontello.woff?87788062') format('woff'),
+		  url('../font/fontello.ttf?87788062') format('truetype'),
+		  url('../font/fontello.svg?87788062#fontello') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+.icon {
+	font-family: "fontello";
+	font-style: normal;
+	font-weight: normal;
+	display: inline-block;
+	text-decoration: inherit;
+	width: 1em;
+	line-height: 1em;
+	text-align: center;
+	font-variant: normal;
+	text-transform: none;
+	font-size: 250%;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-shadow: 0.3px 0.3px 10px rgba(0, 0, 0, 0.9);
+	color: white;
+}
+.icon:hover { color: yellow; }
+.icon-cog:before { content: '\e800'; }
+.icon-info-circled:before { content: '\e801'; }
+
+/* The 'about' and 'settings' buttons should not look like buttons, however. */
+.nobutton {
+	background-color: transparent;
+	border: none;
+}
+
+/* The about section might move somewhere else, but for now it is styled through here. */
+#infopanel {
+	padding: 5px 5px 5px 25px;
+}
+#infopanel > p {
+	margin-bottom: 3px;
+	margin-left: 15px;
+}
+#infopanel > hr {
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+#infopanel > h3 {
+	text-shadow: 0.3px 0.3px 10px rgba(0, 0, 0, 0.9);
+}
+/* Links should not be underlined at all times, but only when hovered over. */
+#infopanel > p > a {
+	color: rgb(94, 24, 17);
+}
+#infopanel > p > a:hover {
+	color: navy;
+}

@@ -1,0 +1,21 @@
+/* Additional styles used by Text.js */
+
+
+
+/* Text should be well visible. */
+.text { 
+	font-size: 20px; 
+	margin: 0; 
+	font-family: Arial;
+}
+.textBold { font-weight:bold; }
+
+/* The dividing line should look good. */
+.textSeparator {
+	border: 1px solid black;
+	margin: 5px 0;
+}
+
+/* When background is dark, text and separators need to change color to stay visible. */
+.textWhite { color: white; }
+.textSeparatorWhite { border-color: #666666; }
