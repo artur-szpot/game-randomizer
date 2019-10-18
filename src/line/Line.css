@@ -41,3 +41,32 @@
 	border-color: #990000;
 	color: #990000;
 }
+
+/* Separator should be starkly visible on the background. */
+.separator { border: 1px solid white; }
+
+/* Separator title should be unostentatious but strong. */
+.separatorTitle {
+	text-transform: uppercase;
+	font-size: 80%;
+	font-weight: 500;
+	margin-bottom: -0.8rem;
+	margin-top: 15px;
+	text-align: left;
+}
+
+/* Separator text should be plain. */
+.separatorText {
+	margin-top: -0.8rem;
+	margin-bottom: 0;
+	text-align: left;
+	padding-left: 25px;
+}
+
+/* Lists should be easily readable and undecorated. */
+.separatorList {
+	list-style: none;
+	margin: 0;
+	padding-left: 25px;
+	text-align: left;
+}

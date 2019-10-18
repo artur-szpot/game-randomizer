@@ -4,6 +4,7 @@ import GameTile from './components/gameTile/GameTile';
 import NearAndFar from './games/NearAndFar';
 import X51stState from './games/X51stState';
 import SushiGoParty from './games/SushiGoParty';
+import Fresco from './games/Fresco';
 import './AppBody.css';
 
 /**
@@ -34,42 +35,120 @@ class AppBody extends React.Component {
 	 * - function: self-explanatory
 	 * - image: thumbnail for the game from BoardGameGeek.com
 	 */
+	designers = {
+		RyanLaukat: {
+			name: 'Ryan Laukat',
+			url: 'http://www.ryanlaukat.com',
+		},
+		IgnacyTrzewiczek: {
+			name: 'Ignacy Trzewiczek',
+			url: 'https://boardgamegeek.com/boardgamedesigner/4735/ignacy-trzewiczek'
+		},
+		PhilWalkerHarding: {
+			name: 'Phil Walker-Harding',
+			url: 'http://www.philwalkerharding.com'
+		},
+		DonaldXVaccarino: {
+			name: 'Donald X. Vaccarino',
+			url: 'https://boardgamegeek.com/boardgamedesigner/10525/donald-x-vaccarino'
+		},
+		AdrianAdamescu: {
+			name: 'Adrian Adamescu',
+			url: 'https://boardgamegeek.com/boardgamedesigner/88370/adrian-adamescu'
+		},
+		DarylAndrews: {
+			name: 'Daryl Andrews',
+			url: 'https://boardgamegeek.com/boardgamedesigner/67502/daryl-andrews'
+		},
+		WolfgangPanning: {
+			name: 'Wolfgang Panning',
+			url: 'https://boardgamegeek.com/boardgamedesigner/249/wolfgang-panning'
+		},
+		MarcoRuskowski: {
+			name: 'Marco Ruskowski',
+			url: 'https://boardgamegeek.com/boardgamedesigner/34864/marco-ruskowski'
+		},
+		MarcelSuesselbeck: {
+			name: 'Marcel Süßelbeck',
+			url: 'https://boardgamegeek.com/boardgamedesigner/34866/marcel-susselbeck'
+		}
+	}
+	publishers = {
+		RedRavenGames: {
+			name: 'Red Raven Games',
+			url: 'https://redravengames.squarespace.com',
+		},
+		PortalGames: {
+			name: 'Portal Games',
+			url: 'https://portalgames.pl'
+		},
+		Gamewright: {
+			name: 'Gamewright',
+			url: 'http://www.gamewright.com/gamewright'
+		},
+		QueenGames: {
+			name: 'Queen Games',
+			url: 'https://www.queen-games.com'
+		},
+		FloodgateGames: {
+			name: 'Floodgate Games',
+			url: 'http://floodgategames.com'
+		}
+	}
 	games = {
 		NearAndFar: {
 			name: 'NearAndFar',
 			titles: { default: 'Near and Far' },
 			function: () => this.loadGame('NearAndFar'),
-			image: 'https://cf.geekdo-images.com/thumb/img/PDunwFmZeYRfCXx2B5glMugNofk=/fit-in/200x150/pic3605785.jpg'
+			image: 'https://cf.geekdo-images.com/thumb/img/PDunwFmZeYRfCXx2B5glMugNofk=/fit-in/200x150/pic3605785.jpg',
+			designers: [this.designers.RyanLaukat],
+			publishers: [this.publishers.RedRavenGames],
+			bgg: 'https://boardgamegeek.com/boardgame/195421/near-and-far'
 		},
 		X51stState: {
 			name: 'X51stState',
 			titles: { default: '51st State: Master Set', Polski: '51. Stan' },
 			function: () => this.loadGame('X51stState'),
-			image: 'https://cf.geekdo-images.com/thumb/img/lkHbwjQfKhiqWaeQRoK2X9MEphc=/fit-in/200x150/pic2961948.jpg'
+			image: 'https://cf.geekdo-images.com/thumb/img/lkHbwjQfKhiqWaeQRoK2X9MEphc=/fit-in/200x150/pic2961948.jpg',
+			designers: [this.designers.IgnacyTrzewiczek],
+			publishers: [this.publishers.PortalGames],
+			bgg: 'https://boardgamegeek.com/boardgame/192458/51st-state-master-set'
 		},
 		SushiGoParty: {
 			name: 'SushiGoParty',
 			titles: { default: 'Sushi Go! Party' },
 			function: () => this.loadGame('SushiGoParty'),
-			image: 'https://cf.geekdo-images.com/thumb/img/A8D6DQy46g02YlMicTyhlJza1jQ=/fit-in/200x150/pic3031286.jpg'
+			image: 'https://cf.geekdo-images.com/thumb/img/A8D6DQy46g02YlMicTyhlJza1jQ=/fit-in/200x150/pic3031286.jpg',
+			designers: [this.designers.PhilWalkerHarding],
+			publishers: [this.publishers.Gamewright],
+			bgg: 'https://boardgamegeek.com/boardgame/192291/sushi-go-party'
 		},
 		Sagrada: {
 			name: 'Sagrada',
 			titles: { default: 'Sagrada' },
 			function: () => this.loadGame('Sagrada'),
-			image: 'https://cf.geekdo-images.com/thumb/img/Efxb5We3kIolBOHjvnOffct-w0c=/fit-in/200x150/pic3525224.jpg'
+			image: 'https://cf.geekdo-images.com/thumb/img/Efxb5We3kIolBOHjvnOffct-w0c=/fit-in/200x150/pic3525224.jpg',
+			designers: [this.designers.AdrianAdamescu, this.designers.DarylAndrews],
+			publishers: [this.publishers.FloodgateGames],
+			bgg: 'https://boardgamegeek.com/boardgame/199561/sagrada'
 		},
 		Fresco: {
 			name: 'Fresco',
 			titles: { default: 'Fresco' },
 			function: () => this.loadGame('Fresco'),
-			image: 'https://cf.geekdo-images.com/thumb/img/kNVrOTCmpam2YmygS2y3KIovRYs=/fit-in/200x150/pic2592064.jpg'
+			image: 'https://cf.geekdo-images.com/thumb/img/kNVrOTCmpam2YmygS2y3KIovRYs=/fit-in/200x150/pic2592064.jpg',
+			designers: [this.designers.WolfgangPanning, this.designers.MarcelSuesselbeck, this.designers.MarcoRuskowski],
+			publishers: [this.publishers.QueenGames],
+			bgg: 'https://boardgamegeek.com/boardgame/66188/fresco'
 		},
 		KingdomBuilder: {
 			name: 'KingdomBuilder',
 			titles: { default: 'Kingdom Builder', Polski: 'Królestwo w budowie' },
 			function: () => this.loadGame('KingdomBuilder'),
-			image: 'https://cf.geekdo-images.com/thumb/img/-QYpVIA0Wa6IO9iwwhsHulOKaCQ=/fit-in/200x150/pic3387491.jpg'
+			image: 'https://cf.geekdo-images.com/thumb/img/-QYpVIA0Wa6IO9iwwhsHulOKaCQ=/fit-in/200x150/pic3387491.jpg',
+			designers: [this.designers.DonaldXVaccarino],
+			publishers: [this.publishers.QueenGames],
+			bgg: 'https://boardgamegeek.com/boardgame/107529/kingdom-builder'
 		},
 	};
 
@@ -92,11 +171,11 @@ class AppBody extends React.Component {
 		newState = Object.assign({}, this.state, { chosenLanguage: this.languages[langName] });
 		this.setState(newState);
 	}
-	
+
 	/** Switch between the different sub-applications and the main menu. */
 	loadGame(gameName) {
 		let newState;
-		if(gameName === null) {
+		if (gameName === null) {
 			newState = Object.assign({}, this.state, { chosenGame: null });
 		} else {
 			newState = Object.assign({}, this.state, { chosenGame: this.games[gameName] });
@@ -147,18 +226,24 @@ class AppBody extends React.Component {
 						onClickHome={this.functions.onClickHome}
 					/>;
 					break;
-					case 'X51stState':
-						appBody = <X51stState
-							language={this.state.chosenLanguage}
-							onClickHome={this.functions.onClickHome}
-						/>;
-						break;
-					case 'SushiGoParty':
-						appBody = <SushiGoParty
+				case 'X51stState':
+					appBody = <X51stState
 						language={this.state.chosenLanguage}
 						onClickHome={this.functions.onClickHome}
-						/>;
-						break;
+					/>;
+					break;
+				case 'SushiGoParty':
+					appBody = <SushiGoParty
+						language={this.state.chosenLanguage}
+						onClickHome={this.functions.onClickHome}
+					/>;
+					break;
+				case 'Fresco':
+					appBody = <Fresco
+						language={this.state.chosenLanguage}
+						onClickHome={this.functions.onClickHome}
+					/>;
+					break;
 				default:
 			}
 		}

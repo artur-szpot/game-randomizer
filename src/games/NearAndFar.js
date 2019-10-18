@@ -133,6 +133,12 @@ class NearAndFar extends React.Component {
 		return (
 			<>
 				<Line
+					lineType='Category'
+					text={this.language.categories.general}
+					title={true}
+					visible={true}
+				/>
+				<Line
 					lineType='PlusMinus'
 					title={this.language.opts.playerCount}
 					onMinusClick={this.functions.onClickPlayerCountMinus}
@@ -150,12 +156,19 @@ class NearAndFar extends React.Component {
 					visible={true}
 				/>
 				<Line
+					lineType='Category'
+					text={this.language.categories.map}
+					title={true}
+					visible={true}
+				/>
+				<Line
 					lineType='YesNo'
 					title={this.language.opts.randMap}
 					opts={this.language.yesNo}
 					onClick={this.functions.onClickRandMap}
 					yesNo={this.state.randMap}
 					visible={true}
+					first={true}
 				/>
 				<Line
 					lineType='MultiState'
@@ -198,12 +211,19 @@ class NearAndFar extends React.Component {
 					visible={lastRuinVisible}
 				/>
 				<Line
+					lineType='Category'
+					text={this.language.categories.camps}
+					title={true}
+					visible={true}
+				/>
+				<Line
 					lineType='YesNo'
 					title={this.language.opts.addCamps}
 					opts={this.language.yesNo}
 					onClick={this.functions.onClickRandCamps}
 					yesNo={this.state.randCamps}
 					visible={true}
+					first={true}
 				/>
 				<Line
 					lineType='PlusMinus'
@@ -241,43 +261,46 @@ class NearAndFar extends React.Component {
 	renderResults() {
 		let resMap = this.language.maps[this.results.map-1];
 		let resTown = this.language.dawnDusk[this.results.dawnDusk];
-		let resQuests = General.list(this.results.quests);
+		let resQuests = this.results.quests.join(', ');
 		let resBosses = General.listWithIndices(this.language.bosses, this.results.bosses);
 		let visBosses = this.results.map === 11;
 
 		return (
 			<>
 				<Line
-					lineType='Text'
-					title={this.language.results.map}
-					text={resMap}
-					visible={true}
-					first={true}
-				/>
-				<Line
-					lineType='Text'
-					title={this.language.results.town}
-					text={resTown}
+					lineType='Category'
+					text={this.language.results.map}
+					subtext={resMap}
+					list={false}
 					visible={true}
 				/>
 				<Line
-					lineType='Text'
-					title={this.language.results.addCamps}
-					text={this.results.addCamps}
+					lineType='Category'
+					text={this.language.results.town}
+					subtext={resTown}
+					list={false}
+					visible={true}
+				/>
+				<Line
+					lineType='Category'
+					text={this.language.results.addCamps}
+					subtext={this.results.addCamps}
+					list={false}
 					visible={this.state.randCamps}
 				/>
 				<Line
-					lineType='Text'
-					title={this.language.results.quests}
-					text={resQuests}
+					lineType='Category'
+					text={this.language.results.quests}
+					subtext={resQuests}
+					list={false}
 					visible={true}
 				/>
 				<Line
-					lineType='Text'
-					title={this.language.results.bosses}
-					text={resBosses}
-					visible={true}
-					hidden={!visBosses}
+					lineType='Category'
+					text={this.language.results.bosses}
+					subtext={resBosses}
+					list={false}
+					visible={visBosses}
 				/>
 				<Line
 					lineType='BigButton'
@@ -320,6 +343,11 @@ class NearAndFar extends React.Component {
 	setLanguage() {
 		switch (this.props.language.name) {
 			case 'Polski':
+				this.language.categories = {
+					general: 'Ogólne',
+					map: 'Mapa',
+					camps: 'Dodatkowe obozowiska'
+				}
 				this.language.opts = {
 					playerCount: 'Liczba graczy',
 					longerGV: 'Wariant: dłuższa gra',
@@ -365,6 +393,11 @@ class NearAndFar extends React.Component {
 
 			case 'English':
 			default:
+					this.language.categories = {
+						general: 'General',
+						map: 'Map',
+						camps: 'Additional camps'
+					}
 				this.language.opts = {
 					playerCount: 'Player count',
 					longerGV: 'Longer game variant',
@@ -600,12 +633,12 @@ class NearAndFar extends React.Component {
 		if (map === 1) {
 			quests = quests.sort();
 		} else {
-			quests = quests.sort(function (a, b) { return a - b });
+			quests = quests.sort((a, b) => a - b);
 		}
 
 		this.results.map = map;
 		this.results.dawnDusk = dawnDusk;
-		this.results.addCamps = addCamps;
+		this.results.addCamps = String(addCamps);
 		this.results.bosses = bosses;
 		this.results.quests = quests;
 

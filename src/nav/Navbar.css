@@ -58,6 +58,11 @@
 .icon:hover { color: yellow; }
 .icon-cog:before { content: '\e800'; }
 .icon-info-circled:before { content: '\e801'; }
+.icon-copyright:before { content: '\f1f9'; }
+.icon-arrows-cw:before { content: '\e802'; }
+.icon-home:before { content: '\e803'; }
+.icon-ok-circled:before { content: '\e804'; }
+.icon-sliders:before { content: '\f1de'; }
 
 /* The 'about' and 'settings' buttons should not look like buttons, however. */
 .nobutton {
@@ -66,24 +71,33 @@
 }
 
 /* The about section might move somewhere else, but for now it is styled through here. */
-#infopanel {
+.panel {
 	padding: 5px 5px 5px 25px;
 }
-#infopanel > p {
+.panel > p {
 	margin-bottom: 3px;
 	margin-left: 15px;
 }
-#infopanel > hr {
+.panel > hr {
 	margin-top: 5px;
 	margin-bottom: 10px;
 }
-#infopanel > h3 {
+.panel > h3 {
 	text-shadow: 0.3px 0.3px 10px rgba(0, 0, 0, 0.9);
 }
 /* Links should not be underlined at all times, but only when hovered over. */
-#infopanel > p > a {
-	color: rgb(94, 24, 17);
+.panel > p > a {
+	text-shadow: 0.3px 0.3px 10px rgba(100, 0, 0, 0.9);
+	/*color: rgb(94, 24, 17);
+	text-decoration: underline;*/
 }
-#infopanel > p > a:hover {
-	color: navy;
+.panel > p > a:hover {
+	text-shadow: 0.3px 0.3px 10px rgb(255, 255, 255);
+	color: white;
+	text-decoration: none;
+	/*color: navy;*/
+}
+
+.panel > strong {
+	color: rgb(200, 200, 255);
 }

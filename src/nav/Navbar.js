@@ -29,8 +29,13 @@ class Navbar extends React.Component {
             </div>);
       }
 
-      /** Create a brand consisting of a miniature game thumbnail (unless in main menu, then app logo) and a properly formatted title sting. */
+      /** 
+       * Create a brand consisting of a miniature game thumbnail (unless in main menu, then app logo) 
+       * and a properly formatted title string. Also, create a (c) button for copyrights.
+       * */
       let brand = null;
+      let copyrightButton = null;
+      let copyrightContent = null;
       if (this.props.gameChosen != null) {
          let gameName;
          if (this.props.gameChosen.titles[this.props.languageChosen.name] === undefined) {
@@ -45,6 +50,35 @@ class Navbar extends React.Component {
                <p className='navbarBrandText d-none d-md-inline'>{gameRandomizerName}</p>
                <p className='navbarBrandText d-none d-sm-inline d-md-none'>{gameName}</p>
             </div>
+         );
+         copyrightButton = (
+            <li className='nav-item my-auto ml-2'>
+               <button className='nobutton icon icon-copyright' type='button' data-toggle='collapse' data-target='#copyrightpanel'>
+               </button>
+            </li>
+         );
+         let designers = [];
+         let separator = '';
+         for (let i=this.props.gameChosen.designers.length-1; i>-1; i--) {
+            designers.push(<><a href={this.props.gameChosen.designers[i].url}>{this.props.gameChosen.designers[i].name}</a>{separator}</>);
+            separator = ', ';
+         }
+         designers.reverse();
+         let publishers = [];
+         separator = '';
+         for (let i=this.props.gameChosen.publishers.length-1; i>-1; i--) {
+            publishers.push(<><a href={this.props.gameChosen.publishers[i].url} key={i}>{this.props.gameChosen.publishers[i].name}</a>{separator}</>);
+            separator = ', ';
+         }
+         publishers.reverse();
+         copyrightContent = (
+            <>
+            <h3>{gameName}</h3>
+            <p><strong>Designer:</strong> {designers}</p>
+            <p><strong>Publisher:</strong> {publishers}</p>
+            <p><a href={this.props.gameChosen.bgg}>{gameName}</a> <strong> on BoardGameGeek.com</strong></p>
+            <hr />
+            </>
          );
       } else {
          brand = (
@@ -78,20 +112,16 @@ class Navbar extends React.Component {
                         </button>
                      </li>
 
-                     {/* Despite initial expectations, there are no settings to be used (for now...?)
-                     <li className='nav-item my-auto'>
-                        <button className='nobutton icon icon-cog' type='button' data-toggle='collapse' data-target='#settingspanel'>
-                        </button>
-                     </li> */}
+                     { copyrightButton }
 
                   </ul>
             </div>
 
-            <div className='bg-primary collapse' id='infopanel'>
+            <div className='panel bg-primary collapse' id='infopanel'>
                <h3>Game randomizer</h3>
                <p>A free application designed to facilitate the process of randomizing setups of board games, as well as to practice React, Javascript, CSS &amp; HTML.</p>
                <p>The author claims no rights to any of the games supported by the application; these go to their respective designers and/or publishers.
-                  See the copyrights section for a temporary listing of these designers and publishers.
+                  See the copyrights section on each game's page for a listing of these designers and publishers.
                </p>
                <p>The source code is inaccesible directly through the website due to how React works, but it can be freely obtained at the&nbsp;
                    <a href="https://github.com/artur-szpot/game-randomizer">project's GitHub page</a>.</p>
@@ -102,20 +132,6 @@ class Navbar extends React.Component {
                <h3>Author:</h3>
                <p>Artur Szpot (<a href="https://github.com/artur-szpot">GitHub</a>).</p>
                <p>The project is being developed since July 2019 and is alive as of October 2019.</p>
-               <hr />
-               <h3>Copyrights</h3>
-               <p><strong>Near and Far: </strong>
-                  designer <a href="http://www.ryanlaukat.com/">Ryan Laukat</a>, 
-                  publisher <a href="https://redravengames.squarespace.com">Red Raven Games</a>
-               </p>
-               <p><strong>51st State: Master Set: </strong>
-                  designer <a href="https://boardgamegeek.com/boardgamedesigner/4735/ignacy-trzewiczek">Ignacy Trzewiczek</a>, 
-                  publisher <a href="https://portalgames.pl/">Portal Games</a>
-               </p>
-               <p><strong>Sushi Go! Party: </strong>
-                  designer <a href="http://www.philwalkerharding.com">Phil Walker-Harding</a>, 
-                  publisher <a href="http://www.gamewright.com/gamewright/">Gamewright</a>
-               </p>
                <hr />
                <h3>Font used for symbols:</h3>
                <p><strong>Font Awesome</strong>, Copyright &copy; 2016 by Dave Gandy</p>
@@ -135,6 +151,14 @@ class Navbar extends React.Component {
                <p>Also, plain old Javascript, CSS and HTML.</p>
                <p>Developed using <a href="https://code.visualstudio.com/">Visual Studio Code</a>.</p>
                <hr />
+            </div>
+            
+            <div className='panel bg-primary collapse' id='copyrightpanel'>
+               <h3>Ownership/copyright recognition</h3>
+               <p>The author of Game Randomizer claims no rights to any of the games supported by the application; these go to their respective designers and/or publishers.</p>
+               <p>The application's only intent is to facilitate the process of setting up a randomized starting state of games supported by it.</p>
+               <hr />
+               {copyrightContent}
             </div>
          </>
       );

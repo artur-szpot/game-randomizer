@@ -45,45 +45,49 @@ class SushiGoParty extends React.Component {
       for(let i=0; i<this.state.results.appetizers.length; i++) {
          resAppetizersTemp.push(this.language.opts.appetizers[this.state.results.appetizers[i]]);
       }
-      let resAppetizers = General.list(resAppetizersTemp);
+      let resAppetizers = resAppetizersTemp.join(', ');
       let resSpecialsTemp = [];
       for(let i=0; i<this.state.results.specials.length; i++) {
          resSpecialsTemp.push(this.language.opts.specials[this.state.results.specials[i]]);
       }
-      let resSpecials = General.list(resSpecialsTemp);
+      let resSpecials = resSpecialsTemp.join(', ');
 		let resDessert = this.language.opts.desserts[this.state.results.dessert];
 
 		return (
 			<>
 				<Line
-					lineType='Text'
-					title={this.language.results.nigiri}
-					text={resNigiri}
-					visible={true}
-					first={true}
-				/>
-				<Line
-					lineType='Text'
-					title={this.language.results.rolls}
-					text={resRolls}
+					lineType='Category'
+					text={this.language.results.nigiri}
+					subtext={resNigiri}
+					list={false}
 					visible={true}
 				/>
 				<Line
-					lineType='Text'
-					title={this.language.results.appetizers}
-					text={resAppetizers}
+					lineType='Category'
+					text={this.language.results.rolls}
+					subtext={resRolls}
+					list={false}
 					visible={true}
 				/>
 				<Line
-					lineType='Text'
-					title={this.language.results.specials}
-					text={resSpecials}
+					lineType='Category'
+					text={this.language.results.appetizers}
+					subtext={resAppetizers}
+					list={false}
 					visible={true}
 				/>
 				<Line
-					lineType='Text'
-					title={this.language.results.dessert}
-					text={resDessert}
+					lineType='Category'
+					text={this.language.results.specials}
+					subtext={resSpecials}
+					list={false}
+					visible={true}
+				/>
+				<Line
+					lineType='Category'
+					text={this.language.results.dessert}
+					subtext={resDessert}
+					list={false}
 					visible={true}
 				/>
 				<Line

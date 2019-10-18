@@ -26,7 +26,7 @@ class Text extends React.Component {
 		return (
 			<>
 				{textHr}
-				<p className={myClass}> {this.props.text} </p>
+				<p className={myClass}>{this.props.text}</p>
 			</>
 		);
 	}

@@ -2,17 +2,6 @@
  * A helper class containing functions useful for the randomizing sub-applications.
  */
 class General {
-    /** Changes an array of items into a comma-separated string listing all of them. */
-   static list(source) {
-       var comma = "";
-       var result = "";
-       for (let i = 0; i < source.length; i++) {
-           result += comma + source[i];
-           comma = ", ";
-       }
-       return result;
-   }
-
    /** Produces a comma-separated list with those items from source having indices as provided by indices. */
    static listWithIndices(source, indices) {
        var comma = "";
@@ -50,7 +39,27 @@ class General {
     /** Returns a random boolean. */
 	static randomBool() {
 		return this.random(0, 1) === 0;
-	}
+    }
+    
+    /** Returns a random intiger from base and variation, adding a portion of variation to the base. 
+     * The portion is most probable to be 0 and increasingly less probable for higher numbers, up to variation itself.
+     * The variation part also has a random sign.
+     * The result must be at greater that or equal to zero. */
+    static randomNormal(base, variation) {
+        let binaryTotal = [...Array(variation+1).keys()].reduce((a,b) => a + 2**b);
+        let weights = [...Array(variation+1).keys()].map(value => binaryTotal / (2**value));
+        let weightTotal = weights.reduce((a,b) => a+b);
+        let breakpoints = [0].concat(weights.map(value => (value / weightTotal) * 100));
+        for (let i=1; i<breakpoints.length; i++) {
+            breakpoints[i] += breakpoints[i-1];
+        }
+        let percent = this.random(1, 100);
+        for (let i=breakpoints.length-1; i>-1; i--) {
+            if (percent > breakpoints[i]) {
+                return Math.max(0, base + i * (this.randomBool() ? 1 : -1));
+            }
+        }
+    }
     
     /** Removes a number of random elements from the source and returns them as a new array. */
 	static randomFromArray(source, count) {

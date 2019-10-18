@@ -79,6 +79,12 @@ class X51stState extends React.Component {
 		return (
 			<>
 				<Line
+					lineType='Category'
+					text={this.language.categories.factions}
+					title={true}
+					visible={true}
+				/>
+				<Line
 					lineType='PlusMinus'
 					title={this.language.opts.playerCount}
 					onMinusClick={this.functions.onClickPlayerCountMinus}
@@ -120,12 +126,19 @@ class X51stState extends React.Component {
 					visible={this.state.randFactions}
 				/>
 				<Line
+					lineType='Category'
+					text={this.language.categories.decks}
+					title={true}
+					visible={true}
+				/>
+				<Line
 					lineType='YesNo'
 					title={this.language.opts.randDeckWinter}
 					opts={this.language.yesNo}
 					onClick={this.functions.onClickRandDeckWinter}
 					yesNo={this.state.randDeckWinter}
 					visible={true}
+					first={true}
 				/>
 				<Line
 					lineType='YesNo'
@@ -152,12 +165,19 @@ class X51stState extends React.Component {
 					visible={true}
 				/>
 				<Line
+					lineType='Category'
+					text={this.language.categories.addons}
+					title={true}
+					visible={true}
+				/>
+				<Line
 					lineType='YesNo'
 					title={this.language.opts.randAddons}
 					opts={this.language.yesNo}
 					onClick={this.functions.onClickRandAddons}
 					yesNo={this.state.randAddons}
 					visible={true}
+					first={true}
 				/>
 				<Line
 					lineType='YesNo'
@@ -201,50 +221,55 @@ class X51stState extends React.Component {
 	}
 
 	renderResults() {
-		let resPlayer1 = this.results.player1;
-		let resPlayer2 = this.results.player2;
-		let resPlayer3 = this.results.player3;
-		let resPlayer4 = this.results.player4;
-		let resDecks = this.results.decks;
-		let resAddons = this.results.addons;
+		let resPlayer1 = this.results.player1.map(value => this.language.factions[value]);
+		let resPlayer2 = this.results.player2.map(value => this.language.factions[value]);
+		let resPlayer3 = this.results.player3.map(value => this.language.factions[value]);
+		let resPlayer4 = this.results.player4.map(value => this.language.factions[value]);
+		let resDecks = this.results.decks.map(value => this.language.decks[value]);
+		let resAddons = this.results.addons.map(value => this.language.addons[value]);
 
 		return (
 			<>
 				<Line
-					lineType='Text'
-					title={this.language.results.player1}
-					text={resPlayer1}
-					visible={true}
-					first={true}
-				/>
-				<Line
-					lineType='Text'
-					title={this.language.results.player2}
-					text={resPlayer2}
+					lineType='Category'
+					text={this.language.results.player1}
+					subtext={resPlayer1}
+					list={true}
 					visible={true}
 				/>
 				<Line
-					lineType='Text'
-					title={this.language.results.player3}
-					text={resPlayer3}
+					lineType='Category'
+					text={this.language.results.player2}
+					subtext={resPlayer2}
+					list={true}
+					visible={true}
+				/>
+				<Line
+					lineType='Category'
+					text={this.language.results.player3}
+					subtext={resPlayer3}
+					list={true}
 					visible={this.state.playerCount[2] >= 3}
 				/>
 				<Line
-					lineType='Text'
-					title={this.language.results.player4}
-					text={resPlayer4}
+					lineType='Category'
+					text={this.language.results.player4}
+					subtext={resPlayer4}
+					list={true}
 					visible={this.state.playerCount[2] === 4}
 				/>
 				<Line
-					lineType='Text'
-					title={this.language.results.decks}
-					text={resDecks}
+					lineType='Category'
+					text={this.language.results.decks}
+					subtext={resDecks}
+					list={true}
 					visible={true}
 				/>
 				<Line
-					lineType='Text'
-					title={this.language.results.addons}
-					text={resAddons}
+					lineType='Category'
+					text={this.language.results.addons}
+					subtext={resAddons}
+					list={true}
 					visible={this.state.randAddons}
 				/>
 				<Line
@@ -288,6 +313,11 @@ class X51stState extends React.Component {
 	setLanguage() {
 		switch (this.props.language.name) {
 			case 'Polski':
+				this.language.categories = {
+					factions: 'Fakcje',
+					decks: 'Talie',
+					addons: 'Dodatki'
+				}
 				this.language.opts = {
 					playerCount: 'Liczba graczy',
 					randomize: 'Losuj',
@@ -343,6 +373,11 @@ class X51stState extends React.Component {
 
 			case 'English':
 			default:
+					this.language.categories = {
+						factions: 'Factions',
+						decks: 'Decks',
+						addons: 'Addons'
+					}
 				this.language.opts = {
 					playerCount: 'Player count',
 					randomize: 'Randomize',
@@ -498,72 +533,70 @@ class X51stState extends React.Component {
 
 	randomize() {
 		// generate results
-		var player1;
-		var player2;
-		var player3;
-		var player4;
-		var decks;
-		var addons;
+		let player1;
+		let player2;
+		let player3;
+		let player4;
+		let decks;
+		let addons = [];
 
 		// player factions
-		var choice = [];
+		let choice = [];
 		for (let i = 0; i < 4; i++) {
-			choice.push(this.language.factions[i]);
+			choice.push(i);
 		}
 		if (this.state.randFactionsTexas) {
-			choice.push(this.language.factions[4]);
-			choice.push(this.language.factions[5]);
+			choice.push(4);
+			choice.push(5);
 		}
 		if (this.state.randFactionsMississippi) {
-			choice.push(this.language.factions[6]);
-			choice.push(this.language.factions[7]);
+			choice.push(6);
+			choice.push(7);
 		}
 		if (this.state.randFactionsBigChoiceAllowed && this.state.randFactionsBigChoice) {
-			player1 = General.list(General.randomFromArray(choice, 2));
-			player2 = General.list(General.randomFromArray(choice, 2));
-			player3 = General.list(General.randomFromArray(choice, 2));
-			player4 = General.list(General.randomFromArray(choice, 2));
+			player1 = General.randomFromArray(choice, 2);
+			player2 = General.randomFromArray(choice, 2);
+			player3 = General.randomFromArray(choice, 2);
+			player4 = General.randomFromArray(choice, 2);
 		}
 		else {
-			var players = General.randomFromArray(choice, 4);
-			player1 = players[0];
-			player2 = players[1];
-			player3 = players[2];
-			player4 = players[3];
+			let players = General.randomFromArray(choice, 4);
+			player1 = [players[0]];
+			player2 = [players[1]];
+			player3 = [players[2]];
+			player4 = [players[3]];
 		}
 
 		// deck
 		choice = [];
 		if (this.state.randDeckNewEra) {
-			choice.push(this.language.decks[1]);
+			choice.push(1);
 		}
 		if (this.state.randDeckWinter) {
-			choice.push(this.language.decks[2]);
+			choice.push(2);
 		}
 		if (this.state.randDeckScavengers) {
-			choice.push(this.language.decks[3]);
+			choice.push(3);
 		}
 		if (this.state.randDeckAllies) {
-			choice.push(this.language.decks[4]);
+			choice.push(4);
 		}
-		var chosen = General.random(1, choice.length);
-		decks = General.list([this.language.decks[0], this.language.decks[chosen]]);
+		let chosen = General.random(1, choice.length);
+		decks = [0, chosen];
 
 		// addons
-		var tempAddons = [];
 		if (this.state.randAddonsCities && General.randomBool()) {
-			tempAddons.push(this.language.addons[1]);
+			addons.push(1);
 		}
 		if (this.state.randAddonsBorderTiles && General.randomBool()) {
-			tempAddons.push(this.language.addons[2]);
+			addons.push(2);
 		}
 		if (this.state.randAddonsArena && General.randomBool()) {
-			tempAddons.push(this.language.addons[3]);
+			addons.push(3);
 		}
-		if (tempAddons.length == 0) {
-			tempAddons.push(this.language.addons[0]);
+		if (addons.length == 0) {
+			addons.push(0);
 		}
-		addons = General.list(tempAddons);
 
 		this.results.player1 = player1;
 		this.results.player2 = player2;
