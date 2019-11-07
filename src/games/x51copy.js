@@ -1,76 +1,35 @@
 import React from 'react';
 import General from '../general/General';
+import Game from './Game';
 import Line from '../line/Line';
 
-class X51stState extends React.Component {
-	//#region === generated functions
-	// language
-	currentLanguage = this.props.language;
-	language = {};
+class X51stState extends Game {
+	//==================================================================================================================================
+	//#region === additional variables
 
-	// functions
-	functions = {
-		// yesNo
-		onClickRandFactions: () => this.handleYesNoClick('randFactions'),
-		onClickRandFactionsBigChoice: () => this.handleYesNoClick('randFactionsBigChoice'),
-		onClickRandFactionsTexas: () => this.handleYesNoClick('randFactionsTexas'),
-		onClickRandFactionsMississippi: () => this.handleYesNoClick('randFactionsMississippi'),
-		onClickRandDeckWinter: () => this.handleYesNoClick('randDeckWinter'),
-		onClickRandDeckNewEra: () => this.handleYesNoClick('randDeckNewEra'),
-		onClickRandDeckScavengers: () => this.handleYesNoClick('randDeckScavengers'),
-		onClickRandDeckAllies: () => this.handleYesNoClick('randDeckAllies'),
-		onClickRandAddons: () => this.handleYesNoClick('randAddons'),
-		onClickRandAddonsCities: () => this.handleYesNoClick('randAddonsCities'),
-		onClickRandAddonsBorderTiles: () => this.handleYesNoClick('randAddonsBorderTiles'),
-		onClickRandAddonsArena: () => this.handleYesNoClick('randAddonsArena'),
-		// plusMinusSolo 
-		onClickPlayerCountMinus: () => this.handlePlusMinusClick('playerCount', -1),
-		onClickPlayerCountPlus: () => this.handlePlusMinusClick('playerCount', 1),
-		// big buttons
-		onClickRandomize: () => this.randomize(),
-		onClickOptions: () => this.showOptions(),
-	};
+	// none
 
 	//#endregion
+	//==================================================================================================================================
+	//#region === variable structure (generated)
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			showResults: false,
+		};
+		this.setLanguage();
+	}
+	
 	//#region === additional variables
 
 	// results
 	results = {
-		player1: null,
-		player2: null,
-		player3: null,
-		player4: null,
-		decks: null,
-		addons: null,
 	};
 
 	//#endregion
 	//#region === initial settings
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			// actual state
-			showResults: false,
-			// yesNo
-			randFactions: true,
-			randFactionsBigChoice: true,
-			randFactionsBigChoiceAllowed: true,
-			randFactionsTexas: true,
-			randFactionsMississippi: false,
-			randDeckWinter: true,
-			randDeckNewEra: true,
-			randDeckScavengers: true,
-			randDeckAllies: true,
-			randAddons: false,
-			randAddonsCities: true,
-			randAddonsBorderTiles: false,
-			randAddonsArena: false,
-			// plusMinusSolo
-			playerCount: [2, 4, 2],
-		};
-		this.setLanguage();
-	}
 
 	//#endregion
 	//#region === renders

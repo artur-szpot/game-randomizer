@@ -24,7 +24,7 @@ class PlusMinus extends React.Component {
 			<>
 				<button
 					className={minusClasses}
-					onClick={() => this.props.onMinusClick()}
+					onClick={() => this.props.onClick(this.props.name, -1)}
 				>
 					<p className='plusminusButtonText'>-</p>
 				</button>
@@ -35,7 +35,7 @@ class PlusMinus extends React.Component {
 				</div>
 				<button
 					className={plusClasses}
-					onClick={() => this.props.onPlusClick()}
+					onClick={() => this.props.onClick(this.props.name, 1)}
 				>
 					<p className='plusminusButtonText'>+</p>
 				</button>

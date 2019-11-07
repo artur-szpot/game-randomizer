@@ -13,7 +13,7 @@ class MultiStateSubButton extends React.Component {
 			if (this.props.active) {
 				myClass += ' multiButtonProgressDotActive';
 			}
-			return (<div className={myClass} onClick={this.props.onClick}></div>);
+			return (<div className={myClass}></div>);
 		} else {
 			let myClass = 'multiListItem ';
 			if (this.props.active) {

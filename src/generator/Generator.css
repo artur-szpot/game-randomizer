@@ -1,0 +1,81 @@
+/* Additional stylings used in Generator.js */
+
+
+
+.genDiv {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+ .genDivWrong > div > input {
+	border: 2px solid #FF3300;
+	background-color: #330000;
+	color: white;
+}
+
+ .genDivOK > div > input {
+	border: 2px solid #00FF00;
+	background-color: #003300;
+	color: white;
+}
+
+.genSelect {
+	width: 20%;
+	font-size: 20px;
+	padding: 3px 0 4px 0;
+	background-color: #121212;
+	border: 2px solid #666666;
+	color: white;
+}
+
+.genInput {
+	width: 45%;
+	margin-left: 5px;
+	font-size: 20px;
+	padding: 3px;
+	background-color: #121212;
+	color: white;
+}
+
+.genArea {
+	width: 100%;
+	font-size: 20px;
+	padding: 3px;
+	background-color: #121212;
+	color: white;
+}
+
+.genButton {
+	width: 5%;
+	margin-left: 5px;
+	font-size: 20px;
+	border-radius: 5px;
+	padding: 3px 0;
+	font-weight: bold;
+	background-color: #121212;
+}
+
+.genButtonEnabled {
+	border: 2px solid #eeeeee;
+	color: white;
+	cursor: pointer;
+}
+
+.genButtonDisabled {
+	border: 2px solid #666666;
+	color: #666666;
+}
+
+.genButtonEnabled:hover {
+	background-color: #363636;
+	color: #eeeeee;
+}
+
+.genBigButton {
+	max-width: 80%;
+}
+
+.genError {
+	color: #FF3300;
+	font-weight: bold;
+}

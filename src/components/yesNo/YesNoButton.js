@@ -19,7 +19,7 @@ class YesNoButton extends React.Component {
 		return (
 			<button
 				className={myClass}
-				onClick={() => this.props.onClick()}
+				onClick={() => this.props.onClick(this.props.name)}
 			>
 				{label}
 			</button>

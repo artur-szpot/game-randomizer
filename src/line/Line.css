@@ -63,6 +63,12 @@
 	padding-left: 25px;
 }
 
+/* When it shows an error, separator text should look critical. */
+.separatorError {
+	color:red;
+	font-weight: bold;
+}
+
 /* Lists should be easily readable and undecorated. */
 .separatorList {
 	list-style: none;

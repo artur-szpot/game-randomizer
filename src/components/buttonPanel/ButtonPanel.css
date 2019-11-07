@@ -1,0 +1,12 @@
+/* Additional stylings used by ButtonPanel.js */
+
+
+
+.overalldiv {
+   position: fixed;
+   z-index: 1;
+   height: 1rem;
+   bottom: 0;
+   background-color: red;
+   width: 100%;
+}

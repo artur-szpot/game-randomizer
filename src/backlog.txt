@@ -1,0 +1,20 @@
+Expand the Generator:
+ - allow setting initial values
+ - allow indexed components/results
+ - add visual preview
+ - for categories, add subtext possibility
+ - create several components/results at once
+ - change the GUI to improve UX:
+   - buttons running away
+   - too much space taken by error messages
+   - superfluous tabbing
+ - add proper generation for apps with no options (refresh by changing showResults, randomize produces state)
+ - close inline braces when empty
+ ! generate basic stuff or import it from somewhere (randomize/home/options/yesno)
+
+General big ideas:
+ - cookies
+ - presets
+ - reorganizable front page
+ - draggable elements (front page/generator)
+ - animation upon rows collapsing/expanding

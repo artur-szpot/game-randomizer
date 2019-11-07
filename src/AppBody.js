@@ -3,8 +3,10 @@ import Navbar from './nav/Navbar';
 import GameTile from './components/gameTile/GameTile';
 import NearAndFar from './games/NearAndFar';
 import X51stState from './games/X51stState';
+import Generator from './generator/Generator';
+import logo from './img/gr-logo.png'; // temp
 import SushiGoParty from './games/SushiGoParty';
-import Fresco from './games/Fresco';
+// import Fresco from './games/Fresco';
 import './AppBody.css';
 
 /**
@@ -132,15 +134,15 @@ class AppBody extends React.Component {
 			publishers: [this.publishers.FloodgateGames],
 			bgg: 'https://boardgamegeek.com/boardgame/199561/sagrada'
 		},
-		Fresco: {
-			name: 'Fresco',
-			titles: { default: 'Fresco' },
-			function: () => this.loadGame('Fresco'),
-			image: 'https://cf.geekdo-images.com/thumb/img/kNVrOTCmpam2YmygS2y3KIovRYs=/fit-in/200x150/pic2592064.jpg',
-			designers: [this.designers.WolfgangPanning, this.designers.MarcelSuesselbeck, this.designers.MarcoRuskowski],
-			publishers: [this.publishers.QueenGames],
-			bgg: 'https://boardgamegeek.com/boardgame/66188/fresco'
-		},
+		// Fresco: {
+		// 	name: 'Fresco',
+		// 	titles: { default: 'Fresco' },
+		// 	function: () => this.loadGame('Fresco'),
+		// 	image: 'https://cf.geekdo-images.com/thumb/img/kNVrOTCmpam2YmygS2y3KIovRYs=/fit-in/200x150/pic2592064.jpg',
+		// 	designers: [this.designers.WolfgangPanning, this.designers.MarcelSuesselbeck, this.designers.MarcoRuskowski],
+		// 	publishers: [this.publishers.QueenGames],
+		// 	bgg: 'https://boardgamegeek.com/boardgame/66188/fresco'
+		// },
 		KingdomBuilder: {
 			name: 'KingdomBuilder',
 			titles: { default: 'Kingdom Builder', Polski: 'Królestwo w budowie' },
@@ -149,6 +151,15 @@ class AppBody extends React.Component {
 			designers: [this.designers.DonaldXVaccarino],
 			publishers: [this.publishers.QueenGames],
 			bgg: 'https://boardgamegeek.com/boardgame/107529/kingdom-builder'
+		},
+		Generator: {
+			name: 'Generator',
+			titles: { default: 'Generator alpha' },
+			function: () => this.loadGame('Generator'),
+			image: logo,
+			designers: [],
+			publishers: [],
+			bgg: ''
 		},
 	};
 
@@ -232,19 +243,23 @@ class AppBody extends React.Component {
 						onClickHome={this.functions.onClickHome}
 					/>;
 					break;
+				case 'Generator':
+					appBody = <Generator />;
+					break;
 				case 'SushiGoParty':
 					appBody = <SushiGoParty
 						language={this.state.chosenLanguage}
 						onClickHome={this.functions.onClickHome}
 					/>;
 					break;
-				case 'Fresco':
-					appBody = <Fresco
-						language={this.state.chosenLanguage}
-						onClickHome={this.functions.onClickHome}
-					/>;
-					break;
+				// case 'Fresco':
+				// 	appBody = <Fresco
+				// 		language={this.state.chosenLanguage}
+				// 		onClickHome={this.functions.onClickHome}
+				// 	/>;
+				// 	break;
 				default:
+					break;
 			}
 		}
 

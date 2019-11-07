@@ -39,7 +39,11 @@ class Line extends React.Component {
                }
                subText = <ul className='separatorList'>{items}</ul>
             } else {
-               subText = <p className='separatorText'>{this.props.subtext}</p>;
+               let subtextClasses = 'separatorText';
+               if(this.props.error){
+                  subtextClasses += ' separatorError';
+               }
+               subText = <p className={subtextClasses}>{this.props.subtext}</p>;
             }
          }
          myThings.push(
@@ -78,10 +82,8 @@ class Line extends React.Component {
                      <MultiStateButton
                         states={this.props.states}
                         currentState={this.props.currentState}
-                        onNextClick={this.props.onNextClick}
-                        onPrevClick={this.props.onPrevClick}
-                        onSubClick={this.props.onSubClick}
-                        onListClick={this.props.onListClick}
+                        name={this.props.name}
+                        onClick={this.props.onClick}
                         showList={this.props.showList}
                      />
                   );
@@ -90,8 +92,8 @@ class Line extends React.Component {
                   cellInside = (
                      <PlusMinus
                         minMaxCurr={this.props.minMaxCurr}
-                        onMinusClick={this.props.onMinusClick}
-                        onPlusClick={this.props.onPlusClick}
+                        name={this.props.name}
+                        onClick={this.props.onClick}
                      />
                   );
                   break;
@@ -100,6 +102,7 @@ class Line extends React.Component {
                      <YesNoButton
                         opts={this.props.opts}
                         yes={this.props.yesNo}
+                        name={this.props.name}
                         onClick={this.props.onClick}
                      />
                   );

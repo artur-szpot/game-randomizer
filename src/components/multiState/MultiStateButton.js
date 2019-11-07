@@ -27,7 +27,7 @@ class MultiStateButton extends React.Component {
 					mini={false}
 					active={i === this.props.currentState}
 					key={i}
-					onClick={this.props.onSubClick[i]}
+					onClick={() => this.props.onClick.subClick(this.props.name, i)}
 					text={this.props.states[i]}
 				/>
 			);
@@ -48,13 +48,13 @@ class MultiStateButton extends React.Component {
 			<div className={mainClasses}>
 					<button
 						className='multiButton multiButtonPrev'
-						onClick={this.props.onPrevClick}
+						onClick={() => this.props.onClick.mainClick(this.props.name, -1)}
 					>
 						&lt;
 					</button>
 					<button
 						className='multiButton multiButtonMain'
-						onClick={this.props.onListClick}
+						onClick={() => this.props.onClick.listClick(this.props.name)}
 					>
 						<div className='multiButtonContainer'>
 						<p className='multiButtonTitle'>{this.props.states[this.props.currentState]}</p>
@@ -63,7 +63,7 @@ class MultiStateButton extends React.Component {
 					</button>
 					<button
 						className='multiButton multiButtonNext'
-						onClick={this.props.onNextClick}
+						onClick={() => this.props.onClick.mainClick(this.props.name, 1)}
 					>
 						&gt;
 						</button>
