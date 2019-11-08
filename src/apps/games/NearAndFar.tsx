@@ -1,7 +1,7 @@
 import React from 'react';
-import { Game, GameProps, GameState } from './Game';
-import General from '../general/General';
-import Line from '../line/Line';
+import { Game, GameProps, GameState } from '../Game';
+import General from '../../general/General';
+import {Line} from '../../components/Line';
 
 interface NearAndFarResults {
 	map: number;
@@ -108,7 +108,7 @@ class NearAndFar extends Game {
 			<>
 				<Line {...this.shortCategory(this.language.results.map, resMap)} />
 				<Line {...this.shortCategory(this.language.results.town, resTown)} />
-				<Line {...this.shortCategory(this.language.results.addCamps, resAddCamps, false, this.state.opts.randCamps)} />
+				<Line {...this.shortCategory(this.language.results.addCamps, resAddCamps,  false, this.state.opts.randCamps)} />
 				<Line {...this.shortCategory(this.language.results.quests, resQuests)} />
 				<Line {...this.shortCategory(this.language.results.bosses, resBosses, false, visBosses)} />
 				{this.createAllButtons()}
@@ -121,6 +121,7 @@ class NearAndFar extends Game {
 	//#region === language
 
 	setLanguage() {
+		this.setCommonLanguage();
 		switch (this.props.language.name) {
 			case 'Polski':
 				this.language.categories = {
@@ -161,7 +162,7 @@ class NearAndFar extends Game {
 						'10: Mammoth Jungle',
 						'11: The Last Ruin'],
 				};
-				this.language.yesNo = ['TAK', 'NIE'];
+				//this.language.yesNo = ['TAK', 'NIE'];
 				this.language.specificArrays = {
 					dawnDusk: ['świt', 'zmierzch'],
 					bosses: ['Captain Shreya', 'Zag the Treasure Hunter', 'The Ivory Queen', ' The Red King'],
@@ -215,7 +216,7 @@ class NearAndFar extends Game {
 						'10: Mammoth Jungle',
 						'11: The Last Ruin'],
 				};
-				this.language.yesNo = ['YES', 'NO'];
+				//this.language.yesNo = ['YES', 'NO'];
 				this.language.specificArrays = {
 					dawnDusk: ['dawn', 'dusk'],
 					bosses: ['Captain Shreya', 'Zag the Treasure Hunter', 'The Ivory Queen', ' The Red King'],

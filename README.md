@@ -50,7 +50,7 @@ The application also makes use of:
 * Font Awesome, Copyright © 2016 by Dave Gandy<br />
 Author: Dave Gandy<br />
 License: SIL ()<br />
-Homepage: [fortawesome.github.com/Font-Awesome](fortawesome.github.com/Font-Awesome)
+Homepage: [fortawesome.github.com/Font-Awesome](fortawesome.github.com/Font-Awesome)<br />
 (Soon to be updated to the most current version offerred directly by Font Awesome website.)
 * Styling of the miniature flag images used for the language dropdown menu was adopted from flag-icon-css, a wonderful node module created by Panayiotis Lipiridis ([GitHub project page](https://github.com/lipis/flag-icon-css))
 

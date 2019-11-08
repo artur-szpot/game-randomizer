@@ -1,7 +1,7 @@
 import React from 'react';
 import { GeneratorLine, GeneratorLineProps, GeneratorLineType, GeneratorLineSelectValues } from './GeneratorLine';
 import { GeneratedElement, GeneratorTemplate } from './GeneratorTemplate';
-import Line from '../line/Line';
+import { Line, LineProps, CategoryProps, ComponentProps, LineTypes } from '../../components/Line';
 
 interface Props {
 }
@@ -207,7 +207,7 @@ class Generator extends React.Component<Props, State> {
          }
 
          let regex = /[A-Z][a-zA-Z0-9]*/.exec(input);
-         if (regex === null || regex[0] != input) {
+         if (regex === null || regex[0] !== input) {
             failMessage = 'App name must begin with a capital letter and contain only letters and numbers.';
             break;
          }
@@ -225,7 +225,7 @@ class Generator extends React.Component<Props, State> {
          let select: string = newState.components[i].select;
          let failMessage: string | undefined = undefined;
          while (true) {
-            if (allNames.indexOf(input) != -1) {
+            if (allNames.indexOf(input) !== -1) {
                failMessage = 'Components\' names must be unique.';
                break;
             }
@@ -233,7 +233,7 @@ class Generator extends React.Component<Props, State> {
                allNames.push(input);
             }
 
-            if (select == 'category') {
+            if (select === 'category') {
                if (emptyCategory) {
                   failMessage = 'The first component after a category may not be another category.';
                   break;
@@ -252,7 +252,7 @@ class Generator extends React.Component<Props, State> {
             }
 
             let regex = /[a-z][a-zA-Z0-9]*/.exec(input);
-            if (regex === null || regex[0] != input) {
+            if (regex === null || regex[0] !== input) {
                failMessage = 'Components\' names must begin with a small letter and contain only letters and numbers.';
                break;
             }
@@ -269,7 +269,7 @@ class Generator extends React.Component<Props, State> {
          let input: string = newState.results[i].input;
          let failMessage: string | undefined = undefined;
          while (true) {
-            if (allNames.indexOf(input) != -1) {
+            if (allNames.indexOf(input) !== -1) {
                failMessage = 'Results\' names must be unique.';
                break;
             }
@@ -283,7 +283,7 @@ class Generator extends React.Component<Props, State> {
             }
 
             let regex = /[a-z][a-zA-Z0-9]*/.exec(input);
-            if (regex === null || regex[0] != input) {
+            if (regex === null || regex[0] !== input) {
                failMessage = 'Results\' names must begin with a small letter and contain only letters and numbers.';
                break;
             }
@@ -339,16 +339,16 @@ class Generator extends React.Component<Props, State> {
 
       return (
          <>
-            <Line lineType='Category' text='General' visible={true} />
+            <Line {...this.shortCategory('General')} />
             <GeneratorLine {...this.state.appName} />
-            <Line lineType='Category' text='Components' visible={true} />
+            <Line {...this.shortCategory('Components')} />
             {components}
             <div className='row no-gutters justify-content-center'>
                <div className='col-xs-10 col-lg-10 col-xl-6 px-3'>
                   <button className='anyButton bigButton genBigButton blue' onClick={() => this.add(GeneratorLineType.COMPONENT)}>Add component</button>
                </div>
             </div>
-            <Line lineType='Category' text='Results' subtext={this.state.resultsError} error={this.state.resultsError != ''} visible={true} />
+            <Line {...this.shortCategory('Results', this.state.resultsError, this.state.resultsError !== '')} />
             {results}
             <div className='row no-gutters justify-content-center'>
                <div className='col-xs-10 col-lg-10 col-xl-6 px-3'>
@@ -367,6 +367,45 @@ class Generator extends React.Component<Props, State> {
             </div>
          </>
       );
+   }
+
+   shortCategory(text: string, subtext: string | string[] | null = null, error: boolean = false, list: boolean = false, visible: boolean = true): LineProps {
+      let actualSubtext: string[];
+      if (subtext === null) {
+         actualSubtext = [];
+      } else if (!Array.isArray(subtext)) {
+         actualSubtext = [subtext];
+      } else {
+         actualSubtext = subtext;
+      }
+      return this.createCategory(
+         text.split(' ')[0],
+         text,
+         actualSubtext,
+         error,
+         list,
+         visible
+      );
+   }
+
+   createCategory(name: string, text: string, subtext: string[], error: boolean, list: boolean, visible: boolean): LineProps {
+      let insideProps: CategoryProps = {
+         name: name,
+         text: text,
+         subtext: subtext,
+         error: error,
+         list: list,
+      };
+      return this.createSingleLine(visible, insideProps);
+   }
+
+   createSingleLine(visible: boolean, insideProps: ComponentProps): LineProps {
+      return {
+         visible: visible,
+         title: null,
+         lineType: LineTypes.CATEGORY,
+         insideProps: insideProps
+      };
    }
 }
 

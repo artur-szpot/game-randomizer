@@ -1,7 +1,7 @@
 import React from 'react';
-import { Game, GameProps, GameState } from './Game';
-import General from '../general/General';
-import Line from '../line/Line';
+import { Game, GameProps, GameState } from '../Game';
+import General from '../../general/General';
+import {Line} from '../../components/Line';
 
 interface X51stStateResults {
 	player1: number[];
@@ -99,7 +99,7 @@ class X51stState extends Game {
 				<Line {...this.shortCategory(this.language.results.player3, resPlayer3, true, this.state.opts.playerCount[2] >= 3)} />
 				<Line {...this.shortCategory(this.language.results.player4, resPlayer4, true, this.state.opts.playerCount[2] === 4)} />
 				<Line {...this.shortCategory(this.language.results.decks, resDecks, true)} />
-				<Line {...this.shortCategory(this.language.results.addons, resAddons, true, this.state.opts.randAddons)} />
+				<Line {...this.shortCategory(this.language.results.addons, resAddons, false, this.state.opts.randAddons)} />
 				{this.createAllButtons()}
 			</>
 		);
@@ -110,19 +110,16 @@ class X51stState extends Game {
 	//#region === language
 
 	setLanguage() {
+		this.setCommonLanguage();
 		switch (this.props.language.name) {
 			case 'Polski':
 				this.language.categories = {
 					factions: 'Fakcje',
 					decks: 'Talie',
 					addons: 'Dodatki'
-				}
+				};
 				this.language.opts = {
 					playerCount: 'Liczba graczy',
-					randomize: 'Losuj',
-					rerandomize: 'Losuj ponownie',
-					home: 'Powrót do menu',
-					options: 'Zmień opcje',
 					randFactions: 'Losuj fakcje',
 					randFactionsBigChoice: 'Dwie fakcje do wyboru',
 					randFactionsTexas: 'Fakcje: Texas i Hegemonia',
@@ -136,11 +133,8 @@ class X51stState extends Game {
 					randAddonsBorderTiles: 'Płytki graniczne',
 					randAddonsArena: 'Arena',
 				};
-				this.language.optArrays = {
-
-				}
-				this.language.yesNo = ['TAK', 'NIE'];
-				this.language.specifics = {}
+				this.language.optArrays = {};
+				this.language.specifics = {};
 				this.language.specificArrays = {
 					factions: [
 						'Federacja Apallachów',
@@ -165,7 +159,7 @@ class X51stState extends Game {
 						'Płytki graniczne',
 						'Arena'
 					],
-				}
+				};
 				this.language.results = {
 					player1: 'Gracz 1',
 					player2: 'Gracz 2',
@@ -182,13 +176,9 @@ class X51stState extends Game {
 					factions: 'Factions',
 					decks: 'Decks',
 					addons: 'Addons'
-				}
+				};
 				this.language.opts = {
 					playerCount: 'Player count',
-					randomize: 'Randomize',
-					rerandomize: 'Randomize again',
-					home: 'Home',
-					options: 'Back to options',
 					randFactions: 'Randomize factions',
 					randFactionsBigChoice: 'Two factions to choose from',
 					randFactionsTexas: 'Factions: Texas & Hegemony',
@@ -202,9 +192,8 @@ class X51stState extends Game {
 					randAddonsBorderTiles: 'Border Tiles',
 					randAddonsArena: 'Arena',
 				};
-				this.language.optArrays = {}
-				this.language.yesNo = ['YES', 'NO'];
-				this.language.specifics = {}
+				this.language.optArrays = {};
+				this.language.specifics = {};
 				this.language.specificArrays = {
 					factions: [
 						'The Appalachian Federation',
@@ -229,7 +218,7 @@ class X51stState extends Game {
 						'Border Tiles',
 						'Arena'
 					],
-				}
+				};
 				this.language.results = {
 					player1: 'Player 1',
 					player2: 'Player 2',
@@ -333,7 +322,7 @@ class X51stState extends Game {
 		if (this.state.opts.randAddonsArena && General.randomBool()) {
 			addons.push(3);
 		}
-		if (addons.length == 0) {
+		if (addons.length === 0) {
 			addons.push(0);
 		}
 

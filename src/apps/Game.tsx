@@ -1,18 +1,26 @@
 import React from 'react';
 import General from '../general/General';
-import Line from '../line/Line';
+import { Line, LineProps, LineTypes, ComponentProps, CategoryProps, BigButtonProps } from '../components/Line';
+import { TextProps } from '../components/text/Text';
+import { MultiStateProps } from '../components/multiState/MultiState';
+import { PlusMinusProps } from '../components/plusMinus/PlusMinus';
+import { YesNoProps } from '../components/yesNo/YesNo';
 
-interface StateLanguage {
+interface GameCommonLanguage {
+   opts: { [key: string]: string };
+   optArrays: { [key: string]: string[] };
+}
+
+interface GameStateLanguage {
    categories: { [key: string]: string };
    opts: { [key: string]: string };
    optArrays: { [key: string]: string[] };
    results: { [key: string]: string };
-   yesNo: string[];
-   specifics:{ [key: string]: string };
+   specifics: { [key: string]: string };
    specificArrays: { [key: string]: string[] };
 }
 
-export interface PropsLanguage {
+export interface GamePropsLanguage {
    name: string;
    abbr: string;
    rnd: string;
@@ -20,8 +28,8 @@ export interface PropsLanguage {
 }
 
 export interface GameProps {
-   language: PropsLanguage;
-   onClickHome(): void;
+   language: GamePropsLanguage;
+   onClickHome: () => void;
 }
 
 export interface GameState {
@@ -33,20 +41,24 @@ export class Game extends React.Component<GameProps, GameState> {
    //==================================================================================================================================
    //#region === initialization
 
-   constructor(props: GameProps) {
-      super(props);
-   }
+   // constructor(props: GameProps) {
+   //    super(props);
+   //    this.shortYesNo = this.shortYesNo.bind(this);
+   // }
 
    // language 
-   currentLanguage: PropsLanguage = this.props.language;
-   language: StateLanguage = { 
+   currentLanguage: GamePropsLanguage = this.props.language;
+   language: GameStateLanguage = {
       categories: {},
       opts: {},
       optArrays: {},
       results: {},
-      yesNo: [],
       specifics: {},
       specificArrays: {},
+   };
+   commonLanguage: GameCommonLanguage = {
+      opts: {},
+      optArrays: {},
    };
 
    // line constructor
@@ -174,9 +186,35 @@ export class Game extends React.Component<GameProps, GameState> {
    //==================================================================================================================================
    //#region === render
 
-   setLanguage() {
-      // overridden by every child
-      return;
+   setLanguage(): void { }
+
+   setCommonLanguage(): void {
+      switch (this.props.language.name) {
+         case 'Polski':
+            this.commonLanguage.opts = {
+               randomize: 'Losuj',
+               rerandomize: 'Losuj ponownie',
+               home: 'Powrót do menu',
+               options: 'Zmień opcje',
+            }
+            this.commonLanguage.optArrays = {
+               yesNo: ['TAK', 'NIE'],
+            }
+            break;
+
+         case 'English':
+         default:
+            this.commonLanguage.opts = {
+               randomize: 'Randomize',
+               rerandomize: 'Randomize again',
+               home: 'Home',
+               options: 'Back to options',
+            };
+            this.commonLanguage.optArrays = {
+               yesNo: ['YES', 'NO'],
+            }
+            break;
+      }
    }
 
    renderResults() {
@@ -210,30 +248,50 @@ export class Game extends React.Component<GameProps, GameState> {
    //==================================================================================================================================
    //#region === components
    //================================================================
+   //#region === general
+
+   createDoubleLine(title: string, visible: boolean, first: boolean, lineType: LineTypes, insideProps: ComponentProps): LineProps {
+      let titleProps: TextProps = {
+         name: '',
+         bold: true,
+         hideSeparator: false,
+         first: first,
+         text: title
+      };
+
+      return {
+         visible: visible,
+         title: titleProps,
+         lineType: lineType,
+         insideProps: insideProps
+      };
+   }
+
+   createSingleLine(visible: boolean, lineType: LineTypes, insideProps: ComponentProps): LineProps {
+      return {
+         visible: visible,
+         title: null,
+         lineType: lineType,
+         insideProps: insideProps
+      };
+   }
+
+   checkFirst(): boolean {
+      let first: boolean = this.first;
+      this.first = false;
+      return first;
+   }
+
+   //#endregion
+   //================================================================
    //#region === buttons
 
    createAllButtons() {
       return (
          <>
-            <Line
-               lineType='BigButton'
-               text={this.language.opts.rerandomize}
-               color='green'
-               onClick={this.functions.onClickRandomize}
-               first={true}
-            />
-            <Line
-               lineType='BigButton'
-               text={this.language.opts.options}
-               color='blue'
-               onClick={this.functions.onClickOptions}
-            />
-            <Line
-               lineType='BigButton'
-               text={this.language.opts.home}
-               color='red'
-               onClick={this.props.onClickHome}
-            />
+            <Line {...this.shortBigButton(this.commonLanguage.opts.rerandomize, 'green', this.functions.onClickRandomize, true, true)} />
+            <Line {...this.shortBigButton(this.commonLanguage.opts.options, 'blue', this.functions.onClickOptions)} />
+            <Line {...this.shortBigButton(this.commonLanguage.opts.home, 'red', this.props.onClickHome)} />
          </>
       );
    }
@@ -241,19 +299,8 @@ export class Game extends React.Component<GameProps, GameState> {
    createMainButtons() {
       return (
          <>
-            <Line
-               lineType='BigButton'
-               text={this.language.opts.randomize}
-               color='green'
-               onClick={this.functions.onClickRandomize}
-               first={true}
-            />
-            <Line
-               lineType='BigButton'
-               text={this.language.opts.home}
-               color='red'
-               onClick={this.props.onClickHome}
-            />
+            <Line {...this.shortBigButton(this.commonLanguage.opts.randomize, 'green', this.functions.onClickRandomize, true, true)} />
+            <Line {...this.shortBigButton(this.commonLanguage.opts.home, 'red', this.props.onClickHome)} />
          </>
       );
    }
@@ -261,47 +308,66 @@ export class Game extends React.Component<GameProps, GameState> {
    createResultOnlyButtons() {
       return (
          <>
-            <Line
-               lineType='BigButton'
-               text={this.language.opts.rerandomize}
-               color='green'
-               onClick={this.functions.onClickRandomize}
-               first={true}
-            />
-            <Line
-               lineType='BigButton'
-               text={this.language.opts.home}
-               color='red'
-               onClick={this.props.onClickHome}
-            />
+            <Line {...this.shortBigButton(this.commonLanguage.opts.rerandomize, 'green', this.functions.onClickRandomize, true, true)} />
+            <Line {...this.shortBigButton(this.commonLanguage.opts.home, 'red', this.props.onClickHome)} />
          </>
       );
+   }
+
+   shortBigButton(text: string, color: string, onClick: () => void, visible: boolean = true, first: boolean = false): LineProps {
+      return this.createBigButton(
+         text,
+         color,
+         onClick,
+         visible,
+         first
+      );
+   }
+
+   createBigButton(text: string, color: string, onClick: () => void, visible: boolean, first: boolean): LineProps {
+      let insideProps: BigButtonProps = {
+         name: '',
+         color: color,
+         onClick: onClick,
+         text: text,
+         first: first
+      };
+      return this.createSingleLine(visible, LineTypes.BIGBUTTON, insideProps);
    }
 
    //#endregion
    //================================================================
    //#region === category
 
-   shortCategory(text: string, subtext: string | string[] = '', list: boolean = false, visible: boolean = true) {
+   shortCategory(text: string, subtext: string | string[] | null = null, list: boolean = false, visible: boolean = true): LineProps {
       this.first = true;
+      let actualSubtext: string[];
+      if (subtext === null) {
+         actualSubtext = [];
+      } else if (!Array.isArray(subtext)) {
+         actualSubtext = [subtext];
+      } else {
+         actualSubtext = subtext;
+      }
       return this.createCategory(
+         text.split(' ')[0],
          text,
-         subtext,
+         actualSubtext,
+         false,
          list,
          visible
       );
    }
 
-   createCategory(text: string, subtext: string | string[], list: boolean, visible: boolean) {
-      return (
-         {
-            lineType: 'Category',
-            text: text,
-            subtext: subtext,
-            list: list,
-            visible: visible,
-         }
-      );
+   createCategory(name: string, text: string, subtext: string[], error: boolean, list: boolean, visible: boolean): LineProps {
+      let insideProps: CategoryProps = {
+         name: name,
+         text: text,
+         subtext: subtext,
+         error: error,
+         list: list,
+      };
+      return this.createSingleLine(visible, LineTypes.CATEGORY, insideProps);
    }
 
    //#endregion
@@ -309,8 +375,6 @@ export class Game extends React.Component<GameProps, GameState> {
    //#region === multiState
 
    shortMultiState(name: string, visible: boolean = true) {
-      let first = this.first;
-      this.first = false;
       return this.createMultiState(
          this.language.opts[name],
          name,
@@ -318,24 +382,19 @@ export class Game extends React.Component<GameProps, GameState> {
          this.language.optArrays[name + 's'],
          this.state.opts[name],
          visible,
-         first
+         this.checkFirst()
       );
    }
 
-   createMultiState(title: string, name: string, showList: boolean, states: string[], currentState: number, visible: boolean, first: boolean) {
-      return (
-         {
-            lineType: 'MultiState',
-            title: title,
-            name: name,
-            onClick: this.functions.onClickMulti,
-            showList: showList,
-            states: states,
-            currentState: currentState,
-            visible: visible,
-            first: first
-         }
-      );
+   createMultiState(title: string, name: string, showList: boolean, states: string[], currentState: number, visible: boolean, first: boolean): LineProps {
+      let insideProps: MultiStateProps = {
+         name: name,
+         onClick: this.functions.onClickMulti,
+         showList: showList,
+         states: states,
+         currentState: currentState,
+      };
+      return this.createDoubleLine(title, visible, first, LineTypes.MULTISTATE, insideProps);
    }
 
    //#endregion
@@ -343,29 +402,22 @@ export class Game extends React.Component<GameProps, GameState> {
    //#region === plusMinus
 
    shortPlusMinus(name: string, visible: boolean = true) {
-      let first = this.first;
-      this.first = false;
       return this.createPlusMinus(
          this.language.opts[name],
          name,
          this.state.opts[name],
          visible,
-         first
+         this.checkFirst()
       );
    }
 
-   createPlusMinus(title: string, name: string, minMaxCurr: number[], visible: boolean, first: boolean) {
-      return (
-         {
-            lineType: 'PlusMinus',
-            title: title,
-            name: name,
-            onClick: this.functions.onClickPlusMinus,
-            minMaxCurr: minMaxCurr,
-            visible: visible,
-            first: first
-         }
-      );
+   createPlusMinus(title: string, name: string, minMaxCurr: number[], visible: boolean, first: boolean): LineProps {
+      let insideProps: PlusMinusProps = {
+         name: name,
+         onClick: this.functions.onClickPlusMinus,
+         minMaxCurr: minMaxCurr,
+      };
+      return this.createDoubleLine(title, visible, first, LineTypes.PLUSMINUS, insideProps);
    }
 
    //#endregion
@@ -373,31 +425,24 @@ export class Game extends React.Component<GameProps, GameState> {
    //#region === yesNo
 
    shortYesNo(name: string, visible: boolean = true) {
-      let first = this.first;
-      this.first = false;
       return this.createYesNo(
          this.language.opts[name],
-         this.language.yesNo,
+         this.commonLanguage.optArrays.yesNo,
          name,
          this.state.opts[name],
          visible,
-         first
+         this.checkFirst()
       );
    }
 
-   createYesNo(title: string, opts: string[], name: string, yesNo: boolean, visible: boolean, first: boolean) {
-      return (
-         {
-            lineType: 'YesNo',
-            title: title,
-            opts: opts,
-            name: name,
-            onClick: this.functions.onClickYesNo,
-            yesNo: yesNo,
-            visible: visible,
-            first: first
-         }
-      );
+   createYesNo(title: string, display: string[], name: string, yes: boolean, visible: boolean, first: boolean): LineProps {
+      let insideProps: YesNoProps = {
+         name: name,
+         display: display,
+         onClick: this.functions.onClickYesNo,
+         yes: yes,
+      };
+      return this.createDoubleLine(title, visible, first, LineTypes.YESNO, insideProps);
    }
 
    //#endregion

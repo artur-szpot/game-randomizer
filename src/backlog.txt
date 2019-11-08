@@ -8,9 +8,6 @@ Expand the Generator:
    - buttons running away
    - too much space taken by error messages
    - superfluous tabbing
- - add proper generation for apps with no options (refresh by changing showResults, randomize produces state)
- - close inline braces when empty
- ! generate basic stuff or import it from somewhere (randomize/home/options/yesno)
 
 General big ideas:
  - cookies
@@ -18,3 +15,18 @@ General big ideas:
  - reorganizable front page
  - draggable elements (front page/generator)
  - animation upon rows collapsing/expanding
+ - changeable color styles
+
+Components:
+ - yesNo: change to the switcher style
+ - new: chance: set a chance of X: (slider?)
+   - rarely: 20%
+   - sometimes: 40%
+   - often: 60%
+   - very often: 80%
+   - allow 0 and 100 too for a complete replacement of yesNo (perhaps make yesNo a version of this with disabled middle steps?)
+
+Navbar:
+  - move the about section into a separate main-page component?
+  - create an actual logo
+  - make it implement languages

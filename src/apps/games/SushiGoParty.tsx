@@ -1,7 +1,7 @@
 import React from 'react';
-import { Game, GameProps, GameState } from './Game';
-import General from '../general/General';
-import Line from '../line/Line';
+import { Game, GameProps, GameState } from '../Game';
+import General from '../../general/General';
+import {Line} from '../../components/Line';
 
 interface SushiGoPartyResults {
 	nigiri: number;
@@ -44,11 +44,11 @@ class SushiGoParty extends Game {
 
 	renderOptions() { return this.renderResults(); }
 
-	renderResults() {		
+	renderResults() {
 		let resNigiri: string = this.language.specificArrays.nigiri[this.results.nigiri];
 		let resRolls: string = this.language.specificArrays.rolls[this.results.rolls];
-		let resAppetizers: string = this.results.appetizers.map(e=>this.language.specificArrays.appetizers[e]).join(', ');
-		let resSpecials: string =this.results.specials.map(e=>this.language.specificArrays.specials[e]).join(', ');
+		let resAppetizers: string = this.results.appetizers.map(e => this.language.specificArrays.appetizers[e]).join(', ');
+		let resSpecials: string = this.results.specials.map(e => this.language.specificArrays.specials[e]).join(', ');
 		let resDessert: string = this.language.specificArrays.desserts[this.results.dessert];
 
 		return (
@@ -68,17 +68,13 @@ class SushiGoParty extends Game {
 	//#region === language
 
 	setLanguage() {
+		this.setCommonLanguage();
 		switch (this.props.language.name) {
 			case 'Polski':
-				this.language.categories = {}
-				this.language.opts = {
-					rerandomize: 'Losuj ponownie',
-					home: 'Powrót do menu',
-
-				};
-				this.language.optArrays = {}
-				this.language.yesNo = ['TAK', 'NIE'];
-				this.language.specifics = {}
+				this.language.categories = {};
+				this.language.opts = {};
+				this.language.optArrays = {};
+				this.language.specifics = {};
 				this.language.specificArrays = {
 					nigiri: ['Nigiri'],
 					rolls: ['Futomaki', 'Uramaki', 'Temaki'],
@@ -97,14 +93,10 @@ class SushiGoParty extends Game {
 
 			case 'English':
 			default:
-				this.language.categories = {}
-				this.language.opts = {
-					rerandomize: 'Randomize again',
-					home: 'Home',
-				};
-				this.language.optArrays = {}
-				this.language.yesNo = ['YES', 'NO'];
-				this.language.specifics = {}
+				this.language.categories = {};
+				this.language.opts = {};
+				this.language.optArrays = {};
+				this.language.specifics = {};
 				this.language.specificArrays = {
 					nigiri: ['Nigiri'],
 					rolls: ['Maki', 'Uramaki', 'Temaki'],
@@ -156,7 +148,7 @@ class SushiGoParty extends Game {
 		this.setState(this.randomizeState(this.state));
 	}
 
-	randomizeState(currentState:GameState) {
+	randomizeState(currentState: GameState) {
 		let nigiri: number = 0;
 		let rolls: number = 0;
 		let appetizers: number[] = [];
