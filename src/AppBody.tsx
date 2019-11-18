@@ -7,6 +7,7 @@ import NearAndFar from './apps/games/NearAndFar';
 import X51stState from './apps/games/X51stState';
 import Generator from './apps/generator/Generator';
 import SushiGoParty from './apps/games/SushiGoParty';
+// import TestFresco from './apps/games/TestFresco';
 import './AppBody.css';
 
 /**
@@ -40,10 +41,6 @@ class AppBody extends React.Component<{}, AppBodyState> {
 			chosenGame: null,
 			chosenLanguage: this.languages.English,
 		};
-		// /** Create the dropdown list of available languages. */
-		// for (let i in this.languages) {
-		// 	this.onSubClickLanguage[this.languages[i].name] = () => this.handleLanguageSubClick(this.languages[i].name);
-		// }
 	}
 
 	/** React to the user setting a different language. */
@@ -110,6 +107,9 @@ class AppBody extends React.Component<{}, AppBodyState> {
 					break;
 				// case 'Fresco':
 				// 	appBody = <Fresco {...props} />;
+				// 	break;
+				// case 'TestFresco':
+				// 	appBody = <TestFresco {...props} />;
 				// 	break;
 				default:
 					break;

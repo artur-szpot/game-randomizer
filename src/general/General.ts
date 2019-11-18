@@ -24,13 +24,6 @@ class General {
         return retval;
     }
 
-    /** Checks whether applying a given change to the current value of the [min, max, current] array would cause it to be invalid. */
-    static validateMinMaxCurr(values: number[], change: number): boolean {
-        if (values[2] + change < values[0]) { return false; }
-        if (values[2] + change > values[1]) { return false; }
-        return true;
-    }
-
     /** Returns a random intiger from between min and max, inclusive on both ends. */
     static random(min: number, max: number): number {
         return min + Math.floor(Math.random() * (max - min + 1));

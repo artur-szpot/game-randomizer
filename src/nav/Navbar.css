@@ -26,44 +26,6 @@
 	transform: translateY(5%);
 }
 
-/* The 'about' and 'settings' buttons use Fontello for their icons. */
-@font-face {
-	font-family: 'fontello';
-	src: url('../font/fontello.eot?87788062');
-	src: url('../font/fontello.eot?87788062#iefix') format('embedded-opentype'),
-		  url('../font/fontello.woff2?87788062') format('woff2'),
-		  url('../font/fontello.woff?87788062') format('woff'),
-		  url('../font/fontello.ttf?87788062') format('truetype'),
-		  url('../font/fontello.svg?87788062#fontello') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-.icon {
-	font-family: "fontello";
-	font-style: normal;
-	font-weight: normal;
-	display: inline-block;
-	text-decoration: inherit;
-	width: 1em;
-	line-height: 1em;
-	text-align: center;
-	font-variant: normal;
-	text-transform: none;
-	font-size: 250%;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-shadow: 0.3px 0.3px 10px rgba(0, 0, 0, 0.9);
-	color: white;
-}
-.icon:hover { color: yellow; }
-.icon-cog:before { content: '\e800'; }
-.icon-info-circled:before { content: '\e801'; }
-.icon-copyright:before { content: '\f1f9'; }
-.icon-arrows-cw:before { content: '\e802'; }
-.icon-home:before { content: '\e803'; }
-.icon-ok-circled:before { content: '\e804'; }
-.icon-sliders:before { content: '\f1de'; }
-
 /* The 'about' and 'settings' buttons should not look like buttons, however. */
 .nobutton {
 	background-color: transparent;

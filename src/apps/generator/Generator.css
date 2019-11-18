@@ -2,42 +2,112 @@
 
 
 
-.genDiv {
+/* The lines and rows inside lines of the generator should stand apart and be the right width. */
+div.genLine {
 	margin-top: 5px;
-	margin-bottom: 5px;
 }
-
- .genDivWrong > div > input {
-	border: 2px solid #FF3300;
-	background-color: #330000;
-	color: white;
+div.genRow {
+	margin-top: 5px;
+	/* margin-bottom: 5px; */
+	width: 80%;
 }
-
- .genDivOK > div > input {
-	border: 2px solid #00FF00;
-	background-color: #003300;
-	color: white;
+div.genDetails {
+	width: 80%;
 }
-
-.genSelect {
+div.genDetailsMain {
+	width: 75%;
+	text-align: left;
+	float: left;
+	padding-left: 10%;
+}
+div.genDetailsButtons {
 	width: 20%;
+	text-align: left;
+	float: right;
+	margin-right: 20px;
+}
+
+/* Inputs should have their own labels, displayed properly below them. They should have the right widths too. */
+div.genInput {
+	margin-bottom: 0;
+	display: inline-block;
+	width: 100%;
+	margin-left: 5px;
+	vertical-align: top;
+}
+div.genInputMain { width: 55% }
+div.genInputHalf { width: 48% }
+div.genInputThird { width: 31% }
+div.genInputFourth { width: 24% }
+div.genInputIndex { width: 5% }
+div.genSelectMain { 
+	width: 35%; 
+	display: inline-block;
+}
+
+/* The select boxes should be styled like the whole app. */
+select.genSelect {
+	font-family: fontello, Arial, Helvetica, sans-serif;
+	width: 100%;
 	font-size: 20px;
 	padding: 3px 0 4px 0;
 	background-color: #121212;
 	border: 2px solid #666666;
 	color: white;
+	display: inline-block;
 }
 
-.genInput {
-	width: 45%;
-	margin-left: 5px;
+/* The input boxes should be styled like the whole app. */
+div.genInput > input {
+	width: 100%;
 	font-size: 20px;
 	padding: 3px;
-	background-color: #121212;
 	color: white;
+	text-align: center;
+}
+div.genInputMain > input { text-align: left; }
+
+/* The input boxes/selects should have a well-positioned and accordingly-styled label. */
+.genInput > div  {
+	position: relative;
+	margin-top: -0.4rem;
+	margin-bottom: 0.4rem;
+}
+.genInput > div > p {
+	color: white;
+	font-size: 80%;
+	padding: 0 5px;
+	background-color: #333;
+	border: 1px solid #666;
+	border-radius: 8px;
+	width: 90%;
+	margin: auto;
+	text-align: center;
 }
 
+/* When there's an error with an input contents, colors should change to reflect it. */
+.genInputWrong > input {
+	border-color: #FF3300;
+	background-color: #330000;
+}
+.genInputWrong > div > p {
+	background-color: #660000;
+	border-color: #FF3300;
+}
+/* And when they're OK, that should be visible as well. */
+ .genInputOK > input {
+	border-color: #00FF00;
+	background-color: #003300;
+}
+/* Also, sometimes input might be OK when empty. */
+.genInputEmpty > input {
+	border: 2px solid #666;
+	background-color: #121212;
+}
+
+/* The generated code should be displayed in a textarea, styled accordingly. */
 .genArea {
+	margin-top: 20px;
 	width: 100%;
 	font-size: 20px;
 	padding: 3px;
@@ -45,37 +115,43 @@
 	color: white;
 }
 
+/* Each line in the generator should have a set of buttons, styled accordingly. */
 .genButton {
-	width: 5%;
-	margin-left: 5px;
-	font-size: 20px;
-	border-radius: 5px;
-	padding: 3px 0;
-	font-weight: bold;
+	width: 30%;
+	margin-right: 3%;
+	border: 0;
 	background-color: #121212;
+	border-radius: 100px;
+	padding: 10px 0;
+	float: right;
 }
-
+.genButtonDisabled {
+	border: 2px solid #666666;
+	color: #666666;
+}
 .genButtonEnabled {
 	border: 2px solid #eeeeee;
 	color: white;
 	cursor: pointer;
 }
-
-.genButtonDisabled {
-	border: 2px solid #666666;
-	color: #666666;
-}
-
 .genButtonEnabled:hover {
-	background-color: #363636;
-	color: #eeeeee;
+	border-color: yellow;
+	color: black;
+	background-color: yellow;
+}
+.genButtonEnabled:hover > p {
+	color: yellow;
 }
 
-.genBigButton {
-	max-width: 80%;
+/* The generator should display a 'sorry, no' information at too small resolutions. */
+.genTooSmall {
+	text-align: left;
+	padding: 0 15px;
 }
-
-.genError {
-	color: #FF3300;
-	font-weight: bold;
+.genTooSmall > p > a {
+	color: #FFAA00;
+}
+.genTooSmall > p > a:hover {
+	color: yellow;
+	text-decoration: none;
 }

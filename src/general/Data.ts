@@ -14,7 +14,7 @@ export interface GameData {
 }
 
 export class Data {
-   static designers: { [key: string]: Owner } = {
+	static designers: { [key: string]: Owner } = {
 		RyanLaukat: {
 			name: 'Ryan Laukat',
 			url: 'http://www.ryanlaukat.com',
@@ -114,6 +114,14 @@ export class Data {
 		// 	image: 'https://cf.geekdo-images.com/thumb/img/kNVrOTCmpam2YmygS2y3KIovRYs=/fit-in/200x150/pic2592064.jpg',
 		// 	designers: [this.designers.WolfgangPanning, this.designers.MarcelSuesselbeck, this.designers.MarcoRuskowski],
 		// 	publishers: [this.publishers.QueenGames],
+		// 	bgg: 'https://boardgamegeek.com/boardgame/66188/fresco'
+		// },
+		// TestFresco: {
+		// 	name: 'TestFresco',
+		// 	titles: { default: 'TestFresco' },
+		// 	image: 'https://cf.geekdo-images.com/thumb/img/kNVrOTCmpam2YmygS2y3KIovRYs=/fit-in/200x150/pic2592064.jpg',
+		// 	designers: [Data.designers.WolfgangPanning, Data.designers.MarcelSuesselbeck, Data.designers.MarcoRuskowski],
+		// 	publishers: [Data.publishers.QueenGames],
 		// 	bgg: 'https://boardgamegeek.com/boardgame/66188/fresco'
 		// },
 		KingdomBuilder: {

@@ -1,16 +1,21 @@
 import React from 'react';
 import './YesNo.css';
-import {ComponentProps} from '../Line';
+import { ComponentProps } from '../Line';
+import { ComponentState, ComponentLanguage } from '../../apps/Game';
 
 /**
  * A boolean visualisation: a big YES or NO button.
  */
 
 export interface YesNoProps extends ComponentProps {
-	onClick(name: string): void;
+	onClick(name: string, index: number): void;
 	yes: boolean;
 	display: string[];
 }
+export interface YesNoState extends ComponentState {
+	yes: boolean
+}
+export interface YesNoLanguage extends ComponentLanguage { };
 
 export class YesNo extends React.Component<YesNoProps> {
 	render() {
@@ -24,7 +29,7 @@ export class YesNo extends React.Component<YesNoProps> {
 		return (
 			<button
 				className={classes}
-				onClick={() => this.props.onClick(this.props.name)}
+				onClick={() => this.props.onClick(this.props.name, this.props.index)}
 			>
 				{display}
 			</button>

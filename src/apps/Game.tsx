@@ -1,25 +1,51 @@
 import React from 'react';
 import General from '../general/General';
-import { Line, LineProps, LineTypes, ComponentProps, CategoryProps, BigButtonProps } from '../components/Line';
+import { LineProps, LineTypes, ComponentProps, CategoryProps } from '../components/Line';
 import { TextProps } from '../components/text/Text';
-import { MultiStateProps } from '../components/multiState/MultiState';
-import { PlusMinusProps } from '../components/plusMinus/PlusMinus';
-import { YesNoProps } from '../components/yesNo/YesNo';
+import { MultiStateProps, MultiStateState, MultiStateLanguage } from '../components/multiState/MultiState';
+import { PlusMinus, PlusMinusProps, PlusMinusState, PlusMinusLanguage, MinMaxCurrent } from '../components/plusMinus/PlusMinus';
+import { YesNoProps, YesNoState, YesNoLanguage } from '../components/yesNo/YesNo';
+import { NiceButtonProps, ButtonPanel, NiceButtonIcons, NiceButtonColors } from '../components/buttonPanel/ButtonPanel';
 
 interface GameCommonLanguage {
-   opts: { [key: string]: string };
-   optArrays: { [key: string]: string[] };
+   labels: { [key: string]: string[] };
 }
 
+export interface ComponentLanguage { title: string; };
+export interface ComponentState { behaviors?: ComponentBehavior[] }
+export enum ComponentBehaviors {
+   MINMAX_MIN,
+   MINMAX_MAX,
+   HIDELIST
+}
+export interface ComponentBehavior {
+   type: ComponentBehaviors,
+   target: string,
+   index: number
+}
+
+/** Internal state of the app. */
+export interface GameState {
+   showResults: boolean;
+   yesno: { [key: string]: YesNoState[] };
+   plusminus: { [key: string]: PlusMinusState[] };
+   multistate: { [key: string]: MultiStateState[] };
+}
 interface GameStateLanguage {
    categories: { [key: string]: string };
-   opts: { [key: string]: string };
-   optArrays: { [key: string]: string[] };
-   results: { [key: string]: string };
+   yesno: { [key: string]: YesNoLanguage[] };
+   plusminus: { [key: string]: PlusMinusLanguage[] };
+   multistate: { [key: string]: MultiStateLanguage[] };
+   results: { [key: string]: string[] };
    specifics: { [key: string]: string };
    specificArrays: { [key: string]: string[] };
 }
 
+/** Props passed on to the app from AppBody. */
+export interface GameProps {
+   language: GamePropsLanguage;
+   onClickHome: () => void;
+}
 export interface GamePropsLanguage {
    name: string;
    abbr: string;
@@ -27,38 +53,25 @@ export interface GamePropsLanguage {
    title: string;
 }
 
-export interface GameProps {
-   language: GamePropsLanguage;
-   onClickHome: () => void;
-}
 
-export interface GameState {
-   showResults: boolean;
-   opts: { [key: string]: any };
-}
 
 export class Game extends React.Component<GameProps, GameState> {
    //==================================================================================================================================
    //#region === initialization
 
-   // constructor(props: GameProps) {
-   //    super(props);
-   //    this.shortYesNo = this.shortYesNo.bind(this);
-   // }
-
    // language 
    currentLanguage: GamePropsLanguage = this.props.language;
    language: GameStateLanguage = {
       categories: {},
-      opts: {},
-      optArrays: {},
+      yesno: {},
+      plusminus: {},
+      multistate: {},
       results: {},
       specifics: {},
       specificArrays: {},
    };
    commonLanguage: GameCommonLanguage = {
-      opts: {},
-      optArrays: {},
+      labels: {},
    };
 
    // line constructor
@@ -67,13 +80,13 @@ export class Game extends React.Component<GameProps, GameState> {
    // functions for components
 
    functions = {
-      onClickYesNo: (name: string) => this.handleYesNoClick(name),
+      onClickYesNo: (name: string, index: number) => this.handleYesNoClick(name, index),
       onClickMulti: {
-         mainClick: (name: string, change: number) => this.handleMultiClick(name, change),
-         subClick: (name: string, index: number) => this.handleMultiSubClick(name, index),
-         listClick: (name: string) => this.handleMultiListClick(name),
+         mainClick: (name: string, index: number, change: number) => this.handleMultiClick(name, index, change),
+         subClick: (name: string, index: number, subIndex: number) => this.handleMultiSubClick(name, index, subIndex),
+         listClick: (name: string, index: number) => this.handleMultiListClick(name, index),
       },
-      onClickPlusMinus: (name: string, change: number) => this.handlePlusMinusClick(name, change),
+      onClickPlusMinus: (name: string, index: number, change: number) => this.handlePlusMinusClick(name, index, change),
 
       // big buttons
       onClickRandomize: () => this.randomize(),
@@ -87,99 +100,183 @@ export class Game extends React.Component<GameProps, GameState> {
 
    //#endregion
    //==================================================================================================================================
+   //#region === component value access
+
+   yesNoValue(name: string, index: number = 0): boolean {
+      if (!this.state.yesno.hasOwnProperty(name) || this.state.yesno[name].length <= index) {
+         alert(`yesNoValue called for non-existent entry ${name}[${index}]`);
+      }
+      return this.state.yesno[name][index].yes;
+   }
+
+   plusMinusValue(name: string, index: number = 0): MinMaxCurrent {
+      if (!this.state.plusminus.hasOwnProperty(name) || this.state.plusminus[name].length <= index) {
+         alert(`plusMinusValue called for non-existent entry ${name}[${index}]`);
+      }
+      return this.state.plusminus[name][index].minMaxCurr;
+   }
+
+   multiStateValue(name: string, index: number = 0): MultiStateState {
+      if (!this.state.multistate.hasOwnProperty(name) || this.state.multistate[name].length <= index) {
+         alert(`multiStateValue called for non-existent entry ${name}[${index}]`);
+      }
+      return this.state.multistate[name][index];
+   }
+
+   //#endregion
+   //==================================================================================================================================
    //#region === handlers
 
-   handleYesNoClick(varName: string) {
-      if (!this.state.opts.hasOwnProperty(varName)) {
+   handleYesNoClick(varName: string, index: number) {
+      if (!this.state.yesno.hasOwnProperty(varName)) {
          alert("handleYesNoClick called for unsupported varName: " + varName);
          return;
       }
       let newState: GameState = Object.assign({}, this.state);
-      newState.opts[varName] = !this.state.opts[varName];
-      newState = this.handleYesNoClickSpecial(newState, varName);
+      const yesNoState = this.state.yesno[varName][index];
+      newState.yesno[varName][index].yes = !yesNoState.yes;
+
+      if (yesNoState.behaviors !== undefined) {
+         for (let i = 0; i < yesNoState.behaviors.length; i++) {
+            let target: ComponentState | null = null;
+            switch (yesNoState.behaviors[i].type) {
+               case ComponentBehaviors.HIDELIST:
+                  target = newState.multistate[yesNoState.behaviors[i].target][yesNoState.behaviors[i].index];
+                  break;
+               default:
+                  alert(`unhandled behavior ascribed to YesNo: ${yesNoState.behaviors[i].type}`)
+                  break;
+            }
+            switch (yesNoState.behaviors[i].type) {
+               case ComponentBehaviors.HIDELIST:
+                  (target as MultiStateState).showList = false;
+                  break;
+               default:
+                  alert(`unhandled behavior ascribed to YesNo: ${yesNoState.behaviors[i].type}`)
+                  break;
+            }
+         }
+      }
+
       this.setState(newState);
    }
 
-   /** Handle special cases after normal processing of YesNoClick. */
-   handleYesNoClickSpecial(newState: GameState, varName: string) {
-      return newState;
-   }
-
-   handleMultiClick(varName: string, change: number) {
-      if (!this.state.opts.hasOwnProperty(varName)) {
+   handleMultiClick(varName: string, index: number, change: number) {
+      if (!this.state.multistate.hasOwnProperty(varName)) {
          alert("handleMultiClick called for unsupported varName: " + varName);
          return;
       }
       let newState = Object.assign({}, this.state);
-      newState.opts[varName] = General.validateNewChosen(this.state.opts[varName], change, this.language.optArrays[varName + 's'].length);
-      newState = this.handleMultiClickSpecial(newState, varName);
+      const multistateState = this.state.multistate[varName][index];
+      newState.multistate[varName][index].current = General.validateNewChosen(multistateState.current, change, this.language.multistate[varName][index].contents.length);
+      if (multistateState.behaviors !== undefined) {
+         for (let i = 0; i < multistateState.behaviors.length; i++) {
+            // let target: ComponentState | null = null;
+            switch (multistateState.behaviors[i].type) {
+               default:
+                  alert(`unhandled behavior ascribed to MultiState: ${multistateState.behaviors[i].type}`)
+                  break;
+            }
+            switch (multistateState.behaviors[i].type) {
+               default:
+                  alert(`unhandled behavior ascribed to MultiState: ${multistateState.behaviors[i].type}`)
+                  break;
+            }
+         }
+      }
       this.setState(newState);
    }
 
-   /** Handle special cases after normal processing of YesNoClick. */
-   handleMultiClickSpecial(newState: GameState, varName: string) {
-      return newState;
-   }
-
-   handleMultiSubClick(varName: string, value: number) {
-      if (!this.state.opts.hasOwnProperty(varName)
-         || !this.state.opts.hasOwnProperty(varName + 'List')) {
+   handleMultiSubClick(varName: string, index: number, subIndex: number) {
+      if (!this.state.multistate.hasOwnProperty(varName)) {
          alert("handleMultiSubClick called for unsupported varName: " + varName);
          return;
       }
       let newState = Object.assign({}, this.state);
-      newState.opts[varName] = value;
-      newState.opts[varName + 'List'] = false;
-      newState = this.handleMultiSubClickSpecial(newState, varName, value);
+      const multistateState = this.state.multistate[varName][index];
+      newState.multistate[varName][index] = { current: subIndex, showList: false };
+      if (multistateState.behaviors !== undefined) {
+         for (let i = 0; i < multistateState.behaviors.length; i++) {
+            // let target: ComponentState | null = null;
+            switch (multistateState.behaviors[i].type) {
+               default:
+                  alert(`unhandled behavior ascribed to MultiState: ${multistateState.behaviors[i].type}`)
+                  break;
+            }
+            switch (multistateState.behaviors[i].type) {
+               default:
+                  alert(`unhandled behavior ascribed to MultiState: ${multistateState.behaviors[i].type}`)
+                  break;
+            }
+         }
+      }
       this.setState(newState);
    }
 
-   /** Handle special cases after normal processing of YesNoClick. */
-   handleMultiSubClickSpecial(newState: GameState, varName: string, value: number) {
-      return newState;
-   }
-
-   handleMultiListClick(varName: string) {
-      if (!this.state.opts.hasOwnProperty(varName + 'List')) {
+   handleMultiListClick(varName: string, index: number) {
+      if (!this.state.multistate.hasOwnProperty(varName)) {
          alert("handleMultiListClick called for unsupported varName: " + varName);
          return;
       }
       let newState = Object.assign({}, this.state);
-      newState.opts[varName + 'List'] = !this.state.opts[varName + 'List'];
-      newState = this.handleMultiListClickSpecial(newState, varName);
+      const multistateState = this.state.multistate[varName][index];
+      newState.multistate[varName][index].showList = !multistateState.showList;
+      if (multistateState.behaviors !== undefined) {
+         for (let i = 0; i < multistateState.behaviors.length; i++) {
+            // let target: ComponentState | null = null;
+            switch (multistateState.behaviors[i].type) {
+               default:
+                  alert(`unhandled behavior ascribed to MultiState: ${multistateState.behaviors[i].type}`)
+                  break;
+            }
+            switch (multistateState.behaviors[i].type) {
+               default:
+                  alert(`unhandled behavior ascribed to MultiState: ${multistateState.behaviors[i].type}`)
+                  break;
+            }
+         }
+      }
       this.setState(newState);
    }
 
-   /** Handle special cases after normal processing of YesNoClick. */
-   handleMultiListClickSpecial(newState: GameState, varName: string) {
-      return newState;
-   }
-
-   handlePlusMinusClick(varName: string, change: number) {
-      if (!this.state.opts.hasOwnProperty(varName)) {
+   handlePlusMinusClick(varName: string, index: number, change: number) {
+      if (!this.state.plusminus.hasOwnProperty(varName)) {
          alert("handlePlusMinusClick called for unsupported varName: " + varName);
          return;
       }
       let newState = Object.assign({}, this.state);
-      if (General.validateMinMaxCurr(this.state.opts[varName], change)) {
-         let newValue = this.state.opts[varName].slice();
-         newValue[2] += change;
-         newState.opts[varName] = newValue;
-         let subVarName = varName.substring(0, varName.length - 3);
-         if (varName.endsWith('Min') && this.state.opts.hasOwnProperty(subVarName + 'Max')) {
-            newState.opts[subVarName + 'Max'][0] = newValue[2] + 1;
-         }
-         else if (varName.endsWith('Max') && this.state.opts.hasOwnProperty(subVarName + 'Min')) {
-            newState.opts[subVarName + 'Min'][1] = newValue[2] - 1;
+      const plusminusState = this.state.plusminus[varName][index];
+      if (PlusMinus.validateMinMaxCurr(plusminusState.minMaxCurr, change)) {
+         let newValue = { ...plusminusState.minMaxCurr };
+         newValue.current += change;
+         newState.plusminus[varName][index].minMaxCurr = newValue;
+         if (plusminusState.behaviors !== undefined) {
+            for (let i = 0; i < plusminusState.behaviors.length; i++) {
+               let target: ComponentState | null = null;
+               switch (plusminusState.behaviors[i].type) {
+                  case ComponentBehaviors.MINMAX_MIN:
+                  case ComponentBehaviors.MINMAX_MAX:
+                     target = newState.plusminus[plusminusState.behaviors[i].target][plusminusState.behaviors[i].index];
+                     break;
+                  default:
+                     alert(`unhandled behavior ascribed to PlusMinus: ${plusminusState.behaviors[i].type}`)
+                     break;
+               }
+               switch (plusminusState.behaviors[i].type) {
+                  case ComponentBehaviors.MINMAX_MIN:
+                     (target as PlusMinusState).minMaxCurr.min = newValue.current + 1;
+                     break;
+                  case ComponentBehaviors.MINMAX_MAX:
+                     (target as PlusMinusState).minMaxCurr.max = newValue.current - 1;
+                     break;
+                  default:
+                     alert(`unhandled behavior ascribed to PlusMinus: ${plusminusState.behaviors[i].type}`)
+                     break;
+               }
+            }
          }
       } else { return; }
-      newState = this.handlePlusMinusClickSpecial(newState, varName, change);
       this.setState(newState);
-   }
-
-   /** Handle special cases after normal processing of YesNoClick. */
-   handlePlusMinusClickSpecial(newState: GameState, varName: string, change: number) {
-      return newState;
    }
 
    //#endregion
@@ -191,26 +288,22 @@ export class Game extends React.Component<GameProps, GameState> {
    setCommonLanguage(): void {
       switch (this.props.language.name) {
          case 'Polski':
-            this.commonLanguage.opts = {
-               randomize: 'Losuj',
-               rerandomize: 'Losuj ponownie',
-               home: 'Powrót do menu',
-               options: 'Zmień opcje',
-            }
-            this.commonLanguage.optArrays = {
+            this.commonLanguage.labels = {
+               randomize: ['Losuj'],
+               rerandomize: ['Losuj ponownie'],
+               home: ['Powrót do menu'],
+               options: ['Zmień opcje'],
                yesNo: ['TAK', 'NIE'],
             }
             break;
 
          case 'English':
          default:
-            this.commonLanguage.opts = {
-               randomize: 'Randomize',
-               rerandomize: 'Randomize again',
-               home: 'Home',
-               options: 'Back to options',
-            };
-            this.commonLanguage.optArrays = {
+            this.commonLanguage.labels = {
+               randomize: ['Randomize'],
+               rerandomize: ['Randomize again'],
+               home: ['Home'],
+               options: ['Back to options'],
                yesNo: ['YES', 'NO'],
             }
             break;
@@ -253,6 +346,7 @@ export class Game extends React.Component<GameProps, GameState> {
    createDoubleLine(title: string, visible: boolean, first: boolean, lineType: LineTypes, insideProps: ComponentProps): LineProps {
       let titleProps: TextProps = {
          name: '',
+         index: -1,
          bold: true,
          hideSeparator: false,
          first: first,
@@ -286,60 +380,77 @@ export class Game extends React.Component<GameProps, GameState> {
    //================================================================
    //#region === buttons
 
-   createAllButtons() {
+   createResultsButtons() {
+      let buttons: NiceButtonProps[] = [];
+      buttons.push({
+         color: NiceButtonColors.GREEN,
+         icon: NiceButtonIcons.RERANDOMIZE,
+         label: this.commonLanguage.labels.rerandomize[0],
+         function: this.functions.onClickRandomize
+      });
+      buttons.push({
+         color: NiceButtonColors.BLUE,
+         icon: NiceButtonIcons.OPTIONS,
+         label: this.commonLanguage.labels.options[0],
+         function: this.functions.onClickOptions
+      });
+      buttons.push({
+         color: NiceButtonColors.RED,
+         icon: NiceButtonIcons.HOME,
+         label: this.commonLanguage.labels.home[0],
+         function: this.props.onClickHome
+      });
+
       return (
-         <>
-            <Line {...this.shortBigButton(this.commonLanguage.opts.rerandomize, 'green', this.functions.onClickRandomize, true, true)} />
-            <Line {...this.shortBigButton(this.commonLanguage.opts.options, 'blue', this.functions.onClickOptions)} />
-            <Line {...this.shortBigButton(this.commonLanguage.opts.home, 'red', this.props.onClickHome)} />
-         </>
+         <ButtonPanel buttons={buttons} />
       );
    }
 
-   createMainButtons() {
+   createOptionsButtons() {
+      let buttons: NiceButtonProps[] = [];
+      buttons.push({
+         color: NiceButtonColors.GREEN,
+         icon: NiceButtonIcons.RANDOMIZE,
+         label: this.commonLanguage.labels.randomize[0],
+         function: this.functions.onClickRandomize
+      });
+      buttons.push({
+         color: NiceButtonColors.RED,
+         icon: NiceButtonIcons.HOME,
+         label: this.commonLanguage.labels.home[0],
+         function: this.props.onClickHome
+      });
+
       return (
-         <>
-            <Line {...this.shortBigButton(this.commonLanguage.opts.randomize, 'green', this.functions.onClickRandomize, true, true)} />
-            <Line {...this.shortBigButton(this.commonLanguage.opts.home, 'red', this.props.onClickHome)} />
-         </>
+         <ButtonPanel buttons={buttons} />
       );
    }
 
-   createResultOnlyButtons() {
+   createResultsOnlyButtons() {
+      let buttons: NiceButtonProps[] = [];
+      buttons.push({
+         color: NiceButtonColors.GREEN,
+         icon: NiceButtonIcons.RERANDOMIZE,
+         label: this.commonLanguage.labels.rerandomize[0],
+         function: this.functions.onClickRandomize
+      });
+      buttons.push({
+         color: NiceButtonColors.RED,
+         icon: NiceButtonIcons.HOME,
+         label: this.commonLanguage.labels.home[0],
+         function: this.props.onClickHome
+      });
+
       return (
-         <>
-            <Line {...this.shortBigButton(this.commonLanguage.opts.rerandomize, 'green', this.functions.onClickRandomize, true, true)} />
-            <Line {...this.shortBigButton(this.commonLanguage.opts.home, 'red', this.props.onClickHome)} />
-         </>
+         <ButtonPanel buttons={buttons} />
       );
-   }
-
-   shortBigButton(text: string, color: string, onClick: () => void, visible: boolean = true, first: boolean = false): LineProps {
-      return this.createBigButton(
-         text,
-         color,
-         onClick,
-         visible,
-         first
-      );
-   }
-
-   createBigButton(text: string, color: string, onClick: () => void, visible: boolean, first: boolean): LineProps {
-      let insideProps: BigButtonProps = {
-         name: '',
-         color: color,
-         onClick: onClick,
-         text: text,
-         first: first
-      };
-      return this.createSingleLine(visible, LineTypes.BIGBUTTON, insideProps);
    }
 
    //#endregion
    //================================================================
    //#region === category
 
-   shortCategory(text: string, subtext: string | string[] | null = null, list: boolean = false, visible: boolean = true): LineProps {
+   shortCategory(text: string, subtext: string | string[] | null = null, visible: boolean = true, error: boolean = false): LineProps {
       this.first = true;
       let actualSubtext: string[];
       if (subtext === null) {
@@ -351,21 +462,42 @@ export class Game extends React.Component<GameProps, GameState> {
       }
       return this.createCategory(
          text.split(' ')[0],
+         0,
          text,
          actualSubtext,
+         error,
          false,
-         list,
          visible
       );
    }
 
-   createCategory(name: string, text: string, subtext: string[], error: boolean, list: boolean, visible: boolean): LineProps {
+   shortResult(text: string, subtext: string | string[], visible: boolean = true): LineProps {
+      this.first = true;
+      let actualSubtext: string[];
+      if (!Array.isArray(subtext)) {
+         actualSubtext = [subtext];
+      } else {
+         actualSubtext = subtext;
+      }
+      return this.createCategory(
+         text.split(' ')[0],
+         0,
+         text,
+         actualSubtext,
+         false,
+         true,
+         visible
+      );
+   }
+
+   createCategory(name: string, index: number, text: string, subtext: string[], error: boolean, result: boolean, visible: boolean): LineProps {
       let insideProps: CategoryProps = {
          name: name,
+         index: -1,
          text: text,
          subtext: subtext,
          error: error,
-         list: list,
+         result: result,
       };
       return this.createSingleLine(visible, LineTypes.CATEGORY, insideProps);
    }
@@ -374,21 +506,36 @@ export class Game extends React.Component<GameProps, GameState> {
    //================================================================
    //#region === multiState
 
+   shortMultiStateArray(name: string, visible: boolean = true) {
+      return this.state.multistate[name].map((e, index) => this.createMultiState(
+         this.language.multistate[name][index].title,
+         name,
+         index,
+         e.showList,
+         this.language.multistate[name][index].contents,
+         e.current,
+         visible,
+         this.checkFirst()
+      ))
+   }
+
    shortMultiState(name: string, visible: boolean = true) {
       return this.createMultiState(
-         this.language.opts[name],
+         this.language.multistate[name][0].title,
          name,
-         this.state.opts[name + 'List'],
-         this.language.optArrays[name + 's'],
-         this.state.opts[name],
+         0,
+         this.state.multistate[name][0].showList,
+         this.language.multistate[name][0].contents,
+         this.state.multistate[name][0].current,
          visible,
          this.checkFirst()
       );
    }
 
-   createMultiState(title: string, name: string, showList: boolean, states: string[], currentState: number, visible: boolean, first: boolean): LineProps {
+   createMultiState(title: string, name: string, index: number, showList: boolean, states: string[], currentState: number, visible: boolean, first: boolean): LineProps {
       let insideProps: MultiStateProps = {
          name: name,
+         index: index,
          onClick: this.functions.onClickMulti,
          showList: showList,
          states: states,
@@ -401,19 +548,32 @@ export class Game extends React.Component<GameProps, GameState> {
    //================================================================
    //#region === plusMinus
 
+   shortPlusMinusArray(name: string, visible: boolean = true) {
+      return this.state.plusminus[name].map((e, index) => this.createPlusMinus(
+         this.language.plusminus[name][index].title,
+         name,
+         index,
+         this.state.plusminus[name][index].minMaxCurr,
+         visible,
+         this.checkFirst()
+      ));
+   }
+
    shortPlusMinus(name: string, visible: boolean = true) {
       return this.createPlusMinus(
-         this.language.opts[name],
+         this.language.plusminus[name][0].title,
          name,
-         this.state.opts[name],
+         0,
+         this.state.plusminus[name][0].minMaxCurr,
          visible,
          this.checkFirst()
       );
    }
 
-   createPlusMinus(title: string, name: string, minMaxCurr: number[], visible: boolean, first: boolean): LineProps {
+   createPlusMinus(title: string, name: string, index: number, minMaxCurr: MinMaxCurrent, visible: boolean, first: boolean): LineProps {
       let insideProps: PlusMinusProps = {
          name: name,
+         index: index,
          onClick: this.functions.onClickPlusMinus,
          minMaxCurr: minMaxCurr,
       };
@@ -424,20 +584,34 @@ export class Game extends React.Component<GameProps, GameState> {
    //================================================================
    //#region === yesNo
 
-   shortYesNo(name: string, visible: boolean = true) {
-      return this.createYesNo(
-         this.language.opts[name],
-         this.commonLanguage.optArrays.yesNo,
+   shortYesNoArray(name: string, visible: boolean = true): LineProps[] {
+      return this.state.yesno[name].map((e, index) => this.createYesNo(
+         this.language.yesno[name][index].title,
+         this.commonLanguage.labels.yesNo,
          name,
-         this.state.opts[name],
+         index,
+         this.state.yesno[name][index].yes,
+         visible,
+         this.checkFirst()
+      ));
+   }
+
+   shortYesNo(name: string, visible: boolean = true): LineProps {
+      return this.createYesNo(
+         this.language.yesno[name][0].title,
+         this.commonLanguage.labels.yesNo,
+         name,
+         0,
+         this.state.yesno[name][0].yes,
          visible,
          this.checkFirst()
       );
    }
 
-   createYesNo(title: string, display: string[], name: string, yes: boolean, visible: boolean, first: boolean): LineProps {
+   createYesNo(title: string, display: string[], name: string, index: number, yes: boolean, visible: boolean, first: boolean): LineProps {
       let insideProps: YesNoProps = {
          name: name,
+         index: index,
          display: display,
          onClick: this.functions.onClickYesNo,
          yes: yes,

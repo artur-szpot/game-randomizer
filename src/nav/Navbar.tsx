@@ -57,7 +57,7 @@ export class Navbar extends React.Component<NavbarProps> {
          );
          copyrightButton = (
             <li className='nav-item my-auto ml-2'>
-               <button className='nobutton icon icon-copyright' type='button' data-toggle='collapse' data-target='#copyrightpanel'>
+               <button className='nobutton icon icon-large icon-copyright' type='button' data-toggle='collapse' data-target='#copyrightpanel'>
                </button>
             </li>
          );
@@ -65,7 +65,7 @@ export class Navbar extends React.Component<NavbarProps> {
          let designers: JSX.Element[] = [];
          let separator: string = '';
          for (let i = this.props.gameChosen.designers.length - 1; i > -1; i--) {
-            designers.push(<><a href={this.props.gameChosen.designers[i].url}>{this.props.gameChosen.designers[i].name}</a>{separator}</>);
+            designers.push(<><a href={this.props.gameChosen.designers[i].url} key={'designer-' + i}>{this.props.gameChosen.designers[i].name}</a>{separator}</>);
             separator = ', ';
          }
          designers.reverse();
@@ -74,7 +74,7 @@ export class Navbar extends React.Component<NavbarProps> {
          let publishers: JSX.Element[] = [];
          separator = '';
          for (let i = this.props.gameChosen.publishers.length - 1; i > -1; i--) {
-            publishers.push(<><a href={this.props.gameChosen.publishers[i].url} key={i}>{this.props.gameChosen.publishers[i].name}</a>{separator}</>);
+            publishers.push(<><a href={this.props.gameChosen.publishers[i].url} key={'publisher-' + i}>{this.props.gameChosen.publishers[i].name}</a>{separator}</>);
             separator = ', ';
          }
          publishers.reverse();
@@ -117,7 +117,7 @@ export class Navbar extends React.Component<NavbarProps> {
                   </li>
 
                   <li className='nav-item my-auto'>
-                     <button className='nobutton icon icon-info-circled' type='button' data-toggle='collapse' data-target='#infopanel'>
+                     <button className='nobutton icon icon-large icon-info-circled' type='button' data-toggle='collapse' data-target='#infopanel'>
                      </button>
                   </li>
 

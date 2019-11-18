@@ -4,7 +4,7 @@
 
 /* Text should be well visible. */
 .text { 
-	font-size: 20px; 
+	font-size: 1.2rem; 
 	margin: 0; 
 	font-family: Arial;
 }

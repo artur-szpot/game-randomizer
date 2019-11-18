@@ -9,7 +9,7 @@ export interface CellProps {
 	title: boolean;
 	center: boolean;
 	visible: boolean;
-	inside: JSX.Element|null;
+	inside: JSX.Element | null;
 }
 
 export class Cell extends React.Component<CellProps> {

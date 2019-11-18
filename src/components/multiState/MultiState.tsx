@@ -1,7 +1,8 @@
 import React from 'react';
 import { MultiStateSub, MultiStateSubProps } from './MultiStateSub';
 import './MultiState.css';
-import {ComponentProps} from '../Line';
+import { ComponentProps } from '../Line';
+import { ComponentState, ComponentLanguage } from '../../apps/Game';
 
 /**
  * The multi state button is actually a two-in-one.
@@ -16,11 +17,18 @@ export interface MultiStateProps extends ComponentProps {
 	onClick: MultiStateClickFunctions;
 	states: string[];
 }
+export interface MultiStateState extends ComponentState {
+   current: number;
+   showList: boolean;
+}
+export interface MultiStateLanguage extends ComponentLanguage { 
+	contents: string[];
+ };
 
 interface MultiStateClickFunctions {
-	subClick(name: string, index: number): void;
-	listClick(name: string): void;
-	mainClick(name: string, change: number): void;
+	subClick(name: string, index: number, subIndex: number): void;
+	listClick(name: string, index: number): void;
+	mainClick(name: string, index: number, change: number): void;
 }
 
 export class MultiState extends React.Component<MultiStateProps> {
@@ -32,19 +40,19 @@ export class MultiState extends React.Component<MultiStateProps> {
 		}
 	}
 
-	listSub(index: number): MultiStateSubProps {
+	listSub(subIndex: number): MultiStateSubProps {
 		return {
 			mini: false,
-			active: index === this.props.currentState,
-			onClick: () => this.props.onClick.subClick(this.props.name, index),
-			text: this.props.states[index],
+			active: subIndex === this.props.currentState,
+			onClick: () => this.props.onClick.subClick(this.props.name, this.props.index, subIndex),
+			text: this.props.states[subIndex],
 		}
 	}
 
 	render() {
 		/** Prepare a list of progress dots and list items based on props. */
-		let subButtons:JSX.Element[] = [];
-		let bigSubButtons:JSX.Element[] = [];
+		let subButtons: JSX.Element[] = [];
+		let bigSubButtons: JSX.Element[] = [];
 		for (let i = 0; i < this.props.states.length; i++) {
 			subButtons.push(<MultiStateSub key={this.props.name + i} {...this.miniSub(i)} />);
 			bigSubButtons.push(<MultiStateSub key={this.props.name + i} {...this.listSub(i)} />);
@@ -65,13 +73,13 @@ export class MultiState extends React.Component<MultiStateProps> {
 				<div className={mainClasses}>
 					<button
 						className='multiButton multiButtonPrev'
-						onClick={() => this.props.onClick.mainClick(this.props.name, -1)}
+						onClick={() => this.props.onClick.mainClick(this.props.name,this.props.index, -1)}
 					>
-						&lt;
+						<p className='icon icon-multi icon-left-open'></p>
 					</button>
 					<button
 						className='multiButton multiButtonMain'
-						onClick={() => this.props.onClick.listClick(this.props.name)}
+						onClick={() => this.props.onClick.listClick(this.props.name, this.props.index)}
 					>
 						<div className='multiButtonContainer'>
 							<p className='multiButtonTitle'>{this.props.states[this.props.currentState]}</p>
@@ -80,10 +88,10 @@ export class MultiState extends React.Component<MultiStateProps> {
 					</button>
 					<button
 						className='multiButton multiButtonNext'
-						onClick={() => this.props.onClick.mainClick(this.props.name, 1)}
+						onClick={() => this.props.onClick.mainClick(this.props.name, this.props.index, 1)}
 					>
-						&gt;
-						</button>
+						<p className='icon icon-multi icon-right-open'></p>
+					</button>
 				</div>
 				<div className={subListClasses}>
 					{bigSubButtons}

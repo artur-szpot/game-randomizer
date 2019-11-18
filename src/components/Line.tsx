@@ -13,20 +13,14 @@ import './Line.css';
 
 export interface ComponentProps {
    name: string;
-}
-
-export interface BigButtonProps extends ComponentProps {
-   color: string;
-   onClick: () => void;
-   text: string;
-   first: boolean;
+   index: number;
 }
 
 export interface CategoryProps extends ComponentProps {
    subtext: string[];
    text: string;
    error: boolean;
-   list: boolean;
+   result: boolean;
 }
 
 export enum LineTypes {
@@ -35,7 +29,6 @@ export enum LineTypes {
    PLUSMINUS,
    YESNO,
    CATEGORY,
-   BIGBUTTON
 }
 
 export interface LineProps {
@@ -49,7 +42,6 @@ export class Line extends React.Component<LineProps> {
    render() {
       switch (this.props.lineType) {
          case LineTypes.CATEGORY:
-         case LineTypes.BIGBUTTON:
             return this.renderSingle();
          default:
             return this.renderDouble();
@@ -105,18 +97,12 @@ export class Line extends React.Component<LineProps> {
       let divClasses: string = '';
 
       switch (this.props.lineType) {
-         case LineTypes.BIGBUTTON:
-            let bigButtonProps: BigButtonProps = this.props.insideProps as BigButtonProps;
-            let classes: string = 'anyButton bigButton ' + bigButtonProps.color;
-            content = <button className={classes} onClick={bigButtonProps.onClick}>{bigButtonProps.text}</button>;
-            if (bigButtonProps.first) { divClasses = ' mt-5'; }
-            break;
          case LineTypes.CATEGORY:
             let categoryProps: CategoryProps = this.props.insideProps as CategoryProps;
             if (!this.props.visible) { divClasses = ' hidden'; }
             let subText: JSX.Element | null = null;
             if (categoryProps.subtext) {
-               if (categoryProps.list) {
+               if (categoryProps.result) {
                   let items: JSX.Element[] = categoryProps.subtext.map((e, index) => <li key={categoryProps.name + '-' + index}>{e}</li>);
                   subText = <ul className='separatorList'>{items}</ul>;
                } else {
