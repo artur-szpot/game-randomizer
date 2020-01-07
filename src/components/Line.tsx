@@ -55,7 +55,7 @@ export class Line extends React.Component<LineProps> {
       let titleCellProps: CellProps = {
          title: true,
          center: false,
-         visible: this.props.visible,
+         visible: true, // this.props.visible,
          inside: <Text {...this.props.title!} />,
       }
 
@@ -81,16 +81,20 @@ export class Line extends React.Component<LineProps> {
       let contentCellProps: CellProps = {
          title: false,
          center: true,
-         visible: this.props.visible,
+         visible: true, // this.props.visible,
          inside: insideComponent,
       }
 
       let contentCell: JSX.Element = <Cell key={this.props.insideProps.name + '-content'} {...contentCellProps} />
 
+      let VERYTEMP = this.props.visible ? ' rowShown' : ' rowHidden'
+
       return (
-         <div className='row no-gutters justify-content-center'>
-            {titleCell}
-            {contentCell}
+         <div className={VERYTEMP}>
+            <div className='row no-gutters justify-content-center'>
+               {titleCell}
+               {contentCell}
+            </div>
          </div>
       )
    }

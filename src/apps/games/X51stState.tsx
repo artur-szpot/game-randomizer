@@ -1,5 +1,5 @@
 import React from 'react'
-import { Game, GameProps } from '../Game'
+import { Game, GameProps, ComponentBehaviors } from '../Game'
 import General from '../../general/General'
 import { Line } from '../../components/Line'
 
@@ -28,7 +28,14 @@ class X51stState extends Game {
 				randDeckNewEra: [{ yes: true }],
 				randDeckScavengers: [{ yes: true }],
 				randDeckAllies: [{ yes: true }],
-				randAddons: [{ yes: true }],
+				randAddons: [{
+					yes: true,
+					behaviors: [
+						{ type: ComponentBehaviors.HIDELIST, target: 'randAddonsCities', index: 0 },
+						{ type: ComponentBehaviors.HIDELIST, target: 'randAddonsBorderTiles', index: 0 },
+						{ type: ComponentBehaviors.HIDELIST, target: 'randAddonsArena', index: 0 }
+					]
+				}],
 			},
 			plusminus: {
 				playerCount: [{

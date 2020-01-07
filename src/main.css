@@ -49,23 +49,7 @@ button:focus {
 .bg2 { background-color: blue; }
 .bg3 { background-color: yellow; }
 
-/* Several icons are displayed using Fontello-provided Font Awesome. */
-/* @font-face {
-	font-family: 'fontello';
-	src: url('./font/fontello.eot?87788062');
-	src: url('./font/fontello.eot?87788062#iefix') format('embedded-opentype'),
-		  url('./font/fontello.woff2?87788062') format('woff2'),
-		  url('./font/fontello.woff?87788062') format('woff'),
-		  url('./font/fontello.ttf?87788062') format('truetype'),
-		  url('./font/fontello.svg?87788062#fontello') format('svg');
-	font-weight: normal;
-	font-style: normal;
-} */
-/* .icon {
-	font-family: "fontello";
-	font-style: normal;
-	font-weight: normal;
-} */
+/* Several icons are displayed using Font Awesome. */
 .icon-large {
 	display: inline-block;
 	text-decoration: inherit;
@@ -88,29 +72,33 @@ button:focus {
 	text-shadow: 0.3px 0.3px 10px rgba(0, 0, 0, 0.9);
 	margin: auto;
 }
-/* .icon-generator {
-	line-height: 1em;
-} */
 .icon-large:hover { color: yellow; }
 .icon-multi:hover { color: white; }
-/* .icon-cog:before { content: '\e800'; }
-.icon-info-circled:before { content: '\e801'; }
-.icon-copyright:before { content: '\f1f9'; }
-.icon-arrows-cw:before { content: '\e802'; }
-.icon-home:before { content: '\e803'; }
-.icon-ok-circled:before { content: '\e804'; }
-.icon-sliders:before { content: '\f1de'; }
-.icon-left-open:before { content: '\e805'; }
-.icon-right-open:before { content: '\e806'; }
-.icon-up-open:before { content: '\e807'; }
-.icon-down-open:before { content: '\e808'; }
-.icon-trash-empty:before { content: '\e809'; }
-.icon-cancel:before { content: '\e80a'; }
-.icon-resize-horizontal:before { content: '\e80b'; }
-.icon-cancel-circled:before { content: '\e80c'; }
-.icon-list:before { content: '\e80d'; }
-.icon-folder-open:after { content: '\e80e'; }
-.icon-check-empty:before { content: '\f096'; }
-.icon-toggle-on:before { content: '\f205'; }
-.icon-clone:before { content: '\f24d'; }
-.icon-hashtag:before { content: '\f292'; } */
+
+
+/* Row show/hide animations. */
+
+.rowHidden { 
+	animation-name: rowHiding;
+	animation-duration: 0.5s;
+	overflow: hidden;
+	max-height: 0;
+	transform: scaleY(0);
+ }
+ 
+ @keyframes rowHiding {
+	from {max-height: 100px; transform: scaleY(1);}
+	to {max-height: 0px; transform: scaleY(0);}
+ }
+
+ .rowShown { 
+	 animation-name: rowShowing;
+	 animation-duration: 0.5s;
+	 overflow: hidden;
+	 transform: scaleY(1);
+  }
+  
+  @keyframes rowShowing {
+	  from {max-height: 0px; transform: scaleY(0);}
+	  to {max-height: 100px; transform: scaleY(1);}
+  }
