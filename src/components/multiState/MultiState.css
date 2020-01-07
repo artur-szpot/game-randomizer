@@ -2,68 +2,54 @@
 
 
 
-/* The general styling for every part of the button. */
+/* The general styling for the button background. */
 .multiButton {
 	display: inline-block;
 	border: 4px solid #666666;
 	color: #666666;
 	background-color: #cccccc;
-	width: 15%;
-	padding: 0;
-	vertical-align: top;
-	font-size: 40px;
+	width: 80%;
+	font-size: 32px;
 	font-weight: bold;
 	cursor: pointer;
+	border-radius: 15px;
+	height: 100%;
 }
 
-/* The central big button doubles as a display and switches to list mode. */
-.multiButtonMain {
-	/* overwrite defaults */
+/* The central part doubles as a display (with the progress dots) and switches to list mode. */
+div.multiButtonMain {
 	padding: 2px 5px;
-	width: 50%;
 	font-size: 20px;
 	color: black;
-	height: 100%;
-	/* borders */
-	border-left: none;
-	border-right: none;
-	border-radius: 0;
+	display: inline-block;
+	width: 74%;
+	margin-top: 5px;
 }
-
-/* The 'next' and 'previous' buttons need to be properly rounded and not have a side border for a smooth overall appearance. */
-.multiButtonNext {
-	/* borders */
-	border-radius: 0 15px 15px 0;
-	border-left: none;
-	height: 100%;
-}
-.multiButtonPrev {
-	/* borders */
-	border-right: none;
-	border-radius: 15px 0 0 15px;
-	height: 100%;
-}
-
-/* The 'next' and 'previous' buttons should react to being moused over. */
-.multiButtonNext:hover { color: black; }
-.multiButtonPrev:hover { color: black; }
-
-/* The text inside the button needs to be positioned properly to look well with the 'progress dots' below. */
-.multiButtonTitle {
-	margin: 0;
+div.multiButtonMain > div {
+	line-height: 15px;
 	margin-bottom: 5px;
-	/* line height needs to be one smaller than font size to avoid the central part of the button getting bloated */
-	line-height: 19px;
+}
+div.multiButtonMain > p {
+	margin: 0;
+	line-height: 1.5rem;
 }
 
-/* The 'progress dots' should display in their proper place inside the main part of the button. */
-.multiButtonContainer {
+/* The 'next' and 'previous' buttons need to be properly positioned and highlight their contents on hover. */
+div.multiButtonSide {
+	display: inline-block;
+	height: 100%;
+	vertical-align: top;
+	width: 12%;
+}
+div.multiButtonSide > i {
 	position: relative;
-	margin: 0;
-	left: 50%;
-	transform: translateX(-50%);
-	/* line height needs to be one smaller than dot height to avoid the central part of the button getting bloated */
-	line-height: 9px;
+	top: 50%;
+	transform: translateY(-50%);
+	line-height: 1rem;
+	vertical-align: top;
+}
+div.multiButtonSide:hover > i {
+	color: black;
 }
 
 /* The 'progress dot' itself should be small but easily visible. Only one at a time will be active and differ in background color. */
@@ -105,8 +91,61 @@
 }
 .multiListItemChosen {
 	color: black;
-	background-color: #adc2eb;
+	background-color: #9cb4e4;
 }
 
-/* The div containing the multi needs this property to keep all its elements same height. */
-.multiCell { height: 100%; }
+/* Random chance should be styled differently than normal multiState. */
+/* COLORS SUBJECT TO CHANGE with proper tools. */
+.randomChanceBar {
+	width: 15%;
+	height: 10px;
+	margin: 0 -1px;
+	display: inline-block;
+	background-color: white;
+	border: 0;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+}
+
+.randomChanceBarSlot0active {
+	border-left: 2px solid black;
+	border-radius: 25px 0 0 25px;
+	/* background-color: red; */
+	background-color: white;
+}
+
+.randomChanceBarSlot0inactive {
+	border-left: 2px solid black;
+	border-radius: 25px 0 0 25px;
+	/* background-color: darkred; */
+	background-color: #333;
+}
+
+.randomChanceBarSlot1active { background-color: white; }
+.randomChanceBarSlot1inactive { background-color: #333; }
+.randomChanceBarSlot2active { background-color: white; }
+.randomChanceBarSlot2inactive { background-color: #333; }
+.randomChanceBarSlot3active { background-color: white; }
+.randomChanceBarSlot3inactive { background-color: #333; }
+
+/* .randomChanceBarSlot1active { background-color: orange; }
+.randomChanceBarSlot1inactive { background-color: rgb(163, 92, 4); }
+
+.randomChanceBarSlot2active { background-color: yellow; }
+.randomChanceBarSlot2inactive { background-color: rgb(119, 74, 35); }
+
+.randomChanceBarSlot3active { background-color: greenyellow; }
+.randomChanceBarSlot3inactive { background-color: rgb(14, 73, 14); } */
+
+.randomChanceBarSlot4active { 
+	border-right: 2px solid black;
+	border-radius: 0 25px 25px 0;
+	/* background-color: lightblue; */
+	background-color: white;
+ }
+.randomChanceBarSlot4inactive {
+	border-right: 2px solid black;
+	border-radius: 0 25px 25px 0;
+ 	/* background-color: rgb(12, 12, 134);  */
+	 background-color: #333;
+}

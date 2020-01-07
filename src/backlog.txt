@@ -1,32 +1,51 @@
-Expand the Generator:
- - add visual preview
- - change the GUI to improve UX:
-   - superfluous tabbing
+===========================================================================
+=                                                                         =
+=                              GENERATOR                                  =
+=                                                                         =
+===========================================================================
+ [HARD] add visual preview
+ [EASY] change the GUI to improve UX (get rid of superfluous tabbing)
+ option to enable/disable color generation
 
-General big ideas:
+===========================================================================
+=                                                                         =
+=                              BIG FUTURE                                 =
+=                                                                         =
+===========================================================================
  - cookies
  - presets
  - reorganizable front page
  - draggable elements (front page/generator)
  - animation upon rows collapsing/expanding
  - changeable color styles
+ - score keeper for most games 
 
-Components:
+===========================================================================
+=                                                                         =
+=                             COMPONENTS                                  =
+=                                                                         =
+===========================================================================
  - unify hover colors for all buttons in all componentns
  - yesNo: change to the switcher style
- - new: chance: set a chance of X: (slider?) special multistate?
-   - rarely: 20%
-   - sometimes: 40%
-   - often: 60%
-   - very often: 80%
-   - allow 0 and 100 too for a complete replacement of yesNo (perhaps make yesNo a version of this with disabled middle steps?)
 
-Navbar:
+===========================================================================
+=                                                                         =
+=                                NAVBAR                                   =
+=                                                                         =
+===========================================================================
   - move the about section into a separate main-page component?
   - create an actual logo
   - make it implement languages (about section)
 
-
-  move down after generate is clicked
-  icons for components in select boxes (for yes no too)
-  min max simplification: needed min, max, min.curr, max.curr
+===========================================================================
+=                                                                         =
+=                           UPCOMING GAMES                                =
+=                                                                         =
+===========================================================================
+  - Near Far expansions
+  - Gentes (the people)
+  - Sagrada (rules, tools, panes, expansions)
+  - Kingdom Builder (oooh)
+  - Cartographers
+  - Castles of Burgundy
+  - Dominion

@@ -4,16 +4,19 @@ import General from '../../general/General';
 import { Line } from '../../components/Line';
 
 interface NearAndFarResults {
-	map: number;
-	dawnDusk: number;
-	addCamps: number;
-	bosses: number[];
-	quests: (string | number)[];
+	map: number
+	dawnDusk: number
+	addCamps: number
+	bosses: number[]
+	quests: (string | number)[]
+	playerOrder: string[]
 }
 
 class NearAndFar extends Game {
 	//==================================================================================================================================
 	//#region === additional variables
+
+	playerColors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00']
 
 	questBase = [
 		[["B", "D", "H", "M"], ["A", "C", "E", "F", "G", "I", "J", "K", "L", "N", "O", "P"]],
@@ -74,7 +77,8 @@ class NearAndFar extends Game {
 		dawnDusk: 0,
 		addCamps: 0,
 		bosses: [],
-		quests: []
+		quests: [],
+		playerOrder: []
 	};
 
 	//#endregion
@@ -111,15 +115,16 @@ class NearAndFar extends Game {
 	}
 
 	renderResults() {
-		const resMap: string = this.language.multistate.map[0].contents[this.results.map - 1];
-		const resTown: string = this.language.specificArrays.dawnDusk[this.results.dawnDusk];
-		const resQuests: string = this.results.quests.join(', ');
-		const resBosses: string = General.listWithIndices(this.language.specificArrays.bosses, this.results.bosses);
-		const visBosses: boolean = this.results.map === 11;
-		const resAddCamps: string = String(this.results.addCamps);
+		const resMap: string = this.language.multistate.map[0].contents[this.results.map - 1]
+		const resTown: string = this.language.specificArrays.dawnDusk[this.results.dawnDusk]
+		const resQuests: string = this.results.quests.join(', ')
+		const resBosses: string = General.listWithIndices(this.language.specificArrays.bosses, this.results.bosses)
+		const visBosses: boolean = this.results.map === 11
+		const resAddCamps: string = String(this.results.addCamps)
 
 		return (
 			<>
+				<Line {...this.colorsResult(this.commonLanguage.playerOrder[0], this.results.playerOrder)} />
 				<Line {...this.shortResult(this.language.results.map[0], resMap)} />
 				<Line {...this.shortResult(this.language.results.town[0], resTown)} />
 				<Line {...this.shortResult(this.language.results.addCamps[0], resAddCamps, this.yesNoValue('randCamps'))} />
@@ -205,7 +210,7 @@ class NearAndFar extends Game {
 					yesno: {
 						longerGV: [{ title: 'Longer game variant' }],
 						randMap: [{ title: 'Randomize map?' }],
-						prioritizeNS: [{ title: 'Prtioritize named spaces?' }],
+						prioritizeNS: [{ title: 'Prioritize named spaces?' }],
 						randBosses: [{ title: 'Last Ruin: randomize bosses?' }],
 						randCamps: [{ title: 'Randomize additional camps?' }],
 					},
@@ -319,9 +324,10 @@ class NearAndFar extends Game {
 		this.results.bosses = bosses;
 		this.results.quests = quests;
 
-		// show 'em
-		const newState = Object.assign({}, this.state, { showResults: true });
-		this.setState(newState);
+		// randomize player order
+		this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
+
+		this.showResults()
 	}
 
 	//#endregion

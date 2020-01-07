@@ -17,7 +17,8 @@ export enum NiceButtonIcons {
    OPTIONS,
    HOME,
    ADD_ONE,
-   ADD_MANY
+   ADD_MANY,
+   GENERATE
 }
 
 export interface NiceButtonProps {
@@ -48,27 +49,28 @@ export class ButtonPanel extends React.Component<ButtonPanelProps> {
       }
       switch (props.icon) {
          case NiceButtonIcons.HOME:
-            icon = 'home';
+            icon = 'fas fa-home';
             break;
          case NiceButtonIcons.OPTIONS:
-            icon = 'sliders';
+            icon = 'fas fa-sliders-h';
             break;
          case NiceButtonIcons.RANDOMIZE:
-            icon = 'ok-circled';
-            break;
          case NiceButtonIcons.RERANDOMIZE:
-            icon = 'arrows-cw';
+            icon = 'fas fa-dice';
+            break;
+         case NiceButtonIcons.GENERATE:
+            icon = 'fas fa-play-circle';
             break;
          case NiceButtonIcons.ADD_ONE:
-            icon = 'check-empty';
+            icon = 'far fa-plus';
             break;
          case NiceButtonIcons.ADD_MANY:
-            icon = 'clone';
+            icon = 'fas fa-plus-square';
             break;
       }
       return <button type='button' key={props.label + '-button'} className={`nobutton nice-button nice-button-${color} nice-button-${width}`} onClick={props.function}>
-         <p key={props.label + '-icon'} className={'icon icon-button icon-' + icon}></p>
-         <p key={props.label + '-label'} className='nice-button-label'>{props.label}</p>
+         <i key={props.label + '-icon'} className={'icon-button ' + icon}></i>
+         <i key={props.label + '-label'} className='nice-button-label'>{props.label}</i>
       </button>
    }
    render() {
@@ -87,7 +89,9 @@ export class ButtonPanel extends React.Component<ButtonPanelProps> {
                   {buttons}
                </div>
                <div className='button-container-fake'>
-                  <button type='button' className='icon icon-large icon-right-open nobutton'></button>
+                  <button type='button' className='icon-large nobutton'>
+                     <i className='fas fa-copyright'></i>
+                  </button>
                </div>
             </div>
          </>

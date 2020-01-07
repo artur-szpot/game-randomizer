@@ -1,16 +1,16 @@
-import logo from '../img/gr-logo.png'; // temp
+import logo from '../img/gr-logo.png' // temp
 
 export interface Owner {
-	name: string;
-	url: string;
+	name: string
+	url: string
 }
 export interface GameData {
 	name: string;
-	titles: { [key: string]: string };
-	image: string;
-	designers: Owner[];
+	titles: { [key: string]: string }
+	image: string
+	designers: Owner[]
 	publishers: Owner[]
-	bgg: string;
+	bgg: string
 }
 
 export class Data {
@@ -50,6 +50,14 @@ export class Data {
 		MarcelSuesselbeck: {
 			name: 'Marcel Süßelbeck',
 			url: 'https://boardgamegeek.com/boardgamedesigner/34866/marcel-susselbeck'
+		},
+		PaoloMori: {
+			name: 'Paolo Mori',
+			url: 'http://www.inventoridigiochi.it/'
+		},
+		JordyAdan: {
+			name: 'Jordy Adan',
+			url: 'https://boardgamegeek.com/boardgamedesigner/109218/jordy-adan'
 		}
 	}
 	static publishers: { [key: string]: Owner } = {
@@ -72,6 +80,14 @@ export class Data {
 		FloodgateGames: {
 			name: 'Floodgate Games',
 			url: 'http://floodgategames.com'
+		},
+		CMON: {
+			name: 'CMON Limited',
+			url: 'http://cmon.com'
+		},
+		ThunderworksGames: {
+			name: 'Thunderworks Games',
+			url: 'http://www.thunderworksgames.com'
 		}
 	}
 	static games: { [key: string]: GameData } = {
@@ -107,23 +123,14 @@ export class Data {
 			publishers: [Data.publishers.FloodgateGames],
 			bgg: 'https://boardgamegeek.com/boardgame/199561/sagrada'
 		},
-		// Fresco: {
-		// 	name: 'Fresco',
-		// 	titles: { default: 'Fresco' },
-		// 	function: () => this.loadGame('Fresco'),
-		// 	image: 'https://cf.geekdo-images.com/thumb/img/kNVrOTCmpam2YmygS2y3KIovRYs=/fit-in/200x150/pic2592064.jpg',
-		// 	designers: [this.designers.WolfgangPanning, this.designers.MarcelSuesselbeck, this.designers.MarcoRuskowski],
-		// 	publishers: [this.publishers.QueenGames],
-		// 	bgg: 'https://boardgamegeek.com/boardgame/66188/fresco'
-		// },
-		// TestFresco: {
-		// 	name: 'TestFresco',
-		// 	titles: { default: 'TestFresco' },
-		// 	image: 'https://cf.geekdo-images.com/thumb/img/kNVrOTCmpam2YmygS2y3KIovRYs=/fit-in/200x150/pic2592064.jpg',
-		// 	designers: [Data.designers.WolfgangPanning, Data.designers.MarcelSuesselbeck, Data.designers.MarcoRuskowski],
-		// 	publishers: [Data.publishers.QueenGames],
-		// 	bgg: 'https://boardgamegeek.com/boardgame/66188/fresco'
-		// },
+		Fresco: {
+			name: 'Fresco',
+			titles: { default: 'Fresco' },
+			image: 'https://cf.geekdo-images.com/thumb/img/kNVrOTCmpam2YmygS2y3KIovRYs=/fit-in/200x150/pic2592064.jpg',
+			designers: [Data.designers.WolfgangPanning, Data.designers.MarcelSuesselbeck, Data.designers.MarcoRuskowski],
+			publishers: [Data.publishers.QueenGames],
+			bgg: 'https://boardgamegeek.com/boardgame/66188/fresco'
+		},
 		KingdomBuilder: {
 			name: 'KingdomBuilder',
 			titles: { default: 'Kingdom Builder', Polski: 'Królestwo w budowie' },
@@ -131,6 +138,22 @@ export class Data {
 			designers: [Data.designers.DonaldXVaccarino],
 			publishers: [Data.publishers.QueenGames],
 			bgg: 'https://boardgamegeek.com/boardgame/107529/kingdom-builder'
+		},
+		Ethnos: {
+			name: 'Ethnos',
+			titles: {default:'Ethnos'},
+			image: 'https://cf.geekdo-images.com/itemrep/img/NB3omzbpZyZ6DqA2RUvow_LAdbo=/fit-in/246x300/pic3304124.png',
+			designers: [Data.designers.PaoloMori],
+			publishers: [Data.publishers.CMON],
+			bgg: 'https://boardgamegeek.com/boardgame/206718/ethnos'
+		},
+		Cartographers: {
+			name: 'Cartographers',
+			titles: {default:'Cartographers', Polski: 'Kartografowie'},
+			image: 'https://cf.geekdo-images.com/imagepage/img/p2QZryZ6cWxuasFSDEUbaID-Kow=/fit-in/900x600/filters:no_upscale()/pic4397932.png',
+			designers: [Data.designers.JordyAdan],
+			publishers: [Data.publishers.ThunderworksGames],
+			bgg: 'https://boardgamegeek.com/boardgame/263918/cartographers-roll-player-tale'
 		},
 		Generator: {
 			name: 'Generator',

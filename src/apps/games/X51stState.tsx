@@ -1,26 +1,22 @@
-import React from 'react';
-import { Game, GameProps } from '../Game';
-import General from '../../general/General';
-import { Line } from '../../components/Line';
+import React from 'react'
+import { Game, GameProps } from '../Game'
+import General from '../../general/General'
+import { Line } from '../../components/Line'
 
 interface X51stStateResults {
-	players: number[][];
-	decks: number[];
-	addons: number[];
+	players: number[][]
+	playerOrder: number[]
+	hiddenPlayerOrder: boolean
+	decks: number[]
+	addons: number[]
 }
 
 class X51stState extends Game {
 	//==================================================================================================================================
-	//#region === additional variables
-
-	// n/a
-
-	//#endregion
-	//==================================================================================================================================
 	//#region === variable structure (generated)
 
 	constructor(props: GameProps) {
-		super(props);
+		super(props)
 		this.state = {
 			showResults: false,
 			yesno: {
@@ -33,23 +29,41 @@ class X51stState extends Game {
 				randDeckScavengers: [{ yes: true }],
 				randDeckAllies: [{ yes: true }],
 				randAddons: [{ yes: true }],
-				randAddonsCities: [{ yes: true }],
-				randAddonsBorderTiles: [{ yes: false }],
-				randAddonsArena: [{ yes: false }],
 			},
 			plusminus: {
-				playerCount: [{ minMaxCurr:  {min:2, max:4, current:2} }],
+				playerCount: [{
+					minMaxCurr: {
+						min: 2,
+						max: 4,
+						current: 2
+					}
+				}],
 			},
-			multistate: {},
-		};
-		this.setLanguage();
+			multistate: {
+				randAddonsCities: [{
+					current: 1,
+					showList: false
+				}],
+				randAddonsBorderTiles: [{
+					current: 1,
+					showList: false
+				}],
+				randAddonsArena: [{
+					current: 1,
+					showList: false
+				}],
+			},
+		}
+		this.setLanguage()
 	}
 
 	results: X51stStateResults = {
 		players: [],
+		playerOrder: [],
+		hiddenPlayerOrder: false,
 		decks: [],
 		addons: [],
-	};
+	}
 
 	//#endregion
 	//==================================================================================================================================
@@ -71,32 +85,40 @@ class X51stState extends Game {
 				<Line {...this.shortYesNo('randDeckAllies')} />
 				<Line {...this.shortCategory('addons')} />
 				<Line {...this.shortYesNo('randAddons')} />
-				<Line {...this.shortYesNo('randAddonsCities', this.yesNoValue('randAddons'))} />
-				<Line {...this.shortYesNo('randAddonsBorderTiles', this.yesNoValue('randAddons'))} />
-				<Line {...this.shortYesNo('randAddonsArena', this.yesNoValue('randAddons'))} />
+				<Line {...this.shortRandomChance('randAddonsCities', this.yesNoValue('randAddons'))} />
+				<Line {...this.shortRandomChance('randAddonsBorderTiles', this.yesNoValue('randAddons'))} />
+				<Line {...this.shortRandomChance('randAddonsArena', this.yesNoValue('randAddons'))} />
 				{this.createOptionsButtons()}
 			</>
-		);
+		)
 	}
 
 	renderResults() {
-		let resPlayers: string[][] = this.results.players.map(e => e.map(el => this.language.specificArrays.factions[el]));
-		let resDecks: string[] = this.results.decks.map(e => this.language.specificArrays.decks[e]);
-		let resAddons: string[] = this.results.addons.map(e => this.language.specificArrays.addons[e]);
+		let resPlayers: string[][] = this.results.players.map(e => e.map(el => this.language.specificArrays.factions[el]))
+		let resPlayerOrder: string[] = this.results.playerOrder.map(e => this.language.specificArrays.factions[e])
+		let resPlayerOrderHidden: string = this.results.hiddenPlayerOrder ? this.language.specifics.playerOrderHidden : ''
+		let resPlayerOrderUnhide: () => void = () => { 
+			this.results.hiddenPlayerOrder = false
+			let newState = Object.assign({}, this.state, { showResults: true })
+			this.setState(newState)
+		}
+		let resDecks: string[] = this.results.decks.map(e => this.language.specificArrays.decks[e])
+		let resAddons: string[] = this.results.addons.map(e => this.language.specificArrays.addons[e])
 
-		let playersAllLines: JSX.Element[] = [];
-		for (let i: number = 0; i < this.language.results.players.length; i++) {
-			playersAllLines.push(<Line key={'players-' + i} {...this.shortResult(this.language.results.players[i], resPlayers[i], i < this.plusMinusValue('playerCount').current)} />);
+		let playersAllLines: JSX.Element[] = []
+		for (let i = 0; i < this.language.results.players.length; i++) {
+			playersAllLines.push(<Line key={'players-' + i} {...this.shortResult(this.language.results.players[i], resPlayers[i], i < this.plusMinusValue('playerCount').current)} />)
 		}
 
 		return (
 			<>
+				<Line {...this.shortResult(this.commonLanguage.playerOrder[0], resPlayerOrder, true, resPlayerOrderHidden, resPlayerOrderUnhide)} />
 				{playersAllLines}
 				<Line {...this.shortResult(this.language.results.decks[0], resDecks)} />
 				<Line {...this.shortResult(this.language.results.addons[0], resAddons, this.yesNoValue('randAddons'))} />
 				{this.createResultsButtons()}
 			</>
-		);
+		)
 	}
 
 	//#endregion
@@ -104,7 +126,7 @@ class X51stState extends Game {
 	//#region === language
 
 	setLanguage() {
-		this.setCommonLanguage();
+		this.setCommonLanguage()
 		switch (this.props.language.name) {
 			case 'Polski':
 				this.language = {
@@ -123,15 +145,27 @@ class X51stState extends Game {
 						randDeckScavengers: [{ title: 'Talia: Zgliszcza' }],
 						randDeckAllies: [{ title: 'Talia: Sojusznicy' }],
 						randAddons: [{ title: 'Dodatki' }],
-						randAddonsCities: [{ title: 'Miasta' }],
-						randAddonsBorderTiles: [{ title: 'Płytki graniczne' }],
-						randAddonsArena: [{ title: 'Arena' }],
 					},
 					plusminus: {
 						playerCount: [{ title: 'Liczba graczy' }],
 					},
-					multistate: {},
-					specifics: {},
+					multistate: {
+						randAddonsCities: [{
+							title: 'Miasta',
+							contents: []
+						}],
+						randAddonsBorderTiles: [{
+							title: 'Płytki graniczne',
+							contents: []
+						}],
+						randAddonsArena: [{
+							title: 'Arena',
+							contents: []
+						}],
+					},
+					specifics: {
+						playerOrderHidden: 'Kliknij tutaj, aby wylosować pierwszeństwo po wyborze fakcji przez graczy.'
+					},
 					specificArrays: {
 						factions: [
 							'Federacja Apallachów',
@@ -158,15 +192,17 @@ class X51stState extends Game {
 						],
 					},
 					results: {
-						players: ['Gracz 1',
+						players: [
+							'Gracz 1',
 							'Gracz 2',
 							'Gracz 3',
-							'Gracz 4'],
+							'Gracz 4'
+						],
 						decks: ['Talie'],
 						addons: ['Dodatki'],
 					},
-				};
-				break;
+				}
+				break
 
 			case 'English':
 			default:
@@ -186,15 +222,27 @@ class X51stState extends Game {
 						randDeckScavengers: [{ title: 'Deck: Scavengers' }],
 						randDeckAllies: [{ title: 'Deck: Allies' }],
 						randAddons: [{ title: 'Addons' }],
-						randAddonsCities: [{ title: 'Cities' }],
-						randAddonsBorderTiles: [{ title: 'Border Tiles' }],
-						randAddonsArena: [{ title: 'Arena' }],
 					},
 					plusminus: {
 						playerCount: [{ title: 'Player count' }],
 					},
-					multistate: {},
-					specifics: {},
+					multistate: {
+						randAddonsCities: [{
+							title: 'Cities',
+							contents: []
+						}],
+						randAddonsBorderTiles: [{
+							title: 'Border Tiles',
+							contents: []
+						}],
+						randAddonsArena: [{
+							title: 'Arena',
+							contents: []
+						}],
+					},
+					specifics: {
+						playerOrderHidden: 'Click here to randomize player order once factions have been chosen.'
+					},
 					specificArrays: {
 						factions: [
 							'The Appalachian Federation',
@@ -221,17 +269,19 @@ class X51stState extends Game {
 						],
 					},
 					results: {
-						players: ['Player 1',
+						players: [
+							'Player 1',
 							'Player 2',
 							'Player 3',
-							'Player 4'],
+							'Player 4'
+						],
 						decks: ['Decks'],
 						addons: ['Addons'],
 					},
-				};
-				break;
+				}
+				break
 		}
-		this.currentLanguage = this.props.language;
+		this.currentLanguage = this.props.language
 	}
 
 	//#endregion
@@ -239,55 +289,68 @@ class X51stState extends Game {
 	//#region === randomizer
 
 	randomize() {
-		let players: number[][] = [];
-		let decks: number[] = [];
-		let addons: number[] = [];
+		let players: number[][] = []
+		let playerOrder: number[] = []
+		let hiddenPlayerOrder: boolean = false
+		let decks: number[] = []
+		let addons: number[] = []
 
 		// player factions
-		let choice = [];
+		let choice: number[] = []
 		for (let i = 0; i < 4; i++) {
-			choice.push(i);
+			choice.push(i)
 		}
 		if (this.yesNoValue('randFactionsTexas')) {
-			choice.push(4);
-			choice.push(5);
+			choice.push(4)
+			choice.push(5)
 		}
 		if (this.yesNoValue('randFactionsMississippi')) {
-			choice.push(6);
-			choice.push(7);
+			choice.push(6)
+			choice.push(7)
 		}
 		if (this.yesNoValue('randFactionsBigChoice') && this.isBigChoiceAllowed()) {
+			hiddenPlayerOrder = true
 			for (let i = 0; i < 4; i++) {
-				players[i] = General.randomFromArray(choice, 2);
+				players[i] = General.randomFromArray(choice, 2)
 			}
 		}
 		else {
-			let chosenPlayers = General.randomFromArray(choice, 4);
+			let chosenPlayers: number[] = General.randomFromArray(choice, 4)
 			for (let i = 0; i < 4; i++) {
-				players[i] = [chosenPlayers[i]];
+				players[i] = [chosenPlayers[i]]
 			}
 		}
 
+		// player order
+		choice = []
+		for (let i = 0; i < this.plusMinusValue('playerCount').current; i++) {
+			for (let j of players[i]) {
+				choice.push(j)
+			}
+		}
+		playerOrder = General.randomizeArray(choice)
+
 		//deck
-		choice = [];
-		if (this.yesNoValue('randDeckNewEra')) { choice.push(1); }
-		if (this.yesNoValue('randDeckWinter')) { choice.push(2); }
-		if (this.yesNoValue('randDeckScavengers')) { choice.push(3); }
-		if (this.yesNoValue('randDeckAllies')) { choice.push(4); }
-		decks = [0, General.random(1, choice.length)];
+		choice = []
+		if (this.yesNoValue('randDeckNewEra')) { choice.push(1) }
+		if (this.yesNoValue('randDeckWinter')) { choice.push(2) }
+		if (this.yesNoValue('randDeckScavengers')) { choice.push(3) }
+		if (this.yesNoValue('randDeckAllies')) { choice.push(4) }
+		decks = [0, General.random(1, choice.length)]
 
 		// addons
-		if (this.yesNoValue('randAddonsCities') && General.randomBool()) { addons.push(1); }
-		if (this.yesNoValue('randAddonsBorderTiles') && General.randomBool()) { addons.push(2); }
-		if (this.yesNoValue('randAddonsArena') && General.randomBool()) { addons.push(3); }
-		if (addons.length === 0) { addons.push(0); }
+		if (this.randomChanceEvaluate('randAddonsCities')) { addons.push(1) }
+		if (this.randomChanceEvaluate('randAddonsBorderTiles')) { addons.push(2) }
+		if (this.randomChanceEvaluate('randAddonsArena')) { addons.push(3) }
+		if (addons.length === 0) { addons.push(0) }
 
-		this.results.players = players;
-		this.results.decks = decks;
-		this.results.addons = addons;
+		this.results.players = players
+		this.results.playerOrder = playerOrder
+		this.results.hiddenPlayerOrder = hiddenPlayerOrder
+		this.results.decks = decks
+		this.results.addons = addons
 
-		let newState = Object.assign({}, this.state, { showResults: true });
-		this.setState(newState);
+		this.showResults()
 	}
 
 	//#endregion
@@ -295,14 +358,14 @@ class X51stState extends Game {
 	//#region === additional functions
 
 	isBigChoiceAllowed() {
-		let totalFactions = 4;
-		if (this.yesNoValue('randFactionsTexas')) { totalFactions += 2; }
-		if (this.yesNoValue('randFactionsMississippi')) { totalFactions += 2; }
-		return totalFactions >= this.plusMinusValue('playerCount').current * 2;
+		let totalFactions = 4
+		if (this.yesNoValue('randFactionsTexas')) { totalFactions += 2 }
+		if (this.yesNoValue('randFactionsMississippi')) { totalFactions += 2 }
+		return totalFactions >= this.plusMinusValue('playerCount').current * 2
 	}
 
 	//#endregion
 	//==================================================================================================================================
 }
 
-export default X51stState;
+export default X51stState

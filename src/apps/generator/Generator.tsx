@@ -1,25 +1,25 @@
-import React from 'react';
-import { GeneratorLine, GeneratorLineProps, GeneratorLineType, GeneratorLineSelectValues, GeneratorLineFields, GeneratorLineInput } from './GeneratorLine';
-import { GeneratedElement, GeneratorTemplate } from './GeneratorTemplate';
-import { Line, LineProps, CategoryProps, ComponentProps, LineTypes } from '../../components/Line';
-import { NiceButtonProps, NiceButtonColors, NiceButtonIcons, ButtonPanel } from '../../components/buttonPanel/ButtonPanel';
+import React from 'react'
+import { GeneratorLine, GeneratorLineProps, GeneratorLineType, GeneratorLineSelectValues, GeneratorLineFields, GeneratorLineInput } from './GeneratorLine'
+import { GeneratedElement, GeneratorTemplate } from './GeneratorTemplate'
+import { Line, LineProps, CategoryProps, ComponentProps, LineTypes } from '../../components/Line'
+import { NiceButtonProps, NiceButtonColors, NiceButtonIcons, ButtonPanel } from '../../components/buttonPanel/ButtonPanel'
 
 interface GeneratorProps {
-   onClickHome: () => void;
+   onClickHome: () => void
    // soon for language as well (etc.?)
 }
 interface State {
-   appName: GeneratorLineProps;
-   components: GeneratorLineProps[];
-   results: GeneratorLineProps[];
-   resultsError: string;
-   totalErrors: number;
-   generated: string;
+   appName: GeneratorLineProps
+   components: GeneratorLineProps[]
+   results: GeneratorLineProps[]
+   resultsError: string
+   totalErrors: number
+   generated: string
 }
 
 class Generator extends React.Component<GeneratorProps, State> {
 
-   emptyGeneratorLineInput(): GeneratorLineInput { return { value: '', error: '' }; }
+   emptyGeneratorLineInput(): GeneratorLineInput { return { value: '', error: '' } }
 
    emptyGeneratorLineProps(): GeneratorLineProps {
       return {
@@ -28,8 +28,9 @@ class Generator extends React.Component<GeneratorProps, State> {
          last: false,
          component: GeneratorLineType.COMPONENT,
          componentInstancesInput: this.emptyGeneratorLineInput(),
-         categorySubtext: this.emptyGeneratorLineInput(),
+         categorySubtext: GeneratorLineSelectValues.NO,
          yesNoInitial: GeneratorLineSelectValues.YES,
+         randomChanceInitial: GeneratorLineSelectValues.SOMETIMES,
          multiStateCurrent: this.emptyGeneratorLineInput(),
          multiStateTotal: this.emptyGeneratorLineInput(),
          plusMinusValues: [this.emptyGeneratorLineInput(), this.emptyGeneratorLineInput(), this.emptyGeneratorLineInput()],
@@ -47,11 +48,11 @@ class Generator extends React.Component<GeneratorProps, State> {
    //#region === initialization
 
    constructor(props: GeneratorProps) {
-      super(props);
-      const appName: GeneratorLineProps = this.emptyGeneratorLineProps();
-      appName.index = 0;
-      appName.component = GeneratorLineType.APPNAME;
-      appName.componentTypeSelect = GeneratorLineSelectValues.APPNAME;
+      super(props)
+      const appName: GeneratorLineProps = this.emptyGeneratorLineProps()
+      appName.index = 0
+      appName.component = GeneratorLineType.APPNAME
+      appName.componentTypeSelect = GeneratorLineSelectValues.APPNAME
       this.state = this.validateState({
          appName: appName,
          components: [],
@@ -59,52 +60,55 @@ class Generator extends React.Component<GeneratorProps, State> {
          resultsError: '',
          totalErrors: 0,
          generated: '',
-      });
+      })
    }
 
    language = {
       generate: 'Generate',
       add: 'Add new line'
-   }; //temp!
+   } //temp!
 
    //#endregion
    //==================================================================================================================================
    //#region === handlers
 
    handleSelect(component: GeneratorLineType, index: number, field: GeneratorLineFields, value: GeneratorLineSelectValues): void {
-      let newLines: GeneratorLineProps[];
+      let newLines: GeneratorLineProps[]
       if (component === GeneratorLineType.COMPONENT) {
-         newLines = [...this.state.components];
+         newLines = [...this.state.components]
       } else {
-         newLines = [...this.state.results];
+         newLines = [...this.state.results]
       }
       switch (field) {
          case GeneratorLineFields.TYPE:
-            newLines[index].componentTypeSelect = value;
-            break;
+            newLines[index].componentTypeSelect = value
+            break
+         case GeneratorLineFields.CATEGORY_SUBTEXT:
+            newLines[index].categorySubtext = value
+            break
          case GeneratorLineFields.YESNO_INITIAL:
-            newLines[index].yesNoInitial = value;
-            break;
+            newLines[index].yesNoInitial = value
+            break
          default:
-            alert('Attempted to call handleSelect for an unsupported field: ' + field);
-            break;
+            alert('Attempted to call handleSelect for an unsupported field: ' + field)
+            break
       }
-      let newState;
+      let newState
       if (component === GeneratorLineType.COMPONENT) {
-         newState = Object.assign({}, this.state, { components: newLines });
+         newState = Object.assign({}, this.state, { components: newLines })
       } else {
-         newState = Object.assign({}, this.state, { results: newLines });
+         newState = Object.assign({}, this.state, { results: newLines })
       }
-      this.setState(newState, this.validate);
+      this.setState(newState, this.validate)
    }
 
    handleInput(component: GeneratorLineType, index: number, field: GeneratorLineFields, value: string): void {
       if (component === GeneratorLineType.APPNAME) {
-         let newAppName = { ...this.state.appName };
-         newAppName.componentNameInput.value = value;
-         let newState = Object.assign({}, this.state, { appName: newAppName });
-         this.setState(newState, this.validate);
-         return;
+         let newAppName = { ...this.state.appName }
+         newAppName.componentNameInput.value = value
+         let newState = Object.assign({}, this.state, { appName: newAppName })
+         this.setState(newState, this.validate)
+         return
       }
 
       // validate input where necessary
@@ -120,66 +124,63 @@ class Generator extends React.Component<GeneratorProps, State> {
          case GeneratorLineFields.MULTISTATE_CURRENT:
          case GeneratorLineFields.MULTISTATE_TOTAL:
             if (value.length > 2 || isNaN(Number(value)) || Number(value) % 1 || Number(value) < 0) {
-               return;
+               return
             }
-            break;
+            break
          default:
-            break;
+            break
       }
-      let newLines: GeneratorLineProps[];
+      let newLines: GeneratorLineProps[]
       if (component === GeneratorLineType.COMPONENT) {
-         newLines = [...this.state.components];
+         newLines = [...this.state.components]
       } else {
-         newLines = [...this.state.results];
+         newLines = [...this.state.results]
       }
       switch (field) {
          case GeneratorLineFields.NAME:
-            newLines[index].componentNameInput.value = value;
-            break;
+            newLines[index].componentNameInput.value = value
+            break
          case GeneratorLineFields.INDEX:
-            newLines[index].componentInstancesInput.value = value;
-            break;
-         case GeneratorLineFields.CATEGORY_SUBTEXT:
-            newLines[index].categorySubtext.value = value;
-            break;
+            newLines[index].componentInstancesInput.value = value
+            break
          case GeneratorLineFields.PLUSMINUS_MIN:
-            newLines[index].plusMinusValues[0].value = value;
-            break;
+            newLines[index].plusMinusValues[0].value = value
+            break
          case GeneratorLineFields.PLUSMINUS_MAX:
-            newLines[index].plusMinusValues![1].value = value;
-            break;
+            newLines[index].plusMinusValues![1].value = value
+            break
          case GeneratorLineFields.PLUSMINUS_CURRENT:
-            newLines[index].plusMinusValues![2].value = value;
-            break;
+            newLines[index].plusMinusValues![2].value = value
+            break
          case GeneratorLineFields.MINMAX_MIN:
-            newLines[index].minMaxValues![0].value = value;
-            break;
+            newLines[index].minMaxValues![0].value = value
+            break
          case GeneratorLineFields.MINMAX_MAX:
-            newLines[index].minMaxValues![1].value = value;
-            break;
+            newLines[index].minMaxValues![1].value = value
+            break
          case GeneratorLineFields.MINMAX_MIN_CURRENT:
-            newLines[index].minMaxValues![2].value = value;
-            break;
+            newLines[index].minMaxValues![2].value = value
+            break
          case GeneratorLineFields.MINMAX_MAX_CURRENT:
-            newLines[index].minMaxValues![3].value = value;
-            break;
+            newLines[index].minMaxValues![3].value = value
+            break
          case GeneratorLineFields.MULTISTATE_CURRENT:
-            newLines[index].multiStateCurrent.value = value;
-            break;
+            newLines[index].multiStateCurrent.value = value
+            break
          case GeneratorLineFields.MULTISTATE_TOTAL:
-            newLines[index].multiStateTotal.value = value;
-            break;
+            newLines[index].multiStateTotal.value = value
+            break
          default:
-            alert('Attempted to call handleInput for an unsupported field: ' + field);
-            break;
+            alert('Attempted to call handleInput for an unsupported field: ' + field)
+            break
       }
-      let newState;
+      let newState
       if (component === GeneratorLineType.COMPONENT) {
-         newState = Object.assign({}, this.state, { components: newLines });
+         newState = Object.assign({}, this.state, { components: newLines })
       } else {
-         newState = Object.assign({}, this.state, { results: newLines });
+         newState = Object.assign({}, this.state, { results: newLines })
       }
-      this.setState(newState, this.validate);
+      this.setState(newState, this.validate)
    }
 
    //#endregion
@@ -187,94 +188,94 @@ class Generator extends React.Component<GeneratorProps, State> {
    //#region === line functions
 
    move(component: GeneratorLineType, index: number, direction: number): void {
-      let newLines: GeneratorLineProps[];
+      let newLines: GeneratorLineProps[]
       if (component === GeneratorLineType.COMPONENT) {
-         newLines = [...this.state.components];
+         newLines = [...this.state.components]
       } else {
-         newLines = [...this.state.results];
+         newLines = [...this.state.results]
       }
-      let tempLine = { ...newLines[index] };
-      newLines[index] = { ...newLines[index + direction] };
-      newLines[index].first = index === 0;
-      newLines[index].last = index === newLines.length - 1;
-      newLines[index].index = index;
-      newLines[index + direction] = tempLine;
-      newLines[index + direction].first = index + direction === 0;
-      newLines[index + direction].last = index + direction === newLines.length - 1;
-      newLines[index + direction].index = index + direction;
-      let newState;
+      let tempLine = { ...newLines[index] }
+      newLines[index] = { ...newLines[index + direction] }
+      newLines[index].first = index === 0
+      newLines[index].last = index === newLines.length - 1
+      newLines[index].index = index
+      newLines[index + direction] = tempLine
+      newLines[index + direction].first = index + direction === 0
+      newLines[index + direction].last = index + direction === newLines.length - 1
+      newLines[index + direction].index = index + direction
+      let newState
       if (component === GeneratorLineType.COMPONENT) {
-         newState = Object.assign({}, this.state, { components: newLines });
+         newState = Object.assign({}, this.state, { components: newLines })
       } else {
-         newState = Object.assign({}, this.state, { results: newLines });
+         newState = Object.assign({}, this.state, { results: newLines })
       }
-      this.setState(newState, this.validate);
+      this.setState(newState, this.validate)
    }
 
    delete(component: GeneratorLineType, index: number): void {
-      let newLines: GeneratorLineProps[];
+      let newLines: GeneratorLineProps[]
       if (component === GeneratorLineType.COMPONENT) {
-         newLines = [...this.state.components];
+         newLines = [...this.state.components]
       } else {
-         newLines = [...this.state.results];
+         newLines = [...this.state.results]
       }
-      newLines.splice(index, 1);
+      newLines.splice(index, 1)
       if (newLines.length > 0) {
          for (let i = index; i < newLines.length; i++) {
-            newLines[i].index = i;
+            newLines[i].index = i
          }
          if (index === 0) {
-            newLines[0].first = true;
+            newLines[0].first = true
          }
          if (index === newLines.length) {
-            newLines[newLines.length - 1].last = true;
+            newLines[newLines.length - 1].last = true
          }
       }
-      let newState;
+      let newState
       if (component === GeneratorLineType.COMPONENT) {
-         newState = Object.assign({}, this.state, { components: newLines });
+         newState = Object.assign({}, this.state, { components: newLines })
       } else {
-         newState = Object.assign({}, this.state, { results: newLines });
+         newState = Object.assign({}, this.state, { results: newLines })
       }
-      this.setState(newState, this.validate);
+      this.setState(newState, this.validate)
    }
 
    add(component: GeneratorLineType, several: boolean): void {
-      let count: number = 1;
+      let count: number = 1
 
       if (several) {
-         let howMany: string | null = prompt('Provide the number of fields to insert:');
-         if (howMany === null) { return; }
-         count = Number(howMany);
-         if (isNaN(count)) { return; }
+         let howMany: string | null = prompt('Provide the number of fields to insert:')
+         if (howMany === null) { return }
+         count = Number(howMany)
+         if (isNaN(count)) { return }
       }
 
-      let newLines: GeneratorLineProps[];
+      let newLines: GeneratorLineProps[]
       if (component === GeneratorLineType.COMPONENT) {
-         newLines = [...this.state.components];
+         newLines = [...this.state.components]
       } else {
-         newLines = [...this.state.results];
+         newLines = [...this.state.results]
       }
       if (newLines.length > 0) {
-         newLines[newLines.length - 1].last = false;
+         newLines[newLines.length - 1].last = false
       }
       for (let i = 0; i < count; i++) {
-         let newLine: GeneratorLineProps = this.emptyGeneratorLineProps();
-         newLine.index = newLines.length;
-         newLine.first = newLines.length === 0;
-         newLine.last = i === count - 1;
-         newLine.component = component;
-         newLine.componentTypeSelect = component === GeneratorLineType.COMPONENT ? GeneratorLineSelectValues.YESNO : GeneratorLineSelectValues.NUMBER;
-         newLines.push(newLine);
+         let newLine: GeneratorLineProps = this.emptyGeneratorLineProps()
+         newLine.index = newLines.length
+         newLine.first = newLines.length === 0
+         newLine.last = i === count - 1
+         newLine.component = component
+         newLine.componentTypeSelect = component === GeneratorLineType.COMPONENT ? GeneratorLineSelectValues.YESNO : GeneratorLineSelectValues.NUMBER
+         newLines.push(newLine)
 
       }
-      let newState;
+      let newState
       if (component === GeneratorLineType.COMPONENT) {
-         newState = Object.assign({}, this.state, { components: newLines });
+         newState = Object.assign({}, this.state, { components: newLines })
       } else {
-         newState = Object.assign({}, this.state, { results: newLines });
+         newState = Object.assign({}, this.state, { results: newLines })
       }
-      this.setState(newState, this.validate);
+      this.setState(newState, this.validate)
    }
 
    //#endregion
@@ -282,225 +283,225 @@ class Generator extends React.Component<GeneratorProps, State> {
    //#region === validation
 
    validate() {
-      this.setState(this.validateState(this.state));
+      this.setState(this.validateState(this.state))
    }
 
    countErrors(input: GeneratorLineProps): number {
-      let result: number = 0;
-      result += input.componentNameInput.error ? 1 : 0;
+      let result: number = 0
+      result += input.componentNameInput.error ? 1 : 0
       switch (input.componentTypeSelect) {
          case GeneratorLineSelectValues.MULTISTATE:
-            result += input.multiStateCurrent.error ? 1 : 0;
-            result += input.multiStateTotal.error ? 1 : 0;
-            break;
+            result += input.multiStateCurrent.error ? 1 : 0
+            result += input.multiStateTotal.error ? 1 : 0
+            break
          case GeneratorLineSelectValues.PLUSMINUS:
-            for (let j: number = 0; j < 3; j++) {
-               result += input.plusMinusValues[j].error ? 1 : 0;
+            for (let j = 0; j < 3; j++) {
+               result += input.plusMinusValues[j].error ? 1 : 0
             }
-            break;
+            break
          case GeneratorLineSelectValues.MINMAX:
-            for (let j: number = 0; j < 4; j++) {
-               result += input.minMaxValues[j].error ? 1 : 0;
+            for (let j = 0; j < 4; j++) {
+               result += input.minMaxValues[j].error ? 1 : 0
             }
-            break;
+            break
       }
-      return result;
+      return result
    }
 
    validateState(currentState: State): State {
-      let newState = { ...currentState };
-      newState = this.validateAppName(newState);
-      newState = this.validateComponents(newState);
-      newState = this.validateResults(newState);
-      newState.totalErrors = 0;
-      newState.totalErrors += this.countErrors(newState.appName);
+      let newState = { ...currentState }
+      newState = this.validateAppName(newState)
+      newState = this.validateComponents(newState)
+      newState = this.validateResults(newState)
+      newState.totalErrors = 0
+      newState.totalErrors += this.countErrors(newState.appName)
       for (let i = 0; i < newState.components.length; i++) {
-         newState.totalErrors += this.countErrors(newState.components[i]);
+         newState.totalErrors += this.countErrors(newState.components[i])
       }
       if (newState.results.length === 0) {
          newState.resultsError = 'The app has to return at least one result.'
-         newState.totalErrors++;
+         newState.totalErrors++
       } else {
-         newState.resultsError = '';
+         newState.resultsError = ''
       }
       for (let i = 0; i < newState.results.length; i++) {
-         newState.totalErrors += this.countErrors(newState.results[i]);
+         newState.totalErrors += this.countErrors(newState.results[i])
       }
-      return newState;
+      return newState
    }
 
    validateAppName(newState: State) {
-      let input: string = newState.appName.componentNameInput.value;
-      let failMessage: string = '';
+      let input: string = newState.appName.componentNameInput.value
+      let failMessage: string = ''
       while (true) {
          if (input.length < 3) {
-            failMessage = 'All names have to consist of at least 3 characters.';
-            break;
+            failMessage = 'All names have to consist of at least 3 characters.'
+            break
          }
 
-         let regex = /[A-Z][a-zA-Z0-9]*/.exec(input);
+         let regex = /[A-Z][a-zA-Z0-9]*/.exec(input)
          if (regex === null || regex[0] !== input) {
-            failMessage = 'App name must begin with a capital letter and contain only letters and numbers.';
-            break;
+            failMessage = 'App name must begin with a capital letter and contain only letters and numbers.'
+            break
          }
-         break;
+         break
       }
-      newState.appName.componentNameInput.error = failMessage;
-      return newState;
+      newState.appName.componentNameInput.error = failMessage
+      return newState
    }
 
    validateComponents(newState: State) {
-      let emptyCategory: boolean = false;
-      let allNames: string[] = [];
+      let emptyCategory: boolean = false
+      let allNames: string[] = []
       for (let i = 0; i < newState.components.length; i++) {
-         let input: string = newState.components[i].componentNameInput.value;
-         let select: GeneratorLineSelectValues = newState.components[i].componentTypeSelect;
-         let failMessage: string = '';
+         let input: string = newState.components[i].componentNameInput.value
+         let select: GeneratorLineSelectValues = newState.components[i].componentTypeSelect
+         let failMessage: string = ''
          // check the generals
          while (true) {
             if (allNames.indexOf(input) !== -1) {
-               failMessage = 'Components\' names must be unique.';
-               break;
+               failMessage = 'Components\' names must be unique.'
+               break
             }
             if (input) {
-               allNames.push(input);
+               allNames.push(input)
             }
 
             if (select === 'category') {
                if (emptyCategory) {
-                  failMessage = 'The first component after a category may not be another category.';
-                  break;
+                  failMessage = 'The first component after a category may not be another category.'
+                  break
                } else if (i === newState.components.length - 1) {
-                  failMessage = 'A category may not be empty.';
-                  break;
+                  failMessage = 'A category may not be empty.'
+                  break
                }
-               emptyCategory = true;
+               emptyCategory = true
             } else {
-               emptyCategory = false;
+               emptyCategory = false
             }
 
             if (input.length < 3) {
-               failMessage = 'All names have to consist of at least 3 characters.';
-               break;
+               failMessage = 'All names have to consist of at least 3 characters.'
+               break
             }
 
-            let regex = /[a-z][a-zA-Z0-9]*/.exec(input);
+            let regex = /[a-z][a-zA-Z0-9]*/.exec(input)
             if (regex === null || regex[0] !== input) {
-               failMessage = 'Components\' names must begin with a small letter and contain only letters and numbers.';
-               break;
+               failMessage = 'Components\' names must begin with a small letter and contain only letters and numbers.'
+               break
             }
-            break;
+            break
          }
-         newState.components[i].componentNameInput.error = failMessage;
+         newState.components[i].componentNameInput.error = failMessage
          // check the particulars
          switch (select) {
             case GeneratorLineSelectValues.MULTISTATE:
                if (Number(newState.components[i].multiStateCurrent.value) > Number(newState.components[i].multiStateTotal.value)) {
-                  newState.components[i].multiStateCurrent.error = 'current > total';
+                  newState.components[i].multiStateCurrent.error = 'current > total'
                } else if (Number(newState.components[i].multiStateCurrent.value) < 1) {
-                  newState.components[i].multiStateCurrent.error = 'current < 1';
+                  newState.components[i].multiStateCurrent.error = 'current < 1'
                } else {
-                  newState.components[i].multiStateCurrent.error = newState.components[i].multiStateCurrent.value ? '' : '`'; // error with no message if blank
+                  newState.components[i].multiStateCurrent.error = newState.components[i].multiStateCurrent.value ? '' : '`' // error with no message if blank
                }
-               newState.components[i].multiStateTotal.error = newState.components[i].multiStateTotal.value ? '' : '`'; // error with no message if blank
-               break;
-               case GeneratorLineSelectValues.PLUSMINUS:
-                  newState.components[i].plusMinusValues[0].error = '';
-                  newState.components[i].plusMinusValues[1].error = '';
-                  newState.components[i].plusMinusValues[2].error = '';
-                  const minMaxCurr: number[] = [
-                     Number(newState.components[i].plusMinusValues[0].value),
-                     Number(newState.components[i].plusMinusValues[1].value),
-                     Number(newState.components[i].plusMinusValues[2].value)
-                  ];
-                  // check logic
-                  if (minMaxCurr[0] >= minMaxCurr[1]) {
-                     newState.components[i].plusMinusValues[0].error = 'min >= max';
-                     newState.components[i].plusMinusValues[1].error = 'max <= min';
+               newState.components[i].multiStateTotal.error = newState.components[i].multiStateTotal.value ? '' : '`' // error with no message if blank
+               break
+            case GeneratorLineSelectValues.PLUSMINUS:
+               newState.components[i].plusMinusValues[0].error = ''
+               newState.components[i].plusMinusValues[1].error = ''
+               newState.components[i].plusMinusValues[2].error = ''
+               const minMaxCurr: number[] = [
+                  Number(newState.components[i].plusMinusValues[0].value),
+                  Number(newState.components[i].plusMinusValues[1].value),
+                  Number(newState.components[i].plusMinusValues[2].value)
+               ]
+               // check logic
+               if (minMaxCurr[0] >= minMaxCurr[1]) {
+                  newState.components[i].plusMinusValues[0].error = 'min >= max'
+                  newState.components[i].plusMinusValues[1].error = 'max <= min'
+               }
+               if (minMaxCurr[2] < minMaxCurr[0]) {
+                  newState.components[i].plusMinusValues[2].error = 'current < min'
+               } else if (minMaxCurr[2] > minMaxCurr[1]) {
+                  newState.components[i].plusMinusValues[2].error = 'current > max'
+               }
+               // check for blanks
+               for (let k = 0; k < 3; k++) {
+                  if (!newState.components[i].plusMinusValues[k].value) {
+                     newState.components[i].plusMinusValues[k].error = '`' // blank error has no message => ` will be replaced with normal label
                   }
-                  if (minMaxCurr[2] < minMaxCurr[0]) {
-                     newState.components[i].plusMinusValues[2].error = 'current < min';
-                  } else if (minMaxCurr[2] > minMaxCurr[1]) {
-                     newState.components[i].plusMinusValues[2].error = 'current > max';
-                  }
-                  // check for blanks
-                  for (let k: number = 0; k < 3; k++) {
-                     if (!newState.components[i].plusMinusValues[k].value) {
-                        newState.components[i].plusMinusValues[k].error = '`'; // blank error has no message => ` will be replaced with normal label
-                     }
-                  }
-                  break;
+               }
+               break
             case GeneratorLineSelectValues.MINMAX:
-               newState.components[i].minMaxValues[0].error = '';
-               newState.components[i].minMaxValues[1].error = '';
-               newState.components[i].minMaxValues[2].error = '';
-               newState.components[i].minMaxValues[3].error = '';
+               newState.components[i].minMaxValues[0].error = ''
+               newState.components[i].minMaxValues[1].error = ''
+               newState.components[i].minMaxValues[2].error = ''
+               newState.components[i].minMaxValues[3].error = ''
                const minMaxValues = {
                   min: Number(newState.components[i].minMaxValues[0].value),
                   max: Number(newState.components[i].minMaxValues[1].value),
                   currmin: Number(newState.components[i].minMaxValues[2].value),
                   currmax: Number(newState.components[i].minMaxValues[3].value)
-               };
+               }
                // check logic
                if (minMaxValues.min >= minMaxValues.max) {
-                  newState.components[i].minMaxValues[0].error = 'min >= max';
-                  newState.components[i].minMaxValues[1].error = 'max <= min';
+                  newState.components[i].minMaxValues[0].error = 'min >= max'
+                  newState.components[i].minMaxValues[1].error = 'max <= min'
                }
                if (minMaxValues.currmin >= minMaxValues.currmax) {
-                  newState.components[i].minMaxValues[2].error = 'current min >= current max';
-                  newState.components[i].minMaxValues[3].error = 'current max <= current min';
+                  newState.components[i].minMaxValues[2].error = 'current min >= current max'
+                  newState.components[i].minMaxValues[3].error = 'current max <= current min'
                }
                if (minMaxValues.currmin < minMaxValues.min) {
-                  newState.components[i].minMaxValues[2].error = 'current min < min';
+                  newState.components[i].minMaxValues[2].error = 'current min < min'
                } else if (minMaxValues.currmin >= minMaxValues.max) {
-                  newState.components[i].minMaxValues[2].error = 'current min >= max';
+                  newState.components[i].minMaxValues[2].error = 'current min >= max'
                }
                if (minMaxValues.currmax <= minMaxValues.min) {
-                  newState.components[i].minMaxValues[3].error = 'current max <= min';
+                  newState.components[i].minMaxValues[3].error = 'current max <= min'
                } else if (minMaxValues.currmax > minMaxValues.max) {
-                  newState.components[i].minMaxValues[3].error = 'current max > max';
+                  newState.components[i].minMaxValues[3].error = 'current max > max'
                }
                // check for blanks
-               for (let k: number = 0; k < 4; k++) {
+               for (let k = 0; k < 4; k++) {
                   if (!newState.components[i].minMaxValues[k].value) {
-                     newState.components[i].minMaxValues[k].error = '`'; // blank error has no message => ` will be replaced with normal label
+                     newState.components[i].minMaxValues[k].error = '`' // blank error has no message => ` will be replaced with normal label
                   }
                }
-               break;
+               break
          }
       }
-      return newState;
+      return newState
    }
 
    validateResults(newState: State) {
-      let allNames: string[] = [];
+      let allNames: string[] = []
       for (let i = 0; i < newState.results.length; i++) {
-         let input: string = newState.results[i].componentNameInput.value;
-         let failMessage: string = '';
+         let input: string = newState.results[i].componentNameInput.value
+         let failMessage: string = ''
          while (true) {
             if (allNames.indexOf(input) !== -1) {
-               failMessage = 'Results\' names must be unique.';
-               break;
+               failMessage = 'Results\' names must be unique.'
+               break
             }
             if (input) {
-               allNames.push(input);
+               allNames.push(input)
             }
 
             if (input.length < 3) {
-               failMessage = 'All names have to consist of at least 3 characters.';
-               break;
+               failMessage = 'All names have to consist of at least 3 characters.'
+               break
             }
 
-            let regex = /[a-z][a-zA-Z0-9]*/.exec(input);
+            let regex = /[a-z][a-zA-Z0-9]*/.exec(input)
             if (regex === null || regex[0] !== input) {
-               failMessage = 'Results\' names must begin with a small letter and contain only letters and numbers.';
-               break;
+               failMessage = 'Results\' names must begin with a small letter and contain only letters and numbers.'
+               break
             }
-            break;
+            break
          }
-         newState.results[i].componentNameInput.error = failMessage;
+         newState.results[i].componentNameInput.error = failMessage
       }
-      return newState;
+      return newState
    }
 
    //#endregion
@@ -509,55 +510,52 @@ class Generator extends React.Component<GeneratorProps, State> {
 
    generate() {
       if (this.state.totalErrors) {
-         return;
+         return
       }
-      let opts: GeneratedElement[] = [];
-      let results: GeneratedElement[] = [];
+      let opts: GeneratedElement[] = []
+      let results: GeneratedElement[] = []
       for (let i = 0; i < this.state.components.length; i++) {
-         const type = this.state.components[i].componentTypeSelect;
-         let initial: string[] = [];
-         let initial2: string[] = [];
+         const type = this.state.components[i].componentTypeSelect
+         let initial: string[] = []
          switch (type) {
             case GeneratorLineSelectValues.CATEGORY:
-               initial.push(this.state.components[i].categorySubtext.value);
-               break;
+               initial.push(this.state.components[i].categorySubtext)
+               break
             case GeneratorLineSelectValues.MULTISTATE:
-               initial.push(this.state.components[i].multiStateCurrent.value);
-               initial.push(this.state.components[i].multiStateTotal.value);
-               break;
+               initial.push(String(Number(this.state.components[i].multiStateCurrent.value) - 1))
+               initial.push(this.state.components[i].multiStateTotal.value)
+               break
             case GeneratorLineSelectValues.PLUSMINUS:
-               for (let j = 0; j < 3; j++) { initial.push(this.state.components[i].plusMinusValues[j].value); }
-               break;
+               for (let j = 0; j < 3; j++) { initial.push(this.state.components[i].plusMinusValues[j].value) }
+               break
             case GeneratorLineSelectValues.MINMAX:
-               initial.push(this.state.components[i].minMaxValues[0].value);
-               initial.push(String(Number(this.state.components[i].minMaxValues[3].value)-1));
-               initial.push(this.state.components[i].minMaxValues[2].value);
-               initial2.push(String(Number(this.state.components[i].minMaxValues[2].value)+1));
-               initial2.push(this.state.components[i].minMaxValues[1].value);
-               initial2.push(this.state.components[i].minMaxValues[3].value);
-               break;
+               initial.push(this.state.components[i].minMaxValues[0].value)
+               initial.push(String(Number(this.state.components[i].minMaxValues[3].value) - 1))
+               initial.push(this.state.components[i].minMaxValues[2].value)
+               initial.push(String(Number(this.state.components[i].minMaxValues[2].value) + 1))
+               initial.push(this.state.components[i].minMaxValues[1].value)
+               initial.push(this.state.components[i].minMaxValues[3].value)
+               break
             case GeneratorLineSelectValues.YESNO:
-               initial.push(this.state.components[i].yesNoInitial);
-               break;
+               initial.push(this.state.components[i].yesNoInitial)
+               break
          }
          opts.push({
             name: this.state.components[i].componentNameInput.value,
             type: type,
             initial: initial,
-            initial2: initial2,
-            instances: Math.max(1, Number(this.state.components[i].componentInstancesInput.value))
-         });
+            instances: type === GeneratorLineSelectValues.CATEGORY ? 1 : Math.max(1, Number(this.state.components[i].componentInstancesInput.value))
+         })
       }
       for (let i = 0; i < this.state.results.length; i++) {
          results.push({
             name: this.state.results[i].componentNameInput.value,
             type: this.state.results[i].componentTypeSelect,
             initial: [],
-            initial2: [],
             instances: Math.max(1, Number(this.state.results[i].componentInstancesInput.value))
-         });
+         })
       }
-      this.setState({ generated: GeneratorTemplate.generate(this.state.appName.componentNameInput.value, results, opts) });
+      this.setState({ generated: GeneratorTemplate.generate(this.state.appName.componentNameInput.value, results, opts) })
    }
 
    //#endregion
@@ -565,67 +563,67 @@ class Generator extends React.Component<GeneratorProps, State> {
    //#region === render
 
    render() {
-      let components = [];
+      let components = []
       for (let i = 0; i < this.state.components.length; i++) {
-         components.push(<GeneratorLine key={i} {...this.state.components[i]} />);
+         components.push(<GeneratorLine key={i} {...this.state.components[i]} />)
       }
-      let results = [];
+      let results = []
       for (let i = 0; i < this.state.results.length; i++) {
-         results.push(<GeneratorLine key={i} {...this.state.results[i]} />);
+         results.push(<GeneratorLine key={i} {...this.state.results[i]} />)
       }
 
-      let finalizeFunction: () => void = () => { };
-      let finalizeLabel: string = this.language.generate;
-      let finalizeColor: NiceButtonColors = NiceButtonColors.GREEN;
+      let finalizeFunction: () => void = () => { }
+      let finalizeLabel: string = this.language.generate
+      let finalizeColor: NiceButtonColors = NiceButtonColors.GREEN
       if (this.state.totalErrors) {
-         finalizeLabel = `${this.state.totalErrors} error(s)`;
-         finalizeColor = NiceButtonColors.RED;
+         finalizeLabel = `${this.state.totalErrors} error(s)`
+         finalizeColor = NiceButtonColors.RED
       } else {
-         finalizeFunction = () => this.generate();
+         finalizeFunction = () => this.generate()
       }
 
-      let generatedOutput: JSX.Element | null = null;
+      let generatedOutput: JSX.Element | null = null
       if (this.state.generated) {
-         generatedOutput = <textarea className='genArea' defaultValue={this.state.generated}></textarea>
+         generatedOutput = <textarea className='genArea' value={this.state.generated} autoFocus={true}></textarea>
       }
 
-      let buttons: NiceButtonProps[] = [];
+      let buttons: NiceButtonProps[] = []
       buttons.push({
          color: NiceButtonColors.GREEN,
          icon: NiceButtonIcons.ADD_ONE,
          label: 'component',
          function: () => this.add(GeneratorLineType.COMPONENT, false)
-      });
+      })
       buttons.push({
          color: NiceButtonColors.GREEN,
          icon: NiceButtonIcons.ADD_MANY,
          label: 'components',
          function: () => this.add(GeneratorLineType.COMPONENT, true)
-      });
+      })
       buttons.push({
          color: NiceButtonColors.BLUE,
          icon: NiceButtonIcons.ADD_ONE,
          label: 'result',
          function: () => this.add(GeneratorLineType.RESULT, false)
-      });
+      })
       buttons.push({
          color: NiceButtonColors.BLUE,
          icon: NiceButtonIcons.ADD_MANY,
          label: 'results',
          function: () => this.add(GeneratorLineType.RESULT, true)
-      });
+      })
       buttons.push({
          color: finalizeColor,
-         icon: NiceButtonIcons.RANDOMIZE,
+         icon: NiceButtonIcons.GENERATE,
          label: finalizeLabel,
          function: finalizeFunction
-      });
+      })
       buttons.push({
          color: NiceButtonColors.RED,
          icon: NiceButtonIcons.HOME,
          label: 'Home',
          function: this.props.onClickHome
-      });
+      })
 
       return (
          <>
@@ -648,11 +646,11 @@ class Generator extends React.Component<GeneratorProps, State> {
             <div className='d-block d-md-none genTooSmall'>
                <p>This page is optimized to only be used at certain screen width.
                   The author doubts that any device with a smaller screen would be suitable for the purposes of writing code and thus did not feel the need to spend time creating
-                  a fully responsive layout for it. Any comments to the contrary will be welcome at the&nbsp;
+                  a fully responsive layout for it. Any comments to the contrary will be welcome at the&nbsp
                    <a href="https://github.com/artur-szpot/game-randomizer">project's GitHub page</a>.</p>
             </div>
          </>
-      );
+      )
    }
 
    //#endregion
@@ -660,13 +658,13 @@ class Generator extends React.Component<GeneratorProps, State> {
    //#region === helper ported over from Game
 
    shortCategory(text: string, subtext: string | string[] | null = null, visible: boolean = true, error: boolean = false): LineProps {
-      let actualSubtext: string[];
+      let actualSubtext: string[]
       if (subtext === null) {
-         actualSubtext = [];
+         actualSubtext = []
       } else if (!Array.isArray(subtext)) {
-         actualSubtext = [subtext];
+         actualSubtext = [subtext]
       } else {
-         actualSubtext = subtext;
+         actualSubtext = subtext
       }
       return this.createCategory(
          text.split(' ')[0],
@@ -675,15 +673,15 @@ class Generator extends React.Component<GeneratorProps, State> {
          error,
          false,
          visible
-      );
+      )
    }
 
    shortResult(text: string, subtext: string | string[], visible: boolean = true): LineProps {
-      let actualSubtext: string[];
+      let actualSubtext: string[]
       if (!Array.isArray(subtext)) {
-         actualSubtext = [subtext];
+         actualSubtext = [subtext]
       } else {
-         actualSubtext = subtext;
+         actualSubtext = subtext
       }
       return this.createCategory(
          text.split(' ')[0],
@@ -692,7 +690,7 @@ class Generator extends React.Component<GeneratorProps, State> {
          false,
          true,
          visible
-      );
+      )
    }
 
    createCategory(name: string, text: string, subtext: string[], error: boolean, result: boolean, visible: boolean): LineProps {
@@ -703,8 +701,11 @@ class Generator extends React.Component<GeneratorProps, State> {
          subtext: subtext,
          error: error,
          result: result,
-      };
-      return this.createSingleLine(visible, insideProps);
+         colors: [],
+         hiddenMessage: '',
+         unhideFunction: () => null
+      }
+      return this.createSingleLine(visible, insideProps)
    }
 
    createSingleLine(visible: boolean, insideProps: ComponentProps): LineProps {
@@ -713,11 +714,11 @@ class Generator extends React.Component<GeneratorProps, State> {
          title: null,
          lineType: LineTypes.CATEGORY,
          insideProps: insideProps
-      };
+      }
    }
 
    //#endregion
    //==================================================================================================================================
 }
 
-export default Generator;
+export default Generator

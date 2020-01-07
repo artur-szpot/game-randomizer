@@ -49,9 +49,7 @@
 }
 /* Links should not be underlined at all times, but only when hovered over. */
 .panel > p > a {
-	text-shadow: 0.3px 0.3px 10px rgba(100, 0, 0, 0.9);
-	/*color: rgb(94, 24, 17);
-	text-decoration: underline;*/
+	text-shadow: 0 0 4px rgba(255, 0, 0, 0.5), 0 0 9px rgba(255, 0, 0, 0.9);
 }
 .panel > p > a:hover {
 	text-shadow: 0.3px 0.3px 10px rgb(255, 255, 255);

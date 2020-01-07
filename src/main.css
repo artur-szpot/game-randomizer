@@ -50,7 +50,7 @@ button:focus {
 .bg3 { background-color: yellow; }
 
 /* Several icons are displayed using Fontello-provided Font Awesome. */
-@font-face {
+/* @font-face {
 	font-family: 'fontello';
 	src: url('./font/fontello.eot?87788062');
 	src: url('./font/fontello.eot?87788062#iefix') format('embedded-opentype'),
@@ -60,12 +60,12 @@ button:focus {
 		  url('./font/fontello.svg?87788062#fontello') format('svg');
 	font-weight: normal;
 	font-style: normal;
-}
-.icon {
+} */
+/* .icon {
 	font-family: "fontello";
 	font-style: normal;
 	font-weight: normal;
-}
+} */
 .icon-large {
 	display: inline-block;
 	text-decoration: inherit;
@@ -79,33 +79,21 @@ button:focus {
 	font-size: 250%;
 	text-shadow: 0.3px 0.3px 10px rgba(0, 0, 0, 0.9);
 	color: white;
+	cursor: pointer;
 }
 .icon-button {
-	display: inline-block;
-	text-decoration: inherit;
+	display: block;
 	text-align: center;
-	font-variant: normal;
-	text-transform: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	width: 1em;
-	line-height: 1em;
 	font-size: 250%;
 	text-shadow: 0.3px 0.3px 10px rgba(0, 0, 0, 0.9);
-	color: white;
+	margin: auto;
 }
-.icon-multi {
-	color: black;
+/* .icon-generator {
 	line-height: 1em;
-	margin: 15px 0;
-	font-size: 80%;
-}
-.icon-generator {
-	line-height: 1em;
-}
+} */
 .icon-large:hover { color: yellow; }
 .icon-multi:hover { color: white; }
-.icon-cog:before { content: '\e800'; }
+/* .icon-cog:before { content: '\e800'; }
 .icon-info-circled:before { content: '\e801'; }
 .icon-copyright:before { content: '\f1f9'; }
 .icon-arrows-cw:before { content: '\e802'; }
@@ -125,4 +113,4 @@ button:focus {
 .icon-check-empty:before { content: '\f096'; }
 .icon-toggle-on:before { content: '\f205'; }
 .icon-clone:before { content: '\f24d'; }
-.icon-hashtag:before { content: '\f292'; }
+.icon-hashtag:before { content: '\f292'; } */

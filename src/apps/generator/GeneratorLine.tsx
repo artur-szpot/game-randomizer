@@ -9,6 +9,7 @@ export enum GeneratorLineSelectValues {
    MULTISTATE = 'multistate',
    PLUSMINUS = 'plusminus',
    MINMAX = 'minmax',
+   RANDOMCHANCE = 'randomchance',
    // result types
    STRING = 'string',
    STRINGARRAY = 'stringarray',
@@ -17,6 +18,13 @@ export enum GeneratorLineSelectValues {
    // yesNo initial state
    YES = 'true',
    NO = 'false',
+   // randomChance initial state
+   NEVER = 'never',
+   RARELY = 'rarely',
+   SOMETIMES = 'sometimes',
+   OFTEN = 'often',
+   USUALLY = 'usually',
+   ALWAYS = 'always',
 }
 
 export enum GeneratorLineType {
@@ -51,31 +59,43 @@ export interface GeneratorLineInput {
 export interface GeneratorLineProps {
    // type of the element
    component: GeneratorLineType;
+
    // index of the element to be passed to methods
    index: number;
+
    // text to display in the input box
    componentNameInput: GeneratorLineInput;
+
    // chosen option of the select box
    componentTypeSelect: GeneratorLineSelectValues;
+
    // total indices to be used
    componentInstancesInput: GeneratorLineInput;
+
    // additional properties of different components
-   categorySubtext: GeneratorLineInput;
+   categorySubtext: GeneratorLineSelectValues;
    yesNoInitial: GeneratorLineSelectValues;
+   randomChanceInitial: GeneratorLineSelectValues;
    multiStateCurrent: GeneratorLineInput;
    multiStateTotal: GeneratorLineInput;
    plusMinusValues: GeneratorLineInput[];
    minMaxValues: GeneratorLineInput[];
+
    // whether this is the first element (thus, unable to go up)
    first: boolean;
+
    // whether this is the last element (thus, unable to go down)
    last: boolean;
+
    // function to handle change in select box
    handleSelect(component: GeneratorLineType, index: number, field: GeneratorLineFields, value: string): void;
+
    // function to handle change in input box
    handleInput(component: GeneratorLineType, index: number, field: GeneratorLineFields, value: string): void;
+
    // function to handle the element moving in the list
    moveClick(component: GeneratorLineType, index: number, direction: number): void;
+
    // function to handle the element getting deleted
    deleteClick(component: GeneratorLineType, index: number): void;
 }
@@ -93,6 +113,9 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
          switch (event.target.name) {
             case "type":
                field = GeneratorLineFields.TYPE;
+               break;
+            case "category_subtext":
+               field = GeneratorLineFields.CATEGORY_SUBTEXT;
                break;
             case "yesno_initial":
                field = GeneratorLineFields.YESNO_INITIAL;
@@ -114,9 +137,6 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
                break;
             case "index":
                field = GeneratorLineFields.INDEX;
-               break;
-            case "category_subtext":
-               field = GeneratorLineFields.CATEGORY_SUBTEXT;
                break;
             case "multistate_current":
                field = GeneratorLineFields.MULTISTATE_CURRENT;
@@ -189,7 +209,7 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
    render() {
       let rowDivClasses = 'col-12 col-lg-10 col-xl-6 genRow';
       let mainInputClasses = 'genInput genInputMain';
-      let indexInputClasses = 'genInput genInputIndex ';
+      let indexInputClasses = 'genInput genInputIndex';
       let errorP = null;
 
       if (this.props.componentNameInput.error) {
@@ -199,10 +219,14 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
          mainInputClasses += ' genInputOK';
       }
 
-      if (this.props.componentInstancesInput.value) {
-         indexInputClasses += ' genInputOK';
+      if (this.props.componentTypeSelect === GeneratorLineSelectValues.CATEGORY) {
+         indexInputClasses += ' invisible'
       } else {
-         indexInputClasses += ' genInputEmpty';
+         if (this.props.componentInstancesInput.value) {
+            indexInputClasses += ' genInputOK';
+         } else {
+            indexInputClasses += ' genInputEmpty';
+         }
       }
 
       let select = null;
@@ -216,11 +240,12 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
             break;
          case GeneratorLineType.COMPONENT:
             select = <select className='genSelect' onChange={this.handleSelect} value={this.props.componentTypeSelect} name='type'>
-               <option value='category'>&#xe80e;&nbsp;&nbsp; Category</option>
-               <option value='yesno'>&#xf205;&nbsp;&nbsp; YesNo</option>
-               <option value='multistate'>&#xe80d;&nbsp;&nbsp; MultiState</option>
-               <option value='plusminus'>&#xf292;&nbsp;&nbsp; PlusMinus</option>
-               <option value='minmax'>&#xe80b;&nbsp;&nbsp; MinMax</option>
+               <option value='category'>&#xf07c; &nbsp; Category</option>
+               <option value='yesno'>&#xf205; &nbsp; YesNo</option>
+               <option value='multistate'>&#xf03a; &nbsp; MultiState</option>
+               <option value='plusminus'>&#xf1de; &nbsp; PlusMinus</option>
+               <option value='minmax'>&#xf337; &nbsp; MinMax</option>
+               <option value='randomchance'>&#xf522; &nbsp; RandomChance</option>
             </select>;
             break;
          case GeneratorLineType.RESULT:
@@ -240,16 +265,22 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
       let downButton: JSX.Element | null = null;
       let deleteButton: JSX.Element | null = null;
 
+      /** For reasons entirely unknown to me, it does greatly matter whether there is a space between the &#fx...; and the nbsp;
+       * To make things more interesting: the behavior is not consistent.
+       * In most cases, without a space there the solid style icons won't even render...
+       * But in one (fx057) it will only render as solid WITH the space.
+       */
+
       switch (this.props.componentTypeSelect) {
          case GeneratorLineSelectValues.CATEGORY:
-            const categorySubtextDivClasses = 'genInput' + (this.props.categorySubtext.value ? ' genInputOK' : ' genInputEmpty');
             detailSection = (
                <>
-                  <div className={categorySubtextDivClasses}>
-                     <input type='text' onChange={this.handleInput} value={this.props.categorySubtext.value} name='category_subtext' />
-                     <div>
-                        <p>subtext</p>
-                     </div>
+                  <div className='genInput'>
+                     <select className='genSelect' onChange={this.handleSelect} value={this.props.categorySubtext} name='category_subtext'>
+                        <option value='true'>&#xf058; &nbsp; yes</option>
+                        <option value='false'>&#xf057;&nbsp; no</option>
+                     </select>
+                     <div><p>has subtext</p></div>
                   </div>
                </>
             );
@@ -259,14 +290,31 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
                <>
                   <div className='genInput'>
                      <select className='genSelect' onChange={this.handleSelect} value={this.props.yesNoInitial} name='yesno_initial'>
-                        <option value='true'>&#xe804;&nbsp;&nbsp; yes</option>
-                        <option value='false'>&#xe80c;&nbsp;&nbsp; no</option>
+                        <option value='true'>&#xf058; &nbsp; yes</option>
+                        <option value='false'>&#xf057;&nbsp; no</option>
                      </select>
                      <div><p>initial value</p></div>
                   </div>
                </>
             );
             break;
+            case GeneratorLineSelectValues.RANDOMCHANCE:
+               detailSection = (
+                  <>
+                     <div className='genInput'>
+                        <select className='genSelect' onChange={this.handleSelect} value={this.props.randomChanceInitial} name='randomchance_initial'>
+                           <option value='never'>&#xf244; &nbsp; never</option>
+                           <option value='rarely'>&#xf244; &nbsp; rarely</option>
+                           <option value='sometimes'>&#xf243; &nbsp; sometimes</option>
+                           <option value='false'>&#xf242; &nbsp; often</option>
+                           <option value='usually'>&#xf241; &nbsp; usually</option>
+                           <option value='always'>&#xf240; &nbsp; always</option>
+                        </select>
+                        <div><p>initial value</p></div>
+                     </div>
+                  </>
+               );
+               break;
          case GeneratorLineSelectValues.MULTISTATE:
             detailSection = (
                <>
@@ -297,19 +345,31 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
       }
 
       if (this.props.component === GeneratorLineType.APPNAME || this.props.first) {
-         upButton = <button type='button' className='genButton genButtonDisabled icon icon-generator icon-up-open'></button>;
+         upButton = <button type='button' className='genButton genButtonDisabled'>
+            <i className='fas fa-angle-up'></i>
+            </button>;
       } else {
-         upButton = <button type='button' className='genButton genButtonEnabled icon icon-generator icon-up-open' onClick={() => this.props.moveClick(this.props.component, this.props.index, -1)}></button>;
+         upButton = <button type='button' className='genButton genButtonEnabled' onClick={() => this.props.moveClick(this.props.component, this.props.index, -1)}>
+            <i className='fas fa-angle-up'></i>
+         </button>;
       }
       if (this.props.component === GeneratorLineType.APPNAME || this.props.last) {
-         downButton = <button type='button' className='genButton genButtonDisabled icon icon-generator icon-down-open'></button>;
+         downButton = <button type='button' className='genButton genButtonDisabled'>
+            <i className='fas fa-angle-down'></i>
+         </button>;
       } else {
-         downButton = <button type='button' className='genButton genButtonEnabled icon icon-generator icon-down-open' onClick={() => this.props.moveClick(this.props.component, this.props.index, 1)}></button>;
+         downButton = <button type='button' className='genButton genButtonEnabled' onClick={() => this.props.moveClick(this.props.component, this.props.index, 1)}>
+            <i className='fas fa-angle-down'></i>
+         </button>;
       }
       if (this.props.component === GeneratorLineType.APPNAME) {
-         deleteButton = <button type='button' className='genButton genButtonDisabled icon icon-generator icon-trash-empty'></button>
+         deleteButton = <button type='button' className='genButton genButtonDisabled'>
+            <i className='far fa-trash-alt'></i>
+         </button>
       } else {
-         deleteButton = <button type='button' className='genButton genButtonEnabled icon icon-generator icon-trash-empty' onClick={() => this.props.deleteClick(this.props.component, this.props.index)}></button>
+         deleteButton = <button type='button' className='genButton genButtonEnabled' onClick={() => this.props.deleteClick(this.props.component, this.props.index)}>
+            <i className='far fa-trash-alt'></i>
+         </button>
       }
 
       let details: JSX.Element | null = null;

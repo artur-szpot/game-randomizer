@@ -1,35 +1,36 @@
-import React from 'react';
-import { Game, GameProps, GameState } from '../Game';
-import General from '../../general/General';
-import { Line } from '../../components/Line';
+import React from 'react'
+import { Game, GameProps, GameState } from '../Game'
+import General from '../../general/General'
+import { Line } from '../../components/Line'
 
 interface SushiGoPartyResults {
-	nigiri: number;
-	rolls: number;
-	appetizers: number[];
-	specials: number[];
-	dessert: number;
+	nigiri: number
+	rolls: number
+	appetizers: number[]
+	specials: number[]
+	dessert: number
+	playerOrder: string[]
 }
 
 class SushiGoParty extends Game {
 	//==================================================================================================================================
 	//#region === additional variables
 
-	// n/a
+	playerColors = ['red','green','blue']
 
 	//#endregion
 	//==================================================================================================================================
 	//#region === variable structure (generated)
 
 	constructor(props: GameProps) {
-		super(props);
+		super(props)
 		this.state = this.randomizeState({
-			showResults: false,
+			showResults: true,
 			yesno: {},
 			plusminus: {},
 			multistate: {},
-		});
-		this.setLanguage();
+		})
+		this.setLanguage()
 	}
 
 	results: SushiGoPartyResults = {
@@ -38,23 +39,25 @@ class SushiGoParty extends Game {
 		appetizers: [],
 		specials: [],
 		dessert: 0,
-	};
+      playerOrder: []
+	}
 
 	//#endregion
 	//==================================================================================================================================
 	//#region === renders
 
-	renderOptions() { return this.renderResults(); }
+	renderOptions() { return this.renderResults() }
 
 	renderResults() {
-		let resNigiri: string = this.language.specificArrays.nigiri[this.results.nigiri];
-		let resRolls: string = this.language.specificArrays.rolls[this.results.rolls];
-		let resAppetizers: string = this.results.appetizers.map(e => this.language.specificArrays.appetizers[e]).join(', ');
-		let resSpecials: string = this.results.specials.map(e => this.language.specificArrays.specials[e]).join(', ');
-		let resDessert: string = this.language.specificArrays.desserts[this.results.dessert];
+		let resNigiri: string = this.language.specificArrays.nigiri[this.results.nigiri]
+		let resRolls: string = this.language.specificArrays.rolls[this.results.rolls]
+		let resAppetizers: string = this.results.appetizers.map(e => this.language.specificArrays.appetizers[e]).join(', ')
+		let resSpecials: string = this.results.specials.map(e => this.language.specificArrays.specials[e]).join(', ')
+		let resDessert: string = this.language.specificArrays.desserts[this.results.dessert]
 
 		return (
 			<>
+			<Line {...this.colorsResult(this.commonLanguage.playerOrder[0], this.results.playerOrder)} />
 				<Line {...this.shortResult(this.language.results.nigiri[0], resNigiri)} />
 				<Line {...this.shortResult(this.language.results.rolls[0], resRolls)} />
 				<Line {...this.shortResult(this.language.results.appetizers[0], resAppetizers)} />
@@ -62,7 +65,7 @@ class SushiGoParty extends Game {
 				<Line {...this.shortResult(this.language.results.dessert[0], resDessert)} />
 				{this.createResultsOnlyButtons()}
 			</>
-		);
+		)
 	}
 
 	//#endregion
@@ -70,7 +73,7 @@ class SushiGoParty extends Game {
 	//#region === language
 
 	setLanguage() {
-		this.setCommonLanguage();
+		this.setCommonLanguage()
 		switch (this.props.language.name) {
 			case 'Polski':
 				this.language = {
@@ -93,8 +96,8 @@ class SushiGoParty extends Game {
 						specials: ['Specjalne'],
 						dessert: ['Deser'],
 					},
-				};
-				break;
+				}
+				break
 
 			case 'English':
 			default:
@@ -118,10 +121,10 @@ class SushiGoParty extends Game {
 						specials: ['Specials'],
 						dessert: ['Dessert'],
 					},
-				};
-				break;
+				}
+				break
 		}
-		this.currentLanguage = this.props.language;
+		this.currentLanguage = this.props.language
 	}
 
 	//#endregion
@@ -129,33 +132,36 @@ class SushiGoParty extends Game {
 	//#region === randomizer
 
 	randomize() {
-		this.setState(this.randomizeState(this.state));
+		this.setState(this.randomizeState(this.state))
 	}
 
 	randomizeState(currentState: GameState) {
-		let nigiri: number = 0;
-		let rolls: number = 0;
-		let appetizers: number[] = [];
-		let specials: number[] = [];
-		let dessert: number = 0;
+		let nigiri: number = 0
+		let rolls: number = 0
+		let appetizers: number[] = []
+		let specials: number[] = []
+		let dessert: number = 0
 
-		rolls = General.random(0, 2);
-		dessert = General.random(0, 2);
+		rolls = General.random(0, 2)
+		dessert = General.random(0, 2)
 
-		let indices = [0, 1, 2, 3, 4, 5, 6, 7];
-		appetizers = General.randomFromArray(indices, 3);
+		let indices = [0, 1, 2, 3, 4, 5, 6, 7]
+		appetizers = General.randomFromArray(indices, 3)
 
-		indices = [0, 1, 2, 3, 4, 5, 6, 7];
-		specials = General.randomFromArray(indices, 3);
+		indices = [0, 1, 2, 3, 4, 5, 6, 7]
+		specials = General.randomFromArray(indices, 2)
 
-		this.results.nigiri = nigiri;
-		this.results.rolls = rolls;
-		this.results.appetizers = appetizers;
-		this.results.specials = specials;
-		this.results.dessert = dessert;
+		this.results.nigiri = nigiri
+		this.results.rolls = rolls
+		this.results.appetizers = appetizers
+		this.results.specials = specials
+		this.results.dessert = dessert
 
-		let newState = Object.assign({}, currentState, { showResults: !currentState.showResults });
-		return newState;
+		// randomize player order
+		this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
+
+		let newState = Object.assign({}, currentState, { showResults: true })// !currentState.showResults })
+		return newState
 	}
 
 	//#endregion
@@ -168,4 +174,4 @@ class SushiGoParty extends Game {
 	//==================================================================================================================================
 }
 
-export default SushiGoParty;
+export default SushiGoParty

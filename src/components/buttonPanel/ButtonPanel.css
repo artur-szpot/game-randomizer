@@ -40,19 +40,21 @@
 .nice-button-label {
    font-size: 0.8rem;
    text-transform: uppercase;
-   margin: -1rem;
-   margin-bottom: 0.4rem;
 }
 
 /* The buttons should react to mouse movement. */
-.nice-button:hover > p {   color: white;}
+.nice-button:hover > p { color: white;}
+.nice-button:hover > i { color: white;}
 
 /* The buttons should have vivid colors. */
-.nice-button-green > p {   color: #30b830;}
-.nice-button-green:hover {  background-color: #30b830;}
+.nice-button-green > p { color: #30b830;}
+.nice-button-green > i { color: #30b830;}
+.nice-button-green:hover { background-color: #30b830;}
 
-.nice-button-red > p {   color: #e64814;}
-.nice-button-red:hover {  background-color: #e64814;}
+.nice-button-red > p { color: #e64814;}
+.nice-button-red > i { color: #e64814;}
+.nice-button-red:hover { background-color: #e64814;}
 
-.nice-button-blue > p {   color: #18689e;}
-.nice-button-blue:hover {  background-color: #18689e;}
+.nice-button-blue > p { color: #18689e;}
+.nice-button-blue > i { color: #18689e;}
+.nice-button-blue:hover { background-color: #18689e;}

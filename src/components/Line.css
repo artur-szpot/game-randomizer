@@ -78,3 +78,42 @@
 	text-align: left;
 	font-size: 1.2rem;
 }
+
+/* When it shows a result, color priority should display neat squares of the appropriate color. */
+.colorList {
+	list-style: none;
+	margin: 0;
+	padding-left: 25px;
+	text-align: left;
+	font-size: 1.2rem;
+	margin-bottom: -1rem;
+}
+.colorList > li {
+	display: inline;
+	margin-right: 1rem;
+}
+.colorList > li > div {
+	display: inline-block;
+	width: 5rem;
+	height: 3rem;
+	margin-bottom: 1rem;
+	border-radius: 10px;
+	background-clip: content-box;
+	padding: 5px;
+	border: 1px solid white;
+}
+
+/* Link to unhide hidden information should fit with the overall style. */
+.hiddenLink {
+	width: 100%;
+	margin: 0;
+	padding: 16px;
+	cursor: pointer;
+}
+.hiddenLink > p {
+	margin: 0;
+}
+.hiddenLink:hover {
+	color: rgb(122, 202, 255);
+	text-decoration: none;
+}
