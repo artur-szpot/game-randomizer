@@ -136,7 +136,7 @@ class AppBody extends React.Component<{}, AppBodyState> {
 		return (
 			<>
 				<Navbar {...navbarProps} />
-				<div className='mainContainer'>
+				<div id='mainContainer' className='mainContainer'>
 					{appBody}
 				</div>
 			</>

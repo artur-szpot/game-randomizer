@@ -1,5 +1,5 @@
-import React, { ChangeEvent } from 'react';
-import './Generator.css';
+import React, { ChangeEvent } from 'react'
+import './Generator.css'
 
 export enum GeneratorLineSelectValues {
    APPNAME = 'appname',
@@ -35,6 +35,7 @@ export enum GeneratorLineType {
 
 export enum GeneratorLineFields {
    NAME,
+   RANDOMIZE_COLORS,
    INDEX,
    CATEGORY_SUBTEXT,
    MULTISTATE_CURRENT,
@@ -46,85 +47,95 @@ export enum GeneratorLineFields {
    MINMAX_MAX,
    MINMAX_MIN_CURRENT,
    MINMAX_MAX_CURRENT,
+   RANDOMCHANCE_CURRENT,
    // selects
    TYPE,
    YESNO_INITIAL,
 }
 
 export interface GeneratorLineInput {
-   value: string;
-   error: string;
+   value: string
+   error: string
 }
 
 export interface GeneratorLineProps {
    // type of the element
-   component: GeneratorLineType;
+   component: GeneratorLineType
 
    // index of the element to be passed to methods
-   index: number;
+   index: number
 
    // text to display in the input box
-   componentNameInput: GeneratorLineInput;
+   componentNameInput: GeneratorLineInput
+
+   // randomize colors/player order?
+   randomizeColors: GeneratorLineSelectValues
 
    // chosen option of the select box
-   componentTypeSelect: GeneratorLineSelectValues;
+   componentTypeSelect: GeneratorLineSelectValues
 
    // total indices to be used
-   componentInstancesInput: GeneratorLineInput;
+   componentInstancesInput: GeneratorLineInput
 
    // additional properties of different components
-   categorySubtext: GeneratorLineSelectValues;
-   yesNoInitial: GeneratorLineSelectValues;
-   randomChanceInitial: GeneratorLineSelectValues;
-   multiStateCurrent: GeneratorLineInput;
-   multiStateTotal: GeneratorLineInput;
-   plusMinusValues: GeneratorLineInput[];
-   minMaxValues: GeneratorLineInput[];
+   categorySubtext: GeneratorLineSelectValues
+   yesNoInitial: GeneratorLineSelectValues
+   randomChanceInitial: GeneratorLineSelectValues
+   multiStateCurrent: GeneratorLineInput
+   multiStateTotal: GeneratorLineInput
+   plusMinusValues: GeneratorLineInput[]
+   minMaxValues: GeneratorLineInput[]
 
    // whether this is the first element (thus, unable to go up)
-   first: boolean;
+   first: boolean
 
    // whether this is the last element (thus, unable to go down)
-   last: boolean;
+   last: boolean
 
    // function to handle change in select box
-   handleSelect(component: GeneratorLineType, index: number, field: GeneratorLineFields, value: string): void;
+   handleSelect(component: GeneratorLineType, index: number, field: GeneratorLineFields, value: string): void
 
    // function to handle change in input box
-   handleInput(component: GeneratorLineType, index: number, field: GeneratorLineFields, value: string): void;
+   handleInput(component: GeneratorLineType, index: number, field: GeneratorLineFields, value: string): void
 
    // function to handle the element moving in the list
-   moveClick(component: GeneratorLineType, index: number, direction: number): void;
+   moveClick(component: GeneratorLineType, index: number, direction: number): void
 
    // function to handle the element getting deleted
-   deleteClick(component: GeneratorLineType, index: number): void;
+   deleteClick(component: GeneratorLineType, index: number): void
 }
 
 export class GeneratorLine extends React.Component<GeneratorLineProps> {
    constructor(props: GeneratorLineProps) {
-      super(props);
-      this.handleSelect = this.handleSelect.bind(this);
-      this.handleInput = this.handleInput.bind(this);
+      super(props)
+      this.handleSelect = this.handleSelect.bind(this)
+      this.handleInput = this.handleInput.bind(this)
    }
 
    handleSelect(event: ChangeEvent) {
       if (event.target !== null && event.target instanceof HTMLSelectElement) {
          let field: GeneratorLineFields
          switch (event.target.name) {
+            case "randomize_colors":
+               field = GeneratorLineFields.RANDOMIZE_COLORS
+               break
             case "type":
-               field = GeneratorLineFields.TYPE;
-               break;
+               field = GeneratorLineFields.TYPE
+               break
             case "category_subtext":
-               field = GeneratorLineFields.CATEGORY_SUBTEXT;
-               break;
+               field = GeneratorLineFields.CATEGORY_SUBTEXT
+               break
             case "yesno_initial":
-               field = GeneratorLineFields.YESNO_INITIAL;
-               break;
+               field = GeneratorLineFields.YESNO_INITIAL
+               break
+            case "randomchance_initial":
+               field = GeneratorLineFields.RANDOMCHANCE_CURRENT
+               break
             default:
-               alert('handleSelect called for an unsopported field name: ' + event.target.name);
-               return;
+               alert('handleSelect called for an unsopported field name: ' + event.target.name)
+               return
          }
-         this.props.handleSelect(this.props.component, this.props.index, field, event.target.value);
+         this.props.handleSelect(this.props.component, this.props.index, field, event.target.value)
       }
    }
 
@@ -133,111 +144,111 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
          let field: GeneratorLineFields
          switch (event.target.name) {
             case "name":
-               field = GeneratorLineFields.NAME;
-               break;
+               field = GeneratorLineFields.NAME
+               break
             case "index":
-               field = GeneratorLineFields.INDEX;
-               break;
+               field = GeneratorLineFields.INDEX
+               break
             case "multistate_current":
-               field = GeneratorLineFields.MULTISTATE_CURRENT;
-               break;
+               field = GeneratorLineFields.MULTISTATE_CURRENT
+               break
             case "multistate_total":
-               field = GeneratorLineFields.MULTISTATE_TOTAL;
-               break;
+               field = GeneratorLineFields.MULTISTATE_TOTAL
+               break
             case "plusminus_min":
-               field = GeneratorLineFields.PLUSMINUS_MIN;
-               break;
+               field = GeneratorLineFields.PLUSMINUS_MIN
+               break
             case "plusminus_max":
-               field = GeneratorLineFields.PLUSMINUS_MAX;
-               break;
+               field = GeneratorLineFields.PLUSMINUS_MAX
+               break
             case "plusminus_curr":
-               field = GeneratorLineFields.PLUSMINUS_CURRENT;
-               break;
+               field = GeneratorLineFields.PLUSMINUS_CURRENT
+               break
             case "minmax_min":
-               field = GeneratorLineFields.MINMAX_MIN;
-               break;
+               field = GeneratorLineFields.MINMAX_MIN
+               break
             case "minmax_max":
-               field = GeneratorLineFields.MINMAX_MAX;
-               break;
+               field = GeneratorLineFields.MINMAX_MAX
+               break
             case "minmax_min_current":
-               field = GeneratorLineFields.MINMAX_MIN_CURRENT;
-               break;
+               field = GeneratorLineFields.MINMAX_MIN_CURRENT
+               break
             case "minmax_max_current":
-               field = GeneratorLineFields.MINMAX_MAX_CURRENT;
-               break;
+               field = GeneratorLineFields.MINMAX_MAX_CURRENT
+               break
             default:
-               alert('handleInput called for an unsopported field name: ' + event.target.name);
-               return;
+               alert('handleInput called for an unsopported field name: ' + event.target.name)
+               return
          }
-         this.props.handleInput(this.props.component, this.props.index, field, event.target.value);
+         this.props.handleInput(this.props.component, this.props.index, field, event.target.value)
       }
    }
 
    plusminusInputDiv(input: GeneratorLineInput, label: string, name: string): JSX.Element {
-      const errorClass = input.error ? ' genInputWrong' : ' genInputOK';
-      const finalLabel = (input.error && input.error !== '`') ? input.error : label;
+      const errorClass = input.error ? ' genInputWrong' : ' genInputOK'
+      const finalLabel = (input.error && input.error !== '`') ? input.error : label
       return (
          <div className={'genInput genInputThird' + errorClass}>
             <input type='text' onChange={this.handleInput} value={input.value} name={name} />
             <div><p>{finalLabel}</p></div>
-         </div>);
+         </div>)
    }
 
    minmaxInputDiv(input: GeneratorLineInput, label: string, name: string): JSX.Element {
-      const errorClass = input.error ? ' genInputWrong' : ' genInputOK';
-      const finalLabel = (input.error && input.error !== '`') ? input.error : label;
+      const errorClass = input.error ? ' genInputWrong' : ' genInputOK'
+      const finalLabel = (input.error && input.error !== '`') ? input.error : label
       return (
          <div className={'genInput genInputFourth' + errorClass}>
             <input type='text' onChange={this.handleInput} value={input.value} name={name} />
             <div><p>{finalLabel}</p></div>
-         </div>);
+         </div>)
    }
 
    multistateInputDiv(total: boolean): JSX.Element {
-      const state: GeneratorLineInput = total ? this.props.multiStateTotal : this.props.multiStateCurrent;
-      const name: string = total ? 'multistate_total' : 'multistate_current';
-      const divClass = state.error ? ' genInputWrong' : ' genInputOK';
-      const normalLabel: string = total ? 'total options' : 'initial option';
-      const label = (state.error && state.error !== '`') ? state.error : normalLabel;
+      const state: GeneratorLineInput = total ? this.props.multiStateTotal : this.props.multiStateCurrent
+      const name: string = total ? 'multistate_total' : 'multistate_current'
+      const divClass = state.error ? ' genInputWrong' : ' genInputOK'
+      const normalLabel: string = total ? 'total options' : 'initial option'
+      const label = (state.error && state.error !== '`') ? state.error : normalLabel
       return (
          <div className={'genInput genInputHalf' + divClass}>
             <input type='text' onChange={this.handleInput} value={state.value} name={name} />
             <div><p>{label}</p></div>
-         </div>);
+         </div>)
    }
 
    render() {
-      let rowDivClasses = 'col-12 col-lg-10 col-xl-6 genRow';
-      let mainInputClasses = 'genInput genInputMain';
-      let indexInputClasses = 'genInput genInputIndex';
-      let errorP = null;
+      let rowDivClasses = 'col-12 col-lg-10 col-xl-6 genRow'
+      let mainInputClasses = 'genInput genInputMain'
+      let indexInputClasses = 'genInput genInputIndex'
+      let errorP = null
 
       if (this.props.componentNameInput.error) {
-         mainInputClasses += ' genInputWrong';
-         errorP = <p>{this.props.componentNameInput.error}</p>;
+         mainInputClasses += ' genInputWrong'
+         errorP = <p>{this.props.componentNameInput.error}</p>
       } else {
-         mainInputClasses += ' genInputOK';
+         mainInputClasses += ' genInputOK'
       }
 
       if (this.props.componentTypeSelect === GeneratorLineSelectValues.CATEGORY) {
          indexInputClasses += ' invisible'
       } else {
          if (this.props.componentInstancesInput.value) {
-            indexInputClasses += ' genInputOK';
+            indexInputClasses += ' genInputOK'
          } else {
-            indexInputClasses += ' genInputEmpty';
+            indexInputClasses += ' genInputEmpty'
          }
       }
 
-      let select = null;
+      let select = null
 
       switch (this.props.component) {
          case GeneratorLineType.APPNAME:
             select = <select className='genSelect'>
                <option value='appname'>AppName</option>
-            </select>;
-            indexInputClasses += ' invisible';
-            break;
+            </select>
+            indexInputClasses += ' invisible'
+            break
          case GeneratorLineType.COMPONENT:
             select = <select className='genSelect' onChange={this.handleSelect} value={this.props.componentTypeSelect} name='type'>
                <option value='category'>&#xf07c; &nbsp; Category</option>
@@ -246,26 +257,26 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
                <option value='plusminus'>&#xf1de; &nbsp; PlusMinus</option>
                <option value='minmax'>&#xf337; &nbsp; MinMax</option>
                <option value='randomchance'>&#xf522; &nbsp; RandomChance</option>
-            </select>;
-            break;
+            </select>
+            break
          case GeneratorLineType.RESULT:
             select = <select className='genSelect' onChange={this.handleSelect} value={this.props.componentTypeSelect} name='type'>
                <option value='number'>number</option>
                <option value='numberarray'>number[]</option>
                <option value='string'>string</option>
                <option value='stringarray'>string[]</option>
-            </select>;
-            break;
+            </select>
+            break
       }
 
-      select = <div className='genSelectMain'>{select}</div>;
+      select = <div className='genSelectMain'>{select}</div>
 
-      let detailSection: JSX.Element | null = null;
-      let upButton: JSX.Element | null = null;
-      let downButton: JSX.Element | null = null;
-      let deleteButton: JSX.Element | null = null;
+      let detailSection: JSX.Element | null = null
+      let upButton: JSX.Element | null = null
+      let downButton: JSX.Element | null = null
+      let deleteButton: JSX.Element | null = null
 
-      /** For reasons entirely unknown to me, it does greatly matter whether there is a space between the &#fx...; and the nbsp;
+      /** For reasons entirely unknown to me, it does greatly matter whether there is a space between the &#fx... and the nbsp
        * To make things more interesting: the behavior is not consistent.
        * In most cases, without a space there the solid style icons won't even render...
        * But in one (fx057) it will only render as solid WITH the space.
@@ -283,8 +294,8 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
                      <div><p>has subtext</p></div>
                   </div>
                </>
-            );
-            break;
+            )
+            break
          case GeneratorLineSelectValues.YESNO:
             detailSection = (
                <>
@@ -296,33 +307,46 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
                      <div><p>initial value</p></div>
                   </div>
                </>
-            );
-            break;
-            case GeneratorLineSelectValues.RANDOMCHANCE:
-               detailSection = (
-                  <>
-                     <div className='genInput'>
-                        <select className='genSelect' onChange={this.handleSelect} value={this.props.randomChanceInitial} name='randomchance_initial'>
-                           <option value='never'>&#xf244; &nbsp; never</option>
-                           <option value='rarely'>&#xf244; &nbsp; rarely</option>
-                           <option value='sometimes'>&#xf243; &nbsp; sometimes</option>
-                           <option value='false'>&#xf242; &nbsp; often</option>
-                           <option value='usually'>&#xf241; &nbsp; usually</option>
-                           <option value='always'>&#xf240; &nbsp; always</option>
-                        </select>
-                        <div><p>initial value</p></div>
-                     </div>
-                  </>
-               );
-               break;
+            )
+            break
+         case GeneratorLineSelectValues.APPNAME:
+            detailSection = (
+               <>
+                  <div className='genInput'>
+                     <select className='genSelect' onChange={this.handleSelect} value={this.props.randomizeColors} name='randomize_colors'>
+                        <option value='true'>&#xf058; &nbsp; yes</option>
+                        <option value='false'>&#xf057;&nbsp; no</option>
+                     </select>
+                     <div><p>randomize player order?</p></div>
+                  </div>
+               </>
+            )
+            break
+         case GeneratorLineSelectValues.RANDOMCHANCE:
+            detailSection = (
+               <>
+                  <div className='genInput'>
+                     <select className='genSelect' onChange={this.handleSelect} value={this.props.randomChanceInitial} name='randomchance_initial'>
+                        <option value='never'>&#xf244; &nbsp; never</option>
+                        <option value='rarely'>&#xf244; &nbsp; rarely</option>
+                        <option value='sometimes'>&#xf243; &nbsp; sometimes</option>
+                        <option value='false'>&#xf242; &nbsp; often</option>
+                        <option value='usually'>&#xf241; &nbsp; usually</option>
+                        <option value='always'>&#xf240; &nbsp; always</option>
+                     </select>
+                     <div><p>initial value</p></div>
+                  </div>
+               </>
+            )
+            break
          case GeneratorLineSelectValues.MULTISTATE:
             detailSection = (
                <>
                   {this.multistateInputDiv(true)}
                   {this.multistateInputDiv(false)}
                </>
-            );
-            break;
+            )
+            break
          case GeneratorLineSelectValues.PLUSMINUS:
             detailSection = (
                <>
@@ -330,8 +354,8 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
                   {this.plusminusInputDiv(this.props.plusMinusValues[1], 'max', 'plusminus_max')}
                   {this.plusminusInputDiv(this.props.plusMinusValues[2], 'current', 'plusminus_curr')}
                </>
-            );
-            break;
+            )
+            break
          case GeneratorLineSelectValues.MINMAX:
             detailSection = (
                <>
@@ -340,27 +364,27 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
                   {this.minmaxInputDiv(this.props.minMaxValues[2], 'current min', 'minmax_min_current')}
                   {this.minmaxInputDiv(this.props.minMaxValues[3], 'current max', 'minmax_max_current')}
                </>
-            );
-            break;
+            )
+            break
       }
 
       if (this.props.component === GeneratorLineType.APPNAME || this.props.first) {
          upButton = <button type='button' className='genButton genButtonDisabled'>
             <i className='fas fa-angle-up'></i>
-            </button>;
+         </button>
       } else {
          upButton = <button type='button' className='genButton genButtonEnabled' onClick={() => this.props.moveClick(this.props.component, this.props.index, -1)}>
             <i className='fas fa-angle-up'></i>
-         </button>;
+         </button>
       }
       if (this.props.component === GeneratorLineType.APPNAME || this.props.last) {
          downButton = <button type='button' className='genButton genButtonDisabled'>
             <i className='fas fa-angle-down'></i>
-         </button>;
+         </button>
       } else {
          downButton = <button type='button' className='genButton genButtonEnabled' onClick={() => this.props.moveClick(this.props.component, this.props.index, 1)}>
             <i className='fas fa-angle-down'></i>
-         </button>;
+         </button>
       }
       if (this.props.component === GeneratorLineType.APPNAME) {
          deleteButton = <button type='button' className='genButton genButtonDisabled'>
@@ -372,7 +396,7 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
          </button>
       }
 
-      let details: JSX.Element | null = null;
+      let details: JSX.Element | null = null
       if (this.props.componentTypeSelect !== GeneratorLineSelectValues.APPNAME) {
          details = (<div className={rowDivClasses + ' genDetails'}>
             <div className='genDetailsMain'>
@@ -383,7 +407,13 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
                {downButton}
                {upButton}
             </div>
-         </div >);
+         </div >)
+      } else {
+         details = (<div className={rowDivClasses + ' genDetails'}>
+            <div className='genDetailsMain'>
+               {detailSection}
+            </div>
+         </div>)
       }
 
       return (
@@ -409,6 +439,6 @@ export class GeneratorLine extends React.Component<GeneratorLineProps> {
                {details}
             </div>
          </div>
-      );
+      )
    }
 }

@@ -130,6 +130,86 @@ class X51stState extends Game {
 
 	//#endregion
 	//==================================================================================================================================
+	//#region === randomizer
+
+	randomize() {
+		let players: number[][] = []
+		let playerOrder: number[] = []
+		let hiddenPlayerOrder: boolean = false
+		let decks: number[] = []
+		let addons: number[] = []
+
+		// player factions
+		let choice: number[] = []
+		for (let i = 0; i < 4; i++) {
+			choice.push(i)
+		}
+		if (this.yesNoValue('randFactionsTexas')) {
+			choice.push(4)
+			choice.push(5)
+		}
+		if (this.yesNoValue('randFactionsMississippi')) {
+			choice.push(6)
+			choice.push(7)
+		}
+		if (this.yesNoValue('randFactionsBigChoice') && this.isBigChoiceAllowed()) {
+			hiddenPlayerOrder = true
+			for (let i = 0; i < 4; i++) {
+				players[i] = General.randomFromArray(choice, 2)
+			}
+		}
+		else {
+			let chosenPlayers: number[] = General.randomFromArray(choice, 4)
+			for (let i = 0; i < 4; i++) {
+				players[i] = [chosenPlayers[i]]
+			}
+		}
+
+		// player order
+		choice = []
+		for (let i = 0; i < this.plusMinusValue('playerCount').current; i++) {
+			for (let j of players[i]) {
+				choice.push(j)
+			}
+		}
+		playerOrder = General.randomizeArray(choice)
+
+		//deck
+		choice = []
+		if (this.yesNoValue('randDeckNewEra')) { choice.push(1) }
+		if (this.yesNoValue('randDeckWinter')) { choice.push(2) }
+		if (this.yesNoValue('randDeckScavengers')) { choice.push(3) }
+		if (this.yesNoValue('randDeckAllies')) { choice.push(4) }
+		decks = [0, General.random(1, choice.length)]
+
+		// addons
+		if (this.randomChanceEvaluate('randAddonsCities')) { addons.push(1) }
+		if (this.randomChanceEvaluate('randAddonsBorderTiles')) { addons.push(2) }
+		if (this.randomChanceEvaluate('randAddonsArena')) { addons.push(3) }
+		if (addons.length === 0) { addons.push(0) }
+
+		this.results.players = players
+		this.results.playerOrder = playerOrder
+		this.results.hiddenPlayerOrder = hiddenPlayerOrder
+		this.results.decks = decks
+		this.results.addons = addons
+
+		this.showResults()
+	}
+
+	//#endregion
+	//==================================================================================================================================
+	//#region === additional functions
+
+	isBigChoiceAllowed() {
+		let totalFactions = 4
+		if (this.yesNoValue('randFactionsTexas')) { totalFactions += 2 }
+		if (this.yesNoValue('randFactionsMississippi')) { totalFactions += 2 }
+		return totalFactions >= this.plusMinusValue('playerCount').current * 2
+	}
+
+	//#endregion
+	//==================================================================================================================================
 	//#region === language
 
 	setLanguage() {
@@ -289,86 +369,6 @@ class X51stState extends Game {
 				break
 		}
 		this.currentLanguage = this.props.language
-	}
-
-	//#endregion
-	//==================================================================================================================================
-	//#region === randomizer
-
-	randomize() {
-		let players: number[][] = []
-		let playerOrder: number[] = []
-		let hiddenPlayerOrder: boolean = false
-		let decks: number[] = []
-		let addons: number[] = []
-
-		// player factions
-		let choice: number[] = []
-		for (let i = 0; i < 4; i++) {
-			choice.push(i)
-		}
-		if (this.yesNoValue('randFactionsTexas')) {
-			choice.push(4)
-			choice.push(5)
-		}
-		if (this.yesNoValue('randFactionsMississippi')) {
-			choice.push(6)
-			choice.push(7)
-		}
-		if (this.yesNoValue('randFactionsBigChoice') && this.isBigChoiceAllowed()) {
-			hiddenPlayerOrder = true
-			for (let i = 0; i < 4; i++) {
-				players[i] = General.randomFromArray(choice, 2)
-			}
-		}
-		else {
-			let chosenPlayers: number[] = General.randomFromArray(choice, 4)
-			for (let i = 0; i < 4; i++) {
-				players[i] = [chosenPlayers[i]]
-			}
-		}
-
-		// player order
-		choice = []
-		for (let i = 0; i < this.plusMinusValue('playerCount').current; i++) {
-			for (let j of players[i]) {
-				choice.push(j)
-			}
-		}
-		playerOrder = General.randomizeArray(choice)
-
-		//deck
-		choice = []
-		if (this.yesNoValue('randDeckNewEra')) { choice.push(1) }
-		if (this.yesNoValue('randDeckWinter')) { choice.push(2) }
-		if (this.yesNoValue('randDeckScavengers')) { choice.push(3) }
-		if (this.yesNoValue('randDeckAllies')) { choice.push(4) }
-		decks = [0, General.random(1, choice.length)]
-
-		// addons
-		if (this.randomChanceEvaluate('randAddonsCities')) { addons.push(1) }
-		if (this.randomChanceEvaluate('randAddonsBorderTiles')) { addons.push(2) }
-		if (this.randomChanceEvaluate('randAddonsArena')) { addons.push(3) }
-		if (addons.length === 0) { addons.push(0) }
-
-		this.results.players = players
-		this.results.playerOrder = playerOrder
-		this.results.hiddenPlayerOrder = hiddenPlayerOrder
-		this.results.decks = decks
-		this.results.addons = addons
-
-		this.showResults()
-	}
-
-	//#endregion
-	//==================================================================================================================================
-	//#region === additional functions
-
-	isBigChoiceAllowed() {
-		let totalFactions = 4
-		if (this.yesNoValue('randFactionsTexas')) { totalFactions += 2 }
-		if (this.yesNoValue('randFactionsMississippi')) { totalFactions += 2 }
-		return totalFactions >= this.plusMinusValue('playerCount').current * 2
 	}
 
 	//#endregion

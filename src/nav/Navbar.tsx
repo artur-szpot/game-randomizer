@@ -14,7 +14,7 @@ export interface NavbarProps {
    languageChosen: GamePropsLanguage;
    languageClick(name: string): void;
    gameChosen: GameData | null;
-   onClickHome: () => void;
+   onClickHome: () => void
 }
 
 export class Navbar extends React.Component<NavbarProps> {

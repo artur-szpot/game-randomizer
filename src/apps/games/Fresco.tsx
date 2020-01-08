@@ -105,6 +105,47 @@ class Fresco extends Game {
 
    //#endregion
    //==================================================================================================================================
+   //#region === randomizer
+
+   randomize() {
+      let modules: number[] = []
+
+      let totalModulesToChoose: number = 0
+      switch (this.multiStateValue('randomizingMode').current) {
+         case 0:
+            totalModulesToChoose = this.plusMinusValue('exact').current
+            break
+         case 1:
+            totalModulesToChoose = General.random(this.plusMinusValue('rangeMin').current, this.plusMinusValue('rangeMax').current)
+            break
+         case 2:
+            totalModulesToChoose = General.randomNormal(this.plusMinusValue('normalBase').current, this.plusMinusValue('normalVariation').current, 0, 11)
+      }
+
+      let modulesToChooseFrom: number[]
+      if (this.yesNoValue('modulesAll')) {
+         modulesToChooseFrom = [...Array(this.language.yesno.modules.length).keys()]
+      } else {
+         modulesToChooseFrom = this.state.yesno.modules.map((state, index) => state.yes ? index : -1).filter(value => value > -1)
+      }
+      if (modulesToChooseFrom.length >= totalModulesToChoose) {
+         modules = General.randomFromArray(modulesToChooseFrom, totalModulesToChoose)
+      } else {
+         let otherModules = this.state.yesno.modules.map((state, index) => !state.yes ? index : -1).filter(value => value > -1)
+         modules = modulesToChooseFrom.concat(General.randomFromArray(otherModules, totalModulesToChoose - modulesToChooseFrom.length))
+      }
+      modules = modules.sort((a, b) => a - b)
+
+      this.results.modules = modules
+
+		// randomize player order
+		this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
+
+		this.showResults()
+   }
+
+   //#endregion
+   //==================================================================================================================================
    //#region === language
 
    setLanguage() {
@@ -208,47 +249,6 @@ class Fresco extends Game {
             break
       }
       this.currentLanguage = this.props.language
-   }
-
-   //#endregion
-   //==================================================================================================================================
-   //#region === randomizer
-
-   randomize() {
-      let modules: number[] = []
-
-      let totalModulesToChoose: number = 0
-      switch (this.multiStateValue('randomizingMode').current) {
-         case 0:
-            totalModulesToChoose = this.plusMinusValue('exact').current
-            break
-         case 1:
-            totalModulesToChoose = General.random(this.plusMinusValue('rangeMin').current, this.plusMinusValue('rangeMax').current)
-            break
-         case 2:
-            totalModulesToChoose = General.randomNormal(this.plusMinusValue('normalBase').current, this.plusMinusValue('normalVariation').current, 0, 11)
-      }
-
-      let modulesToChooseFrom: number[]
-      if (this.yesNoValue('modulesAll')) {
-         modulesToChooseFrom = [...Array(this.language.yesno.modules.length).keys()]
-      } else {
-         modulesToChooseFrom = this.state.yesno.modules.map((state, index) => state.yes ? index : -1).filter(value => value > -1)
-      }
-      if (modulesToChooseFrom.length >= totalModulesToChoose) {
-         modules = General.randomFromArray(modulesToChooseFrom, totalModulesToChoose)
-      } else {
-         let otherModules = this.state.yesno.modules.map((state, index) => !state.yes ? index : -1).filter(value => value > -1)
-         modules = modulesToChooseFrom.concat(General.randomFromArray(otherModules, totalModulesToChoose - modulesToChooseFrom.length))
-      }
-      modules = modules.sort((a, b) => a - b)
-
-      this.results.modules = modules
-
-		// randomize player order
-		this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
-
-		this.showResults()
    }
 
    //#endregion

@@ -137,6 +137,82 @@ class NearAndFar extends Game {
 
 	//#endregion
 	//==================================================================================================================================
+	//#region === randomizer
+
+	randomize() {
+		// select map
+		let map: number = 0;
+		if (this.yesNoValue('randMap')) {
+			switch (this.multiStateValue('mapSubset').current) {
+				case 0: map = 1; break;
+				case 1: map = General.random(2, 10); break;
+				case 2: map = 11; break;
+				case 3: map = General.random(1, 11); break;
+				default: alert("Unexpected value of mapSubset!"); break;
+			}
+		}
+		else {
+			map = this.multiStateValue('map').current;
+		}
+
+		// select town variant
+		let dawnDusk: number = General.random(0, 1);
+
+		// select additional camps
+		let addCamps: number = General.random(
+			this.plusMinusValue('addCampsMin').current,
+			this.plusMinusValue('addCampsMax').current,
+		);
+
+		// select bosses
+		let choice: (string | number)[] = [0, 1, 2, 3];
+		let bosses: number[] = General.randomFromArray(choice, this.plusMinusValue('playerCount').current);
+
+		// select quests
+		let totalQuests: number = 0;
+		let quests: (number | string)[] = [];
+		switch (this.plusMinusValue('playerCount').current) {
+			case 2: totalQuests = 7; break;
+			case 3: totalQuests = 9; break;
+			case 4: totalQuests = 11; break;
+			default: alert('Unexpected value of playerCount!'); break;
+		}
+		if (this.yesNoValue('longerGV')) { totalQuests += 2; }
+
+		if (this.yesNoValue('prioritizeNS')) {
+			quests = [...this.questBase[map - 1][0]];
+			choice = [...this.questBase[map - 1][1]];
+		}
+		else {
+			choice = [...this.questBase[map - 1][0]].concat(this.questBase[map - 1][1]);
+		}
+		quests = quests.concat(General.randomFromArray(choice, totalQuests - quests.length));
+		if (map === 1) {
+			quests = quests.sort();
+		} else {
+			quests = (quests as number[]).sort((a, b) => a - b);
+		}
+
+		this.results.map = map;
+		this.results.dawnDusk = dawnDusk;
+		this.results.addCamps = addCamps;
+		this.results.bosses = bosses;
+		this.results.quests = quests;
+
+		// randomize player order
+		this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
+
+		this.showResults()
+	}
+
+	//#endregion
+	//==================================================================================================================================
+	//#region === additional functions
+
+	// n/a
+
+	//#endregion
+	//==================================================================================================================================
 	//#region === language
 
 	setLanguage() {
@@ -259,82 +335,6 @@ class NearAndFar extends Game {
 		}
 		this.currentLanguage = this.props.language;
 	}
-
-	//#endregion
-	//==================================================================================================================================
-	//#region === randomizer
-
-	randomize() {
-		// select map
-		let map: number = 0;
-		if (this.yesNoValue('randMap')) {
-			switch (this.multiStateValue('mapSubset').current) {
-				case 0: map = 1; break;
-				case 1: map = General.random(2, 10); break;
-				case 2: map = 11; break;
-				case 3: map = General.random(1, 11); break;
-				default: alert("Unexpected value of mapSubset!"); break;
-			}
-		}
-		else {
-			map = this.multiStateValue('map').current;
-		}
-
-		// select town variant
-		let dawnDusk: number = General.random(0, 1);
-
-		// select additional camps
-		let addCamps: number = General.random(
-			this.plusMinusValue('addCampsMin').current,
-			this.plusMinusValue('addCampsMax').current,
-		);
-
-		// select bosses
-		let choice: (string | number)[] = [0, 1, 2, 3];
-		let bosses: number[] = General.randomFromArray(choice, this.plusMinusValue('playerCount').current);
-
-		// select quests
-		let totalQuests: number = 0;
-		let quests: (number | string)[] = [];
-		switch (this.plusMinusValue('playerCount').current) {
-			case 2: totalQuests = 7; break;
-			case 3: totalQuests = 9; break;
-			case 4: totalQuests = 11; break;
-			default: alert('Unexpected value of playerCount!'); break;
-		}
-		if (this.yesNoValue('longerGV')) { totalQuests += 2; }
-
-		if (this.yesNoValue('prioritizeNS')) {
-			quests = [...this.questBase[map - 1][0]];
-			choice = [...this.questBase[map - 1][1]];
-		}
-		else {
-			choice = [...this.questBase[map - 1][0]].concat(this.questBase[map - 1][1]);
-		}
-		quests = quests.concat(General.randomFromArray(choice, totalQuests - quests.length));
-		if (map === 1) {
-			quests = quests.sort();
-		} else {
-			quests = (quests as number[]).sort((a, b) => a - b);
-		}
-
-		this.results.map = map;
-		this.results.dawnDusk = dawnDusk;
-		this.results.addCamps = addCamps;
-		this.results.bosses = bosses;
-		this.results.quests = quests;
-
-		// randomize player order
-		this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
-
-		this.showResults()
-	}
-
-	//#endregion
-	//==================================================================================================================================
-	//#region === additional functions
-
-	// n/a
 
 	//#endregion
 	//==================================================================================================================================

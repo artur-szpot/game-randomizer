@@ -29,7 +29,7 @@ export class MultiStateSub extends React.Component<MultiStateSubProps>{
 			/** Produces the dot for button mode. */
 			let classes: string
 			if (this.props.randomChance) {
-				classes = 'randomChanceBar randomChanceBarSlot' + this.props.index + (this.props.active ? 'active' : 'inactive')
+				classes = 'randomChanceBar randomChanceBarSlot' + this.props.index + ' randomChanceBar' + (this.props.active ? 'Active' : 'Inactive')
 			} else {
 				classes = 'multiButtonProgressDot' + (this.props.active ? ' multiButtonProgressDotActive' : '')
 			}

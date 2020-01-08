@@ -124,6 +124,7 @@ export class GeneratorTemplate {
 	static optMultiLineInitializationMapper(input: GeneratedElement): string {
 		switch (input.type) {
 			case GeneratorLineSelectValues.MULTISTATE:
+			case GeneratorLineSelectValues.RANDOMCHANCE:
 			case GeneratorLineSelectValues.PLUSMINUS:
 			case GeneratorLineSelectValues.YESNO:
 				let functionName: string = ''
@@ -131,7 +132,7 @@ export class GeneratorTemplate {
 					case GeneratorLineSelectValues.MULTISTATE:
 						functionName = 'MultiState'
 						break
-					case GeneratorLineSelectValues.MULTISTATE:
+					case GeneratorLineSelectValues.RANDOMCHANCE:
 						functionName = 'RandomChance'
 						break
 					case GeneratorLineSelectValues.PLUSMINUS:
@@ -345,7 +346,7 @@ export class GeneratorTemplate {
 		return input
 	}
 
-	static generate(gameName: string, results: GeneratedElement[], opts: GeneratedElement[]): string {
+	static generate(gameName: string, randomizeColors: boolean, results: GeneratedElement[], opts: GeneratedElement[]): string {
 		const resultsOnly: boolean = opts.length === 0
 
 		// relevant imports
@@ -354,7 +355,10 @@ export class GeneratorTemplate {
 		if (opts.filter(e => e.type === GeneratorLineSelectValues.MINMAX).length) { gameImports += ', ComponentBehaviors' }
 
 		// content of the interface dictating results' structure
-		const resultsInterface: string = results.map(this.resultInterfaceMapper).join('\n') + '\nplayerOrder: string[]'
+		const resultsInterface: string = results.map(this.resultInterfaceMapper).join('\n') + (randomizeColors ? '\nplayerOrder: string[]' : '')
+
+		// mock colors for player order randomization
+		const playerColors : string = randomizeColors ? `playerColors = ['red', 'green', 'blue']` : 'n/a'
 
 		// content of the state initialization in constructor
 		const yesnoState: string = this.addBreaks(opts.filter(e => e.type === GeneratorLineSelectValues.YESNO).map(this.optStateMapper).join('\n'))
@@ -392,7 +396,7 @@ export class GeneratorTemplate {
 		}
 
 		// content of the results object in the constructor
-		const resultsInitialization: string = results.map(this.resultInitializationMapper).join('\n') + '\nplayerOrder: []'
+		const resultsInitialization: string = results.map(this.resultInitializationMapper).join('\n') + (randomizeColors ? '\nplayerOrder: []' : '')
 
 		// indexed lines to prerender in renderOptions
 		const indexedOptLines: string = this.addBreaks(opts.filter(e => e.instances > 1).map(this.optMultiLineInitializationMapper).join('\n'))
@@ -422,7 +426,8 @@ export class GeneratorTemplate {
 		const indexedResultLinesInitialization: string = this.addBreaks(results.filter(e => e.instances > 1).map(this.resultsMultiLineInitializationMapper).join('\n'))
 
 		// results being displayed in renderResults
-		const resultLines: string = '<Line {...this.colorsResult(this.commonLanguage.playerOrder[0], this.results.playerOrder)} />\n' + results.map(this.resultLineMapper).join('\n')
+		const resultLines: string = (randomizeColors ? '<Line {...this.colorsResult(this.commonLanguage.playerOrder[0], this.results.playerOrder)} />\n' : '')
+			+ results.map(this.resultLineMapper).join('\n')
 
 		// result buttons depend on whether there are options
 		const resultButtons: string = resultsOnly ? '{this.createResultsOnlyButtons()}' : '{this.createResultsButtons()}'
@@ -448,6 +453,11 @@ export class GeneratorTemplate {
 
 		// randomizer function(s) themselves
 		let randomizer: string = ''
+		const randomizePlayerOrder = randomizeColors ? `
+
+		// randomize player order
+		this.results.playerOrder = General.randomizeArray(this.playerColors.slice())` : ''
+
 		if (resultsOnly) {
 			randomizer = `randomize() {
 				this.setState(this.randomizeState(this.state))
@@ -458,10 +468,7 @@ export class GeneratorTemplate {
 		
 				// perform randomization
 		
-				${randomizerAscription}
-
-				// randomize player order
-				this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
+				${randomizerAscription}${randomizePlayerOrder}
 		
 				let newState = Object.assign({}, currentState, { showResults: true })
 				return newState
@@ -472,10 +479,7 @@ export class GeneratorTemplate {
 
 				// perform randomization
 				
-				${randomizerAscription}
-
-				// randomize player order
-				this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
+				${randomizerAscription}${randomizePlayerOrder}
 		
 				this.showResults()
 			}`
@@ -502,7 +506,7 @@ class ${gameName} extends Game {
 	//==================================================================================================================================
 	//#region === additional variables
 
-	playerColors = ['red', 'green', 'blue']
+	${playerColors}
 
 	//#endregion
 	//==================================================================================================================================
@@ -534,6 +538,18 @@ class ${gameName} extends Game {
 			</>
 		)
 	}
+
+	//#endregion
+	//==================================================================================================================================
+	//#region === randomizer
+
+	${randomizer}
+
+	//#endregion
+	//==================================================================================================================================
+	//#region === additional functions
+
+	// n/a
 
 	//#endregion
 	//==================================================================================================================================
@@ -569,18 +585,6 @@ class ${gameName} extends Game {
 		}
 		this.currentLanguage = this.props.language
 	}
-
-	//#endregion
-	//==================================================================================================================================
-	//#region === randomizer
-
-	${randomizer}
-
-	//#endregion
-	//==================================================================================================================================
-	//#region === additional functions
-
-	// n/a
 
 	//#endregion
 	//==================================================================================================================================

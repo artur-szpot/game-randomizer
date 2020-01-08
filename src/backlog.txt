@@ -5,7 +5,6 @@
 ===========================================================================
  [HARD] add visual preview
  [EASY] change the GUI to improve UX (get rid of superfluous tabbing)
- option to enable/disable color generation
 
 ===========================================================================
 =                                                                         =
@@ -14,19 +13,17 @@
 ===========================================================================
  - cookies
  - presets
- - reorganizable front page
+ - searchable (reorganizable?) front page
  - draggable elements (front page/generator)
- - animation upon rows collapsing/expanding
  - changeable color styles
- - score keeper for most games 
+ - score keeper for most games
 
 ===========================================================================
 =                                                                         =
 =                             COMPONENTS                                  =
 =                                                                         =
 ===========================================================================
- - unify hover colors for all buttons in all componentns
- - yesNo: change to the switcher style
+ - handle correctly a click outside of multiState if screen moves?
 
 ===========================================================================
 =                                                                         =

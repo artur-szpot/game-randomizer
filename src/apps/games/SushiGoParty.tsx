@@ -70,6 +70,49 @@ class SushiGoParty extends Game {
 
 	//#endregion
 	//==================================================================================================================================
+	//#region === randomizer
+
+	randomize() {
+		this.setState(this.randomizeState(this.state))
+	}
+
+	randomizeState(currentState: GameState) {
+		let nigiri: number = 0
+		let rolls: number = 0
+		let appetizers: number[] = []
+		let specials: number[] = []
+		let dessert: number = 0
+
+		rolls = General.random(0, 2)
+		dessert = General.random(0, 2)
+
+		let indices = [0, 1, 2, 3, 4, 5, 6, 7]
+		appetizers = General.randomFromArray(indices, 3)
+
+		indices = [0, 1, 2, 3, 4, 5, 6, 7]
+		specials = General.randomFromArray(indices, 2)
+
+		this.results.nigiri = nigiri
+		this.results.rolls = rolls
+		this.results.appetizers = appetizers
+		this.results.specials = specials
+		this.results.dessert = dessert
+
+		// randomize player order
+		this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
+
+		let newState = Object.assign({}, currentState, { showResults: true })// !currentState.showResults })
+		return newState
+	}
+
+	//#endregion
+	//==================================================================================================================================
+	//#region === additional functions
+
+	// n/a
+
+	//#endregion
+	//==================================================================================================================================
 	//#region === language
 
 	setLanguage() {
@@ -126,49 +169,6 @@ class SushiGoParty extends Game {
 		}
 		this.currentLanguage = this.props.language
 	}
-
-	//#endregion
-	//==================================================================================================================================
-	//#region === randomizer
-
-	randomize() {
-		this.setState(this.randomizeState(this.state))
-	}
-
-	randomizeState(currentState: GameState) {
-		let nigiri: number = 0
-		let rolls: number = 0
-		let appetizers: number[] = []
-		let specials: number[] = []
-		let dessert: number = 0
-
-		rolls = General.random(0, 2)
-		dessert = General.random(0, 2)
-
-		let indices = [0, 1, 2, 3, 4, 5, 6, 7]
-		appetizers = General.randomFromArray(indices, 3)
-
-		indices = [0, 1, 2, 3, 4, 5, 6, 7]
-		specials = General.randomFromArray(indices, 2)
-
-		this.results.nigiri = nigiri
-		this.results.rolls = rolls
-		this.results.appetizers = appetizers
-		this.results.specials = specials
-		this.results.dessert = dessert
-
-		// randomize player order
-		this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
-
-		let newState = Object.assign({}, currentState, { showResults: true })// !currentState.showResults })
-		return newState
-	}
-
-	//#endregion
-	//==================================================================================================================================
-	//#region === additional functions
-
-	// n/a
 
 	//#endregion
 	//==================================================================================================================================

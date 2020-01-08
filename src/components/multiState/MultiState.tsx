@@ -35,12 +35,38 @@ export interface MultiStateClickFunctions {
 	subClick(props: MultiStateProps, subIndex: number): void
 	listClick(props: MultiStateProps): void
 	mainClick(props: MultiStateProps, change: number): void
+	outsideClick(props: MultiStateProps): void
 }
 
 //#endregion
 //==================================================================================================================================
 
 export class MultiState extends React.Component<MultiStateProps> {
+
+	/** Takes care of hiding the list view when anything outside of it is clicked. */
+	constructor(props: MultiStateProps) {
+		super(props)
+		this.setWrapperRef = this.setWrapperRef.bind(this)
+		this.handleClickOutside = this.handleClickOutside.bind(this)
+	}
+
+	wrapperRef: Node | null = null
+	listenerState: boolean = false
+	listenerToggle(newState: boolean) {
+		if (this.listenerState === newState) { return }
+		if (!this.listenerState) {
+			document.addEventListener('mousedown', this.handleClickOutside)
+		} else {
+			document.removeEventListener('mousedown', this.handleClickOutside)
+		}
+		this.listenerState = newState
+	}
+	setWrapperRef(node: HTMLDivElement) { this.wrapperRef = node }
+	handleClickOutside(event: MouseEvent) {
+		if (this.wrapperRef && !this.wrapperRef.contains(event.target as Node)) {
+			this.props.onClick.outsideClick(this.props)
+		}
+	}
 
 	/** Checks whether applying the change will not result in overflow - if so, sets the value back to 0. */
 	static validateNewChosen(current: number, change: number, max: number): number {
@@ -95,7 +121,23 @@ export class MultiState extends React.Component<MultiStateProps> {
 
 		/** Set the classes, including hiding the currently unused part of the multi. */
 		let subListClasses = 'multiListContainer'
-		let mainClasses = 'multiCell multiButton'
+		let mainClasses = 'mainMulti ' + (this.props.isRandomChance ? 'multiRandomChance' : 'multiButton')
+		
+		const mainButtonClasses = 'multiButtonMain ' + (this.props.isRandomChance ? 'multiButtonMainRandomChance' : 'multiButtonMainButton')
+		const mainButtonAction = this.props.isRandomChance ? () => null : () => this.props.onClick.listClick(this.props)
+
+		let sideButtonClasses = 'multiButtonSide ' + (this.props.isRandomChance ? 'multiButtonSideRandomChance' : 'multiButtonSideButton')
+
+		const rightEnabled = !this.props.isRandomChance || this.props.currentState < this.props.states.length - 1
+		const rightIcon = <i className={this.props.isRandomChance ? (rightEnabled ? 'fas fa-plus-square' : '') : 'fas fa-angle-right'}></i>
+		const rightAction = rightEnabled ? () => this.props.onClick.mainClick(this.props, 1) : () => null
+		const rightButton = <div className={rightEnabled ? sideButtonClasses : 'multiButtonSide'} onClick={rightAction}>{rightIcon}</div>
+		
+		const leftEnabled = !this.props.isRandomChance || this.props.currentState > 0
+		const leftIcon = <i className={this.props.isRandomChance ? (leftEnabled ? 'fas fa-minus-square' : '') : 'fas fa-angle-left'}></i>
+		const leftAction = leftEnabled ? () => this.props.onClick.mainClick(this.props, -1) : () => null
+		const leftButton = <div className={leftEnabled ? sideButtonClasses : 'multiButtonSide'} onClick={leftAction}>{leftIcon}</div>
+		this.listenerToggle(this.props.showList)
 		if (this.props.showList) {
 			mainClasses += ' hidden'
 		} else {
@@ -106,56 +148,22 @@ export class MultiState extends React.Component<MultiStateProps> {
 		return (
 			<>
 				<div className={mainClasses}>
+					{leftButton}
 					<div
-						className='multiButtonSide'
-						onClick={() => this.props.onClick.mainClick(this.props, -1)}
-					>
-						<i className='fas fa-angle-left'></i>
-					</div>
-					<div
-						className='multiButtonMain'
-						onClick={() => this.props.onClick.listClick(this.props)}
+						className={mainButtonClasses}
+						onClick={mainButtonAction}
 					>
 						<p className='multiButtonTitle'>{this.props.states[this.props.currentState]}</p>
 						<div>
 							{subButtons}
 						</div>
 					</div>
-					<div
-						className='multiButtonSide'
-						onClick={() => this.props.onClick.mainClick(this.props, 1)}
-					>
-					<i className='fas fa-angle-right'></i>
-					</div>
+					{rightButton}
 				</div>
-				<div className={subListClasses}>
+				<div className={subListClasses} ref={this.setWrapperRef}>
 					{bigSubButtons}
 				</div>
 			</>
 		);
 	}
 }
-
-
-
-{/* <button
-className='multiButton multiButtonPrev'
-onClick={() => this.props.onClick.mainClick(this.props, -1)}
->
-<p className='icon icon-multi icon-left-open'></p>
-</button>
-<button
-className='multiButton multiButtonMain'
-onClick={() => this.props.onClick.listClick(this.props)}
->
-<div className='multiButtonContainer'>
-	<p className='multiButtonTitle'>{this.props.states[this.props.currentState]}</p>
-	{subButtons}
-</div>
-</button>
-<button
-className='multiButton multiButtonNext'
-onClick={() => this.props.onClick.mainClick(this.props, 1)}
->
-<p className='icon icon-multi icon-right-open'></p>
-</button> */}

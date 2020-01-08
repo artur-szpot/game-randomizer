@@ -29,6 +29,7 @@ class Generator extends React.Component<GeneratorProps, State> {
          component: GeneratorLineType.COMPONENT,
          componentInstancesInput: this.emptyGeneratorLineInput(),
          categorySubtext: GeneratorLineSelectValues.NO,
+         randomizeColors: GeneratorLineSelectValues.YES,
          yesNoInitial: GeneratorLineSelectValues.YES,
          randomChanceInitial: GeneratorLineSelectValues.SOMETIMES,
          multiStateCurrent: this.emptyGeneratorLineInput(),
@@ -53,6 +54,7 @@ class Generator extends React.Component<GeneratorProps, State> {
       appName.index = 0
       appName.component = GeneratorLineType.APPNAME
       appName.componentTypeSelect = GeneratorLineSelectValues.APPNAME
+      appName.randomizeColors = GeneratorLineSelectValues.YES
       this.state = this.validateState({
          appName: appName,
          components: [],
@@ -74,7 +76,15 @@ class Generator extends React.Component<GeneratorProps, State> {
 
    handleSelect(component: GeneratorLineType, index: number, field: GeneratorLineFields, value: GeneratorLineSelectValues): void {
       let newLines: GeneratorLineProps[]
-      if (component === GeneratorLineType.COMPONENT) {
+      if (component === GeneratorLineType.APPNAME) {
+         let appName = { ...this.state.appName }
+         appName.randomizeColors = value
+         let newState
+         newState = Object.assign({}, this.state, { appName: appName })
+         this.setState(newState, this.validate)
+         return
+      }
+      else if (component === GeneratorLineType.COMPONENT) {
          newLines = [...this.state.components]
       } else {
          newLines = [...this.state.results]
@@ -88,6 +98,9 @@ class Generator extends React.Component<GeneratorProps, State> {
             break
          case GeneratorLineFields.YESNO_INITIAL:
             newLines[index].yesNoInitial = value
+            break
+         case GeneratorLineFields.RANDOMCHANCE_CURRENT:
+            newLines[index].randomChanceInitial = value
             break
          default:
             alert('Attempted to call handleSelect for an unsupported field: ' + field)
@@ -244,7 +257,7 @@ class Generator extends React.Component<GeneratorProps, State> {
       let count: number = 1
 
       if (several) {
-         let howMany: string | null = prompt('Provide the number of fields to insert:')
+         let howMany: string | null = prompt('Provide the number of options to insert:')
          if (howMany === null) { return }
          count = Number(howMany)
          if (isNaN(count)) { return }
@@ -555,7 +568,7 @@ class Generator extends React.Component<GeneratorProps, State> {
             instances: Math.max(1, Number(this.state.results[i].componentInstancesInput.value))
          })
       }
-      this.setState({ generated: GeneratorTemplate.generate(this.state.appName.componentNameInput.value, results, opts) })
+      this.setState({ generated: GeneratorTemplate.generate(this.state.appName.componentNameInput.value, this.state.appName.randomizeColors === GeneratorLineSelectValues.YES, results, opts) })
    }
 
    //#endregion
@@ -591,13 +604,13 @@ class Generator extends React.Component<GeneratorProps, State> {
       buttons.push({
          color: NiceButtonColors.GREEN,
          icon: NiceButtonIcons.ADD_ONE,
-         label: 'component',
+         label: 'option',
          function: () => this.add(GeneratorLineType.COMPONENT, false)
       })
       buttons.push({
          color: NiceButtonColors.GREEN,
          icon: NiceButtonIcons.ADD_MANY,
-         label: 'components',
+         label: 'options',
          function: () => this.add(GeneratorLineType.COMPONENT, true)
       })
       buttons.push({
@@ -631,7 +644,7 @@ class Generator extends React.Component<GeneratorProps, State> {
                <form spellCheck={false} autoComplete='off'>
                   <Line {...this.shortCategory('General')} />
                   <GeneratorLine {...this.state.appName} />
-                  <Line {...this.shortCategory('Components')} />
+                  <Line {...this.shortCategory('Options')} />
                   {components}
                   <Line {...this.shortCategory('Results', this.state.resultsError, true, this.state.resultsError !== '')} />
                   {results}

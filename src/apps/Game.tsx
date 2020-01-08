@@ -17,8 +17,8 @@ export enum ComponentBehaviors {
    HIDELIST
 }
 export interface ComponentBehavior {
-   type: ComponentBehaviors,
-   target: string,
+   type: ComponentBehaviors
+   target: string
    index: number
 }
 
@@ -52,7 +52,6 @@ export interface GamePropsLanguage {
 }
 
 
-
 export class Game extends React.Component<GameProps, GameState> {
    //==================================================================================================================================
    //#region === initialization
@@ -81,6 +80,7 @@ export class Game extends React.Component<GameProps, GameState> {
          mainClick: (props: MultiStateProps, change: number) => this.handleMultiClick(props, change),
          subClick: (props: MultiStateProps, subIndex: number) => this.handleMultiSubClick(props, subIndex),
          listClick: (props: MultiStateProps) => this.handleMultiListClick(props),
+         outsideClick: (props: MultiStateProps) => this.handleMultiOutsideClick(props)
       },
       onClickPlusMinus: (props: PlusMinusProps, change: number) => this.handlePlusMinusClick(props, change),
 
@@ -230,6 +230,16 @@ export class Game extends React.Component<GameProps, GameState> {
       this.setState(newState)
    }
 
+   handleMultiOutsideClick(props: MultiStateProps) {
+      if (!this.state.multistate.hasOwnProperty(props.name)) {
+         alert("handleMultiListClick called for unsupported component: " + props.name)
+         return
+      }
+      let newState = Object.assign({}, this.state)
+      newState.multistate[props.name][props.index].showList = false
+      this.setState(newState)
+   }
+
    handlePlusMinusClick(props: PlusMinusProps, change: number) {
       if (!this.state.plusminus.hasOwnProperty(props.name)) {
          alert("handlePlusMinusClick called for unsupported varName: " + props.name)
@@ -250,7 +260,7 @@ export class Game extends React.Component<GameProps, GameState> {
                   case ComponentBehaviors.MINMAX_MIN:
                   case ComponentBehaviors.MINMAX_MAX:
                      target = newState.plusminus[plusminusState.behaviors[i].target][plusminusState.behaviors[i].index]
-                     if(plusminusState.behaviors[i].type == ComponentBehaviors.MINMAX_MIN){
+                     if(plusminusState.behaviors[i].type === ComponentBehaviors.MINMAX_MIN){
                         (target as PlusMinusState).minMaxCurr.min = newValue.current + 1
                      } else {
                         (target as PlusMinusState).minMaxCurr.max = newValue.current - 1

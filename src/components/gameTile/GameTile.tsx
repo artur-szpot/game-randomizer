@@ -1,14 +1,14 @@
-import React from 'react';
-import './GameTile.css';
+import React from 'react'
+import './GameTile.css'
 
 /**
  * A tile displaying the game's name and thumbnail in the main menu.
  */
 
 interface GameTileProps {
-   image: string;
-   onClick: () => void;
-   title: string;
+   image: string
+   onClick: () => void
+   title: string
 }
 
 class GameTile extends React.Component<GameTileProps> {
@@ -25,8 +25,8 @@ class GameTile extends React.Component<GameTileProps> {
                </div>
             </div>
          </div>
-      );
+      )
    }
 }
 
-export default GameTile;
+export default GameTile

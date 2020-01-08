@@ -65,6 +65,30 @@ class Ethnos extends Game {
 
    //#endregion
    //==================================================================================================================================
+   //#region === randomizer
+
+   randomize() {
+      let races: number[] = []
+
+      let racesChoice = [...Array(12 + (this.yesNoValue('fairies') ? 1 : 0)).keys()]
+      races = General.randomFromArray(racesChoice, 6 - (this.yesNoValue('twoPlayers') ? 1 : 0))
+
+      this.results.races = races
+
+      // randomize player order
+      this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
+
+		this.showResults()
+   }
+
+   //#endregion
+   //==================================================================================================================================
+   //#region === additional functions
+
+   // n/a
+
+   //#endregion
+   //==================================================================================================================================
    //#region === language
 
    setLanguage() {
@@ -139,30 +163,6 @@ class Ethnos extends Game {
       }
       this.currentLanguage = this.props.language
    }
-
-   //#endregion
-   //==================================================================================================================================
-   //#region === randomizer
-
-   randomize() {
-      let races: number[] = []
-
-      let racesChoice = [...Array(12 + (this.yesNoValue('fairies') ? 1 : 0)).keys()]
-      races = General.randomFromArray(racesChoice, 6 - (this.yesNoValue('twoPlayers') ? 1 : 0))
-
-      this.results.races = races
-
-      // randomize player order
-      this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
-
-		this.showResults()
-   }
-
-   //#endregion
-   //==================================================================================================================================
-   //#region === additional functions
-
-   // n/a
 
    //#endregion
    //==================================================================================================================================

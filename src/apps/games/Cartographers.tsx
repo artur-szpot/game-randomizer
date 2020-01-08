@@ -49,6 +49,39 @@ class Cartographers extends Game {
 
    //#endregion
    //==================================================================================================================================
+   //#region === randomizer
+
+   randomize() {
+      this.setState(this.randomizeState(this.state))
+   }
+
+   randomizeState(currentState: GameState) {
+      let side: number = 0
+      let decrees: number[] = []
+
+      side = General.random(0, 1)
+      for(let i=0;i<4;i++){
+         let choices = [i*2, i*2+1]
+         decrees.push(General.randomFromArray(choices, 1)[0])
+      }
+
+      decrees = General.randomizeArray(decrees)
+
+      this.results.side = side
+      this.results.decrees = decrees
+
+      let newState = Object.assign({}, currentState, { showResults: true })
+      return newState
+   }
+
+   //#endregion
+   //==================================================================================================================================
+   //#region === additional functions
+
+   // n/a
+
+   //#endregion
+   //==================================================================================================================================
    //#region === language
 
    setLanguage() {
@@ -111,39 +144,6 @@ class Cartographers extends Game {
       }
       this.currentLanguage = this.props.language
    }
-
-   //#endregion
-   //==================================================================================================================================
-   //#region === randomizer
-
-   randomize() {
-      this.setState(this.randomizeState(this.state))
-   }
-
-   randomizeState(currentState: GameState) {
-      let side: number = 0
-      let decrees: number[] = []
-
-      side = General.random(0, 1)
-      for(let i=0;i<4;i++){
-         let choices = [i*2, i*2+1]
-         decrees.push(General.randomFromArray(choices, 1)[0])
-      }
-
-      decrees = General.randomizeArray(decrees)
-
-      this.results.side = side
-      this.results.decrees = decrees
-
-      let newState = Object.assign({}, currentState, { showResults: true })
-      return newState
-   }
-
-   //#endregion
-   //==================================================================================================================================
-   //#region === additional functions
-
-   // n/a
 
    //#endregion
    //==================================================================================================================================
