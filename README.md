@@ -41,7 +41,7 @@ Developed using [Visual Studio Code](https://code.visualstudio.com/)
 
 ## Additional resources
 
-* Font Awesome 5 Free ([https://github.com/FortAwesome/Font-Awesome](GitHub project page), [https://fontawesome.com/](official website))
+* Font Awesome 5 Free ([GitHub project page](https://github.com/FortAwesome/Font-Awesome), [official website](https://fontawesome.com/))
 * Styling of the miniature flag images used for the language dropdown menu was adopted from flag-icon-css, a wonderful node module created by Panayiotis Lipiridis ([GitHub project page](https://github.com/lipis/flag-icon-css))
 
 ## License
