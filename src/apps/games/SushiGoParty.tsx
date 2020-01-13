@@ -9,16 +9,9 @@ interface SushiGoPartyResults {
 	appetizers: number[]
 	specials: number[]
 	dessert: number
-	playerOrder: string[]
 }
 
 class SushiGoParty extends Game {
-	//==================================================================================================================================
-	//#region === additional variables
-
-	playerColors = ['red','green','blue']
-
-	//#endregion
 	//==================================================================================================================================
 	//#region === variable structure (generated)
 
@@ -38,8 +31,7 @@ class SushiGoParty extends Game {
 		rolls: 0,
 		appetizers: [],
 		specials: [],
-		dessert: 0,
-      playerOrder: []
+		dessert: 0
 	}
 
 	//#endregion
@@ -49,15 +41,14 @@ class SushiGoParty extends Game {
 	renderOptions() { return this.renderResults() }
 
 	renderResults() {
-		let resNigiri: string = this.language.specificArrays.nigiri[this.results.nigiri]
-		let resRolls: string = this.language.specificArrays.rolls[this.results.rolls]
-		let resAppetizers: string = this.results.appetizers.map(e => this.language.specificArrays.appetizers[e]).join(', ')
-		let resSpecials: string = this.results.specials.map(e => this.language.specificArrays.specials[e]).join(', ')
-		let resDessert: string = this.language.specificArrays.desserts[this.results.dessert]
+		let resNigiri: string = this.language.specificArrays.nigiri[this.results.nigiri].content
+		let resRolls: string = this.language.specificArrays.rolls[this.results.rolls].content
+		let resAppetizers: string = this.results.appetizers.map(e => this.language.specificArrays.appetizers[e].content).join(', ')
+		let resSpecials: string = this.results.specials.map(e => this.language.specificArrays.specials[e].content).join(', ')
+		let resDessert: string = this.language.specificArrays.desserts[this.results.dessert].content
 
 		return (
 			<>
-			<Line {...this.colorsResult(this.commonLanguage.playerOrder[0], this.results.playerOrder)} />
 				<Line {...this.shortResult(this.language.results.nigiri[0], resNigiri)} />
 				<Line {...this.shortResult(this.language.results.rolls[0], resRolls)} />
 				<Line {...this.shortResult(this.language.results.appetizers[0], resAppetizers)} />
@@ -98,18 +89,9 @@ class SushiGoParty extends Game {
 		this.results.specials = specials
 		this.results.dessert = dessert
 
-		// randomize player order
-		this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
-
 		let newState = Object.assign({}, currentState, { showResults: true })// !currentState.showResults })
 		return newState
 	}
-
-	//#endregion
-	//==================================================================================================================================
-	//#region === additional functions
-
-	// n/a
 
 	//#endregion
 	//==================================================================================================================================
@@ -126,11 +108,39 @@ class SushiGoParty extends Game {
 					multistate: {},
 					specifics: {},
 					specificArrays: {
-						nigiri: ['Nigiri'],
-						rolls: ['Futomaki', 'Uramaki', 'Temaki'],
-						appetizers: ['Tempura', 'Sashimi', 'Pierożek Gyoza', 'Węgorz', 'Edamame', 'Onigiri', 'Tofu', 'Zupa Miso'],
-						specials: ['Wasabi', 'Pałeczki', 'Łyżeczka', 'Pudełko na wynos', 'Sos sojowy', 'Herbata', 'Menu', 'Zamówienie specjalne'],
-						desserts: ['Pudding', 'Lody herbaciane', 'Owoce']
+						nigiri: [
+							{ content: 'Nigiri', tag: '' },
+						],
+						rolls: [
+							{ content: 'Futomaki', tag: '' },
+							{ content: 'Uramaki', tag: '' },
+							{ content: 'Temaki', tag: '' },
+						],
+						appetizers: [
+							{ content: 'Tempura', tag: '' },
+							{ content: 'Sashimi', tag: '' },
+							{ content: 'Pierożek Gyoza', tag: '' },
+							{ content: 'Węgorz', tag: '' },
+							{ content: 'Edamame', tag: '' },
+							{ content: 'Onigiri', tag: '' },
+							{ content: 'Tofu', tag: '' },
+							{ content: 'Zupa Miso', tag: '' },
+						],
+						specials: [
+							{ content: 'Wasabi', tag: '' },
+							{ content: 'Pałeczki', tag: '' },
+							{ content: 'Łyżeczka', tag: '' },
+							{ content: 'Pudełko na wynos', tag: '' },
+							{ content: 'Sos sojowy', tag: '' },
+							{ content: 'Herbata', tag: '' },
+							{ content: 'Menu', tag: '' },
+							{ content: 'Zamówienie specjalne', tag: '' },
+						],
+						desserts: [
+							{ content: 'Pudding', tag: '' },
+							{ content: 'Lody herbaciane', tag: '' },
+							{ content: 'Owoce', tag: '' },
+						]
 					},
 					results: {
 						nigiri: ['Nigiri'],
@@ -151,11 +161,39 @@ class SushiGoParty extends Game {
 					multistate: {},
 					specifics: {},
 					specificArrays: {
-						nigiri: ['Nigiri'],
-						rolls: ['Maki', 'Uramaki', 'Temaki'],
-						appetizers: ['Tempura', 'Sashimi', 'Dumpling', 'Eel', 'Edamame', 'Onigiri', 'Tofu', 'Miso soup'],
-						specials: ['Wasabi', 'Chopsticks', 'Spoon', 'Takeout box', 'Soy sauce', 'Tea', 'Menu', 'Special order'],
-						desserts: ['Pudding', 'Green tea ice cream', 'Fruit']
+						nigiri: [
+							{ content: 'Nigiri', tag: '' },
+						],
+						rolls: [
+							{ content: 'Maki', tag: '' },
+							{ content: 'Uramaki', tag: '' },
+							{ content: 'Temaki', tag: '' },
+						],
+						appetizers: [
+							{ content: 'Tempura', tag: '' },
+							{ content: 'Sashimi', tag: '' },
+							{ content: 'Dumpling', tag: '' },
+							{ content: 'Eel', tag: '' },
+							{ content: 'Edamame', tag: '' },
+							{ content: 'Onigiri', tag: '' },
+							{ content: 'Tofu', tag: '' },
+							{ content: 'Miso soup', tag: '' },
+						],
+						specials: [
+							{ content: 'Wasabi', tag: '' },
+							{ content: 'Chopsticks', tag: '' },
+							{ content: 'Spoon', tag: '' },
+							{ content: 'Takeout box', tag: '' },
+							{ content: 'Soy sauce', tag: '' },
+							{ content: 'Tea', tag: '' },
+							{ content: 'Menu', tag: '' },
+							{ content: 'Special order', tag: '' },
+						],
+						desserts: [
+							{ content: 'Pudding', tag: '' },
+							{ content: 'Green tea ice cream', tag: '' },
+							{ content: 'Fruit', tag: '' },
+						]
 					},
 					results: {
 						nigiri: ['Nigiri'],

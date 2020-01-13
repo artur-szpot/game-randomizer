@@ -115,14 +115,14 @@ export class Data {
 			publishers: [Data.publishers.Gamewright],
 			bgg: 'https://boardgamegeek.com/boardgame/192291/sushi-go-party'
 		},
-		Sagrada: {
-			name: 'Sagrada',
-			titles: { default: 'Sagrada' },
-			image: 'https://cf.geekdo-images.com/thumb/img/Efxb5We3kIolBOHjvnOffct-w0c=/fit-in/200x150/pic3525224.jpg',
-			designers: [Data.designers.AdrianAdamescu, Data.designers.DarylAndrews],
-			publishers: [Data.publishers.FloodgateGames],
-			bgg: 'https://boardgamegeek.com/boardgame/199561/sagrada'
-		},
+		// Sagrada: {
+		// 	name: 'Sagrada',
+		// 	titles: { default: 'Sagrada' },
+		// 	image: 'https://cf.geekdo-images.com/thumb/img/Efxb5We3kIolBOHjvnOffct-w0c=/fit-in/200x150/pic3525224.jpg',
+		// 	designers: [Data.designers.AdrianAdamescu, Data.designers.DarylAndrews],
+		// 	publishers: [Data.publishers.FloodgateGames],
+		// 	bgg: 'https://boardgamegeek.com/boardgame/199561/sagrada'
+		// },
 		Fresco: {
 			name: 'Fresco',
 			titles: { default: 'Fresco' },
@@ -131,14 +131,14 @@ export class Data {
 			publishers: [Data.publishers.QueenGames],
 			bgg: 'https://boardgamegeek.com/boardgame/66188/fresco'
 		},
-		KingdomBuilder: {
-			name: 'KingdomBuilder',
-			titles: { default: 'Kingdom Builder', Polski: 'Królestwo w budowie' },
-			image: 'https://cf.geekdo-images.com/thumb/img/-QYpVIA0Wa6IO9iwwhsHulOKaCQ=/fit-in/200x150/pic3387491.jpg',
-			designers: [Data.designers.DonaldXVaccarino],
-			publishers: [Data.publishers.QueenGames],
-			bgg: 'https://boardgamegeek.com/boardgame/107529/kingdom-builder'
-		},
+		// KingdomBuilder: {
+		// 	name: 'KingdomBuilder',
+		// 	titles: { default: 'Kingdom Builder', Polski: 'Królestwo w budowie' },
+		// 	image: 'https://cf.geekdo-images.com/thumb/img/-QYpVIA0Wa6IO9iwwhsHulOKaCQ=/fit-in/200x150/pic3387491.jpg',
+		// 	designers: [Data.designers.DonaldXVaccarino],
+		// 	publishers: [Data.publishers.QueenGames],
+		// 	bgg: 'https://boardgamegeek.com/boardgame/107529/kingdom-builder'
+		// },
 		Ethnos: {
 			name: 'Ethnos',
 			titles: {default:'Ethnos'},

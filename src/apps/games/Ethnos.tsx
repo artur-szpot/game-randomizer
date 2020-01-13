@@ -12,7 +12,7 @@ class Ethnos extends Game {
    //==================================================================================================================================
    //#region === additional variables
 
-   playerColors = ['white','lightblue','purple','lightgreen','red','black']
+   playerColors = ['white', '#72f3f3', '#e600ac', '#8cff1a', '#ffff33', 'black']
 
    //#endregion
    //==================================================================================================================================
@@ -52,7 +52,7 @@ class Ethnos extends Game {
    }
 
    renderResults() {
-      let resRaces: string[] = this.results.races.map(e => this.language.specificArrays.races[e])
+      let resRaces: string[] = this.results.races.map(e => this.language.specificArrays.races[e].content)
 
       return (
          <>
@@ -78,14 +78,8 @@ class Ethnos extends Game {
       // randomize player order
       this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
 
-		this.showResults()
+      this.showResults()
    }
-
-   //#endregion
-   //==================================================================================================================================
-   //#region === additional functions
-
-   // n/a
 
    //#endregion
    //==================================================================================================================================
@@ -106,19 +100,19 @@ class Ethnos extends Game {
                specifics: {},
                specificArrays: {
                   races: [
-                     'Szkielety',
-                     'Niziołki',
-                     'Giganci',
-                     'Morski lud',
-                     'Trolle',
-                     'Elfy',
-                     'Orkowie',
-                     'Czarodzieje',
-                     'Minotaury',
-                     'Centaury',
-                     'Skrzydlaci',
-                     'Krasnoludy',
-                     'Wróżki'
+                     { content: 'Szkielet', tag: '' },
+                     { content: 'Niziołek', tag: '' },
+                     { content: 'Olbrzym', tag: '' },
+                     { content: 'Morski lud', tag: '' },
+                     { content: 'Troll', tag: '' },
+                     { content: 'Elf', tag: '' },
+                     { content: 'Ork', tag: '' },
+                     { content: 'Czarodziej', tag: '' },
+                     { content: 'Minotaur', tag: '' },
+                     { content: 'Centaur', tag: '' },
+                     { content: 'Skrzydlaci', tag: '' },
+                     { content: 'Krasnolud', tag: '' },
+                     { content: 'Wróżka', tag: '' },
                   ],
                },
                results: {
@@ -140,19 +134,19 @@ class Ethnos extends Game {
                specifics: {},
                specificArrays: {
                   races: [
-                     'Skeleton',
-                     'Halfling',
-                     'Giant',
-                     'Merfolk',
-                     'Troll',
-                     'Elf',
-                     'Orc',
-                     'Wizards',
-                     'Minotaur',
-                     'Centaur',
-                     'Wingfolk',
-                     'Dwarf',
-                     'Fairies'
+                     { content: 'Skeleton', tag: '' },
+                     { content: 'Halfling', tag: '' },
+                     { content: 'Giant', tag: '' },
+                     { content: 'Merfolk', tag: '' },
+                     { content: 'Troll', tag: '' },
+                     { content: 'Elf', tag: '' },
+                     { content: 'Orc', tag: '' },
+                     { content: 'Wizards', tag: '' },
+                     { content: 'Minotaur', tag: '' },
+                     { content: 'Centaur', tag: '' },
+                     { content: 'Wingfolk', tag: '' },
+                     { content: 'Dwarf', tag: '' },
+                     { content: 'Fairy', tag: '' },
                   ],
                },
                results: {

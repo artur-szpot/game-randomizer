@@ -142,7 +142,7 @@ export class Navbar extends React.Component<NavbarProps> {
                <p>The project is being developed since July 2019 and is alive as of January 2020.</p>
                <hr />
                <h3>Additional resources:</h3>
-               <p><strong>Font Awesome 5 Free</strong> (<a href="https://github.com/FortAwesome/Font-Awesome">GitHub project page</a>)</p>
+               <p><strong>Font Awesome 5 Free</strong> (<a href="https://github.com/FortAwesome/Font-Awesome">GitHub project page</a>, <a href="https://fontawesome.com/">official website</a>)</p>
                <p><strong>Styling of the miniature flag images</strong> used for the language dropdown menu was adopted from <em>flag-icon-css</em>, a wonderful node module created by Panayiotis Lipiridis
                   (<a href="https://github.com/lipis/flag-icon-css">GitHub project page</a>)
                </p>

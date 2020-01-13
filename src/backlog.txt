@@ -41,8 +41,9 @@
 ===========================================================================
   - Near Far expansions
   - Gentes (the people)
-  - Sagrada (rules, tools, panes, expansions)
+  - Sagrada (rules, tools, windows, expansions)
   - Kingdom Builder (oooh)
-  - Cartographers
   - Castles of Burgundy
   - Dominion
+
+  - 51st: add factions' colors

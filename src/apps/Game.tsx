@@ -36,7 +36,7 @@ interface GameStateLanguage {
    multistate: { [key: string]: MultiStateLanguage[] }
    results: { [key: string]: string[] }
    specifics: { [key: string]: string }
-   specificArrays: { [key: string]: string[] }
+   specificArrays: { [key: string]: { tag: string, content: string}[] }
 }
 
 /** Props passed on to the app from AppBody. */
@@ -459,21 +459,25 @@ export class Game extends React.Component<GameProps, GameState> {
    //================================================================
    //#region ====== category
 
-   shortCategory(name: string, subtext: string | string[] | null = null, visible: boolean = true, error: boolean = false): LineProps {
-      this.first = true
-      let actualSubtext: string[]
-      if (subtext === null) {
-         actualSubtext = []
-      } else if (!Array.isArray(subtext)) {
-         actualSubtext = [subtext]
+   assure_is_array(input: string | string[] | null) {
+      if (input === null) {
+         return []
+      } else if (!Array.isArray(input)) {
+         return [input]
       } else {
-         actualSubtext = subtext
+         return input
       }
+   }
+
+   shortCategory(name: string, text: string | string[] | null = null, visible: boolean = true, error: boolean = false): LineProps {
+      this.first = true
       return this.createCategory(
          name,
          0,
          this.language.categories[name],
-         actualSubtext,
+         [],
+         [],
+         this.assure_is_array(text),
          [],
          error,
          false,
@@ -483,19 +487,15 @@ export class Game extends React.Component<GameProps, GameState> {
       )
    }
 
-   shortResult(text: string, subtext: string | string[], visible: boolean = true, hiddenMessage: string = '', unhideFunction: () => void = () => null): LineProps {
+   shortResult(title: string, text: string | string[], visible: boolean = true, hiddenMessage: string = '', unhideFunction: () => void = () => null): LineProps {
       this.first = true
-      let actualSubtext: string[]
-      if (!Array.isArray(subtext)) {
-         actualSubtext = [subtext]
-      } else {
-         actualSubtext = subtext
-      }
       return this.createCategory(
-         text.split(' ')[0],
+         title.split(' ')[0],
          0,
-         text,
-         actualSubtext,
+         title,
+         [],
+         [],
+         this.assure_is_array(text),
          [],
          false,
          true,
@@ -505,12 +505,32 @@ export class Game extends React.Component<GameProps, GameState> {
       )
    }
 
-   colorsResult(text: string, colors: string[], visible: boolean = true, hiddenMessage: string = '', unhideFunction: () => void = () => null): LineProps {
+   shortResultCategoryColor(title: string, text_category:string|string[], colors: string|string[], text: string | string[], visible: boolean = true, hiddenMessage: string = '', unhideFunction: () => void = () => null): LineProps {
       this.first = true
       return this.createCategory(
-         text.split(' ')[0],
+         title.split(' ')[0],
          0,
-         text,
+         title,
+         this.assure_is_array(text_category),
+         this.assure_is_array(colors),
+         this.assure_is_array(text),
+         [],
+         false,
+         true,
+         hiddenMessage,
+         unhideFunction,
+         visible
+      )
+   }
+
+   colorsResult(title: string, colors: string[], visible: boolean = true, hiddenMessage: string = '', unhideFunction: () => void = () => null): LineProps {
+      this.first = true
+      return this.createCategory(
+         title.split(' ')[0],
+         0,
+         title,
+         [],
+         [],
          [],
          colors,
          false,
@@ -521,12 +541,14 @@ export class Game extends React.Component<GameProps, GameState> {
       )
    }
 
-   createCategory(name: string, index: number, text: string, subtext: string[], colors: string[], error: boolean, result: boolean, hiddenMessage: string, unhideFunction: () => void, visible: boolean): LineProps {
+   createCategory(name: string, index: number, title: string, text_category:string[], tag_color: string[], text: string[], colors: string[], error: boolean, result: boolean, hiddenMessage: string, unhideFunction: () => void, visible: boolean): LineProps {
       let insideProps: CategoryProps = {
          name: name,
-         index: -1,
+         index: index,
+         title: title,
+         text_category: text_category,
+         tag_color: tag_color,
          text: text,
-         subtext: subtext,
          error: error,
          result: result,
          colors: colors,

@@ -116,9 +116,9 @@ class NearAndFar extends Game {
 
 	renderResults() {
 		const resMap: string = this.language.multistate.map[0].contents[this.results.map - 1]
-		const resTown: string = this.language.specificArrays.dawnDusk[this.results.dawnDusk]
+		const resTown: string = this.language.specificArrays.dawnDusk[this.results.dawnDusk].content
 		const resQuests: string = this.results.quests.join(', ')
-		const resBosses: string = General.listWithIndices(this.language.specificArrays.bosses, this.results.bosses)
+		const resBosses: string = this.results.bosses.map(e => this.language.specificArrays.bosses[e].content).join(', ')
 		const visBosses: boolean = this.results.map === 11
 		const resAddCamps: string = String(this.results.addCamps)
 
@@ -262,8 +262,16 @@ class NearAndFar extends Game {
 					},
 					specifics: {},
 					specificArrays: {
-						dawnDusk: ['świt', 'zmierzch'],
-						bosses: ['Captain Shreya', 'Zag the Treasure Hunter', 'The Ivory Queen', ' The Red King'],
+						dawnDusk: [
+							{content: 'świt',  tag:''},
+							{content: 'zmierzch', tag:''},
+						],
+						bosses: [
+							{content: 'Captain Shreya',  tag:''},
+							{content: 'Zag the Treasure Hunter',  tag:''},
+							{content: 'The Ivory Queen',  tag:''},
+							{content: ' The Red King', tag:''},
+						],
 					},
 					results: {
 						map: ['Mapa:'],
@@ -320,8 +328,16 @@ class NearAndFar extends Game {
 					},
 					specifics: {},
 					specificArrays: {
-						dawnDusk: ['dawn', 'dusk'],
-						bosses: ['Captain Shreya', 'Zag the Treasure Hunter', 'The Ivory Queen', ' The Red King'],
+						dawnDusk: [
+							{content: 'dawn',  tag:''},
+							{content: 'dusk', tag:''},
+						],
+						bosses: [
+							{content: 'Captain Shreya',  tag:''},
+							{content: 'Zag the Treasure Hunter', tag:''},
+							{content:  'The Ivory Queen', tag:''},
+							{content:  ' The Red King', tag:''},
+						],
 					},
 					results: {
 						map: ['Map:'],

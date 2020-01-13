@@ -670,6 +670,16 @@ class Generator extends React.Component<GeneratorProps, State> {
    //==================================================================================================================================
    //#region === helper ported over from Game
 
+   assure_is_array(input: string | string[] | null) {
+      if (input === null) {
+         return []
+      } else if (!Array.isArray(input)) {
+         return [input]
+      } else {
+         return input
+      }
+   }
+
    shortCategory(text: string, subtext: string | string[] | null = null, visible: boolean = true, error: boolean = false): LineProps {
       let actualSubtext: string[]
       if (subtext === null) {
@@ -706,12 +716,14 @@ class Generator extends React.Component<GeneratorProps, State> {
       )
    }
 
-   createCategory(name: string, text: string, subtext: string[], error: boolean, result: boolean, visible: boolean): LineProps {
+   createCategory(name: string, title: string, text: string[], error: boolean, result: boolean, visible: boolean): LineProps {
       let insideProps: CategoryProps = {
          name: name,
          index: -1,
+         title: title,
          text: text,
-         subtext: subtext,
+         text_category: [],
+         tag_color: [],
          error: error,
          result: result,
          colors: [],

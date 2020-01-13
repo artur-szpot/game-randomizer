@@ -117,3 +117,27 @@
 	color: rgb(122, 202, 255);
 	text-decoration: none;
 }
+
+/* Some results are displayed as category - color - text. */
+.resultCategory {
+	display: inline-block;
+	margin: 0;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.resultColor {
+	height: 1.8rem;
+	width: 1.8rem;
+	border: 2px solid white;
+	border-radius: 20px;
+	display: inline-block;
+	margin: 0 10px;
+	vertical-align: middle;
+}
+
+.resultText {
+	display: inline-block;
+	margin: 0;
+	vertical-align: middle;
+}

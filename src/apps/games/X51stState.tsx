@@ -101,16 +101,16 @@ class X51stState extends Game {
 	}
 
 	renderResults() {
-		let resPlayers: string[][] = this.results.players.map(e => e.map(el => this.language.specificArrays.factions[el]))
-		let resPlayerOrder: string[] = this.results.playerOrder.map(e => this.language.specificArrays.factions[e])
+		let resPlayers: string[][] = this.results.players.map(e => e.map(el => this.language.specificArrays.factions[el].content))
+		let resPlayerOrder: string[] = this.results.playerOrder.map(e => this.language.specificArrays.factions[e].content)
 		let resPlayerOrderHidden: string = this.results.hiddenPlayerOrder ? this.language.specifics.playerOrderHidden : ''
 		let resPlayerOrderUnhide: () => void = () => { 
 			this.results.hiddenPlayerOrder = false
 			let newState = Object.assign({}, this.state, { showResults: true })
 			this.setState(newState)
 		}
-		let resDecks: string[] = this.results.decks.map(e => this.language.specificArrays.decks[e])
-		let resAddons: string[] = this.results.addons.map(e => this.language.specificArrays.addons[e])
+		let resDecks: string[] = this.results.decks.map(e => this.language.specificArrays.decks[e].content)
+		let resAddons: string[] = this.results.addons.map(e => this.language.specificArrays.addons[e].content)
 
 		let playersAllLines: JSX.Element[] = []
 		for (let i = 0; i < this.language.results.players.length; i++) {
@@ -255,27 +255,27 @@ class X51stState extends Game {
 					},
 					specificArrays: {
 						factions: [
-							'Federacja Apallachów',
-							'Gildia Kupców',
-							'Sojusz Mutantów',
-							'Nowy Jork',
-							'Texas',
-							'Hegemonia',
-							'Mississippi',
-							'Uniwersytet'
+							{ content: 'Federacja Apallachów', tag: '' },
+							{ content: 'Gildia Kupców', tag: '' },
+							{ content: 'Sojusz Mutantów', tag: '' },
+							{ content: 'Nowy Jork', tag: '' },
+							{ content: 'Texas', tag: '' },
+							{ content: 'Hegemonia', tag: '' },
+							{ content: 'Mississippi', tag: '' },
+							{ content: 'Uniwersytet', tag: '' },
 						],
 						decks: [
-							'Podstawka',
-							'Nowa Era',
-							'Zima',
-							'Zgliszcza',
-							'Sojusznicy'
+							{ content: 'Podstawka', tag: '' },
+							{ content: 'Nowa Era', tag: '' },
+							{ content: 'Zima', tag: '' },
+							{ content: 'Zgliszcza', tag: '' },
+							{ content: 'Sojusznicy', tag: '' },
 						],
 						addons: [
-							'brak',
-							'Miasta',
-							'Płytki graniczne',
-							'Arena'
+							{ content: 'brak', tag: '' },
+							{ content: 'Miasta', tag: '' },
+							{ content: 'Płytki graniczne', tag: '' },
+							{ content: 'Arena', tag: '' },
 						],
 					},
 					results: {
@@ -332,27 +332,27 @@ class X51stState extends Game {
 					},
 					specificArrays: {
 						factions: [
-							'The Appalachian Federation',
-							'The Merchants Guild',
-							'Mutants Union',
-							'New York',
-							'Texas',
-							'Hegemony',
-							'Mississippi',
-							'University'
+							{ content: 'The Appalachian Federation', tag: '' },
+							{ content: 'The Merchants Guild', tag: '' },
+							{ content: 'Mutants Union', tag: '' },
+							{ content: 'New York', tag: '' },
+							{ content: 'Texas', tag: '' },
+							{ content: 'Hegemony', tag: '' },
+							{ content: 'Mississippi', tag: '' },
+							{ content: 'University', tag: '' },
 						],
 						decks: [
-							'Base',
-							'New Era',
-							'Winter',
-							'Scavengers',
-							'Allies'
+							{ content: 'Base', tag: '' },
+							{ content: 'New Era', tag: '' },
+							{ content: 'Winter', tag: '' },
+							{ content: 'Scavengers', tag: '' },
+							{ content: 'Allies', tag: '' },
 						],
 						addons: [
-							'none',
-							'Cities',
-							'Border Tiles',
-							'Arena'
+							{ content: 'none', tag: '' },
+							{ content: 'Cities', tag: '' },
+							{ content: 'Border Tiles', tag: '' },
+							{ content: 'Arena', tag: '' },
 						],
 					},
 					results: {
