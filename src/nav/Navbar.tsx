@@ -14,7 +14,7 @@ export interface NavbarProps {
    languageChosen: GamePropsLanguage;
    languageClick(name: string): void;
    gameChosen: GameData | null;
-   onClickHome: () => void;
+   onClickHome: () => void
 }
 
 export class Navbar extends React.Component<NavbarProps> {
@@ -57,7 +57,8 @@ export class Navbar extends React.Component<NavbarProps> {
          );
          copyrightButton = (
             <li className='nav-item my-auto ml-2'>
-               <button className='nobutton icon icon-copyright' type='button' data-toggle='collapse' data-target='#copyrightpanel'>
+               <button className='nobutton icon-large' type='button' data-toggle='collapse' data-target='#copyrightpanel'>
+                  <i className='fas fa-copyright'></i>
                </button>
             </li>
          );
@@ -65,7 +66,7 @@ export class Navbar extends React.Component<NavbarProps> {
          let designers: JSX.Element[] = [];
          let separator: string = '';
          for (let i = this.props.gameChosen.designers.length - 1; i > -1; i--) {
-            designers.push(<><a href={this.props.gameChosen.designers[i].url}>{this.props.gameChosen.designers[i].name}</a>{separator}</>);
+            designers.push(<><a href={this.props.gameChosen.designers[i].url} key={'designer-' + i}>{this.props.gameChosen.designers[i].name}</a>{separator}</>);
             separator = ', ';
          }
          designers.reverse();
@@ -74,7 +75,7 @@ export class Navbar extends React.Component<NavbarProps> {
          let publishers: JSX.Element[] = [];
          separator = '';
          for (let i = this.props.gameChosen.publishers.length - 1; i > -1; i--) {
-            publishers.push(<><a href={this.props.gameChosen.publishers[i].url} key={i}>{this.props.gameChosen.publishers[i].name}</a>{separator}</>);
+            publishers.push(<><a href={this.props.gameChosen.publishers[i].url} key={'publisher-' + i}>{this.props.gameChosen.publishers[i].name}</a>{separator}</>);
             separator = ', ';
          }
          publishers.reverse();
@@ -85,7 +86,7 @@ export class Navbar extends React.Component<NavbarProps> {
                <h3>{gameName}</h3>
                <p><strong>Designer{designersPlural}:</strong> {designers}</p>
                <p><strong>Publisher{publishersPlural}:</strong> {publishers}</p>
-               <p><a href={this.props.gameChosen.bgg}>{gameName}</a> <strong> on BoardGameGeek.com</strong></p>
+               <p><a href={this.props.gameChosen.bgg}>{gameName}</a> on <strong>BoardGameGeek.com</strong></p>
                <hr />
             </>
          );
@@ -116,8 +117,9 @@ export class Navbar extends React.Component<NavbarProps> {
                      </div>
                   </li>
 
-                  <li className='nav-item my-auto'>
-                     <button className='nobutton icon icon-info-circled' type='button' data-toggle='collapse' data-target='#infopanel'>
+                  <li className='nav-item my-auto mr-2'>
+                     <button className='nobutton icon-large' type='button' data-toggle='collapse' data-target='#infopanel'>
+                        <i className='fas fa-info-circle'></i>
                      </button>
                   </li>
 
@@ -134,23 +136,14 @@ export class Navbar extends React.Component<NavbarProps> {
                </p>
                <p>The source code is inaccesible directly through the website due to how React works, but it can be freely obtained at the&nbsp;
                    <a href="https://github.com/artur-szpot/game-randomizer">project's GitHub page</a>.</p>
-               <p>There are only three working randomizers for now; more are coming with future releases!
-                  The thumbnails are both a sneak-peak into the future and placeholders to make the front page appear less empty.
-               </p>
                <hr />
                <h3>Author:</h3>
                <p>Artur Szpot (<a href="https://github.com/artur-szpot">GitHub</a>).</p>
-               <p>The project is being developed since July 2019 and is alive as of October 2019.</p>
+               <p>The project is being developed since July 2019 and is alive as of January 2020.</p>
                <hr />
-               <h3>Font used for symbols:</h3>
-               <p><strong>Font Awesome</strong>, Copyright &copy; 2016 by Dave Gandy</p>
-               <p>Author: Dave Gandy</p>
-               <p>License: SIL ()</p>
-               <p>Homepage: <a href='http://fortawesome.github.com/Font-Awesome/'>fortawesome.github.com/Font-Awesome</a></p>
-               <p>Additional thank you to <strong>Fontello</strong> for providing a neat and easy to use solution! Visit <a href='http://fontello.com'>fontello.com</a> to learn more.</p>
-               <hr />
-               <h3>Flags:</h3>
-               <p>Styling of the miniature flag images used for the language dropdown menu was adopted from flag-icon-css, a wonderful node module created by Panayiotis Lipiridis
+               <h3>Additional resources:</h3>
+               <p><strong>Font Awesome 5 Free</strong> (<a href="https://github.com/FortAwesome/Font-Awesome">GitHub project page</a>, <a href="https://fontawesome.com/">official website</a>)</p>
+               <p><strong>Styling of the miniature flag images</strong> used for the language dropdown menu was adopted from <em>flag-icon-css</em>, a wonderful node module created by Panayiotis Lipiridis
                   (<a href="https://github.com/lipis/flag-icon-css">GitHub project page</a>)
                </p>
                <hr />

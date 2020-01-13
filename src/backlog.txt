@@ -1,32 +1,49 @@
-Expand the Generator:
- - allow setting initial values
- - allow indexed components/results
- - add visual preview
- - for categories, add subtext possibility
- - create several components/results at once
- - change the GUI to improve UX:
-   - buttons running away
-   - too much space taken by error messages
-   - superfluous tabbing
+===========================================================================
+=                                                                         =
+=                              GENERATOR                                  =
+=                                                                         =
+===========================================================================
+ [HARD] add visual preview
+ [EASY] change the GUI to improve UX (get rid of superfluous tabbing)
 
-General big ideas:
+===========================================================================
+=                                                                         =
+=                              BIG FUTURE                                 =
+=                                                                         =
+===========================================================================
  - cookies
  - presets
- - reorganizable front page
+ - searchable (reorganizable?) front page
  - draggable elements (front page/generator)
- - animation upon rows collapsing/expanding
  - changeable color styles
+ - score keeper for most games
 
-Components:
- - yesNo: change to the switcher style
- - new: chance: set a chance of X: (slider?)
-   - rarely: 20%
-   - sometimes: 40%
-   - often: 60%
-   - very often: 80%
-   - allow 0 and 100 too for a complete replacement of yesNo (perhaps make yesNo a version of this with disabled middle steps?)
+===========================================================================
+=                                                                         =
+=                             COMPONENTS                                  =
+=                                                                         =
+===========================================================================
+ - handle correctly a click outside of multiState if screen moves?
 
-Navbar:
+===========================================================================
+=                                                                         =
+=                                NAVBAR                                   =
+=                                                                         =
+===========================================================================
   - move the about section into a separate main-page component?
   - create an actual logo
-  - make it implement languages
+  - make it implement languages (about section)
+
+===========================================================================
+=                                                                         =
+=                           UPCOMING GAMES                                =
+=                                                                         =
+===========================================================================
+  - Near Far expansions
+  - Gentes (the people)
+  - Sagrada (rules, tools, windows, expansions)
+  - Kingdom Builder (oooh)
+  - Castles of Burgundy
+  - Dominion
+
+  - 51st: add factions' colors

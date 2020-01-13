@@ -6,8 +6,7 @@
 .plusminusButton {
 	width: 55px;
 	height: 55px;
-	border-radius: 12px; 
-	border: 3px solid black;
+	border-radius: 15px; 
    font-weight: bold;
 }
 
@@ -19,14 +18,15 @@
 
 /* The button should differ clearly between the on and off states. */
 .plusminusButtonOn {
-	background-color: #ccebff;
-	border-color: #003d66;
-	color: #003d66;
+	background-color: #cccccc;
+	color: #666666;
+	border: 4px solid #666666;
+	cursor: pointer;
 }
 .plusminusButtonOff {
-	color: #ababab;
-	border: 3px solid #ababab;
-	background-color: #dedede;
+	background-color: #666666;
+	color: #333333;
+	border: 4px solid #333333;
 	cursor: default;
 }
 

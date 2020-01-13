@@ -2,69 +2,65 @@
 
 
 
-/* The general styling for every part of the button. */
-.multiButton {
+/* The general styling for the multiState. */
+.mainMulti {
 	display: inline-block;
-	border: 4px solid #666666;
-	color: #666666;
-	background-color: #cccccc;
-	width: 15%;
-	padding: 0;
-	vertical-align: top;
-	font-size: 40px;
+	width: 80%;
+	font-size: 32px;
 	font-weight: bold;
+	height: 100%;
+}
+
+/* The button background for normal multiState. */
+.multiButton {
+	color: #666666;
+	border: 4px solid #666666;
+	background-color: #cccccc;
 	cursor: pointer;
+	border-radius: 15px;
 }
 
-/* The central big button doubles as a display and switches to list mode. */
-.multiButtonMain {
-	/* overwrite defaults */
+/* Additional styling for randomChance. */
+.multiRandomChance {
+	color: #cccccc;
+}
+
+/* The central part doubles as a display (with the progress dots) and switches to list mode. */
+div.multiButtonMain {
 	padding: 2px 5px;
-	width: 50%;
 	font-size: 20px;
-	color: black;
-	height: 100%;
-	/* borders */
-	border-left: none;
-	border-right: none;
-	border-radius: 0;
+	display: inline-block;
+	width: 74%;
+	margin-top: 5px;
 }
-
-/* The 'next' and 'previous' buttons need to be properly rounded and not have a side border for a smooth overall appearance. */
-.multiButtonNext {
-	/* borders */
-	border-radius: 0 15px 15px 0;
-	border-left: none;
-	height: 100%;
-}
-.multiButtonPrev {
-	/* borders */
-	border-right: none;
-	border-radius: 15px 0 0 15px;
-	height: 100%;
-}
-
-/* The 'next' and 'previous' buttons should react to being moused over. */
-.multiButtonNext:hover { color: black; }
-.multiButtonPrev:hover { color: black; }
-
-/* The text inside the button needs to be positioned properly to look well with the 'progress dots' below. */
-.multiButtonTitle {
-	margin: 0;
+div.multiButtonMainButton { color: black; }
+div.multiButtonMainRandomChance { color: white; }
+div.multiButtonMain > div {
+	line-height: 15px;
 	margin-bottom: 5px;
-	/* line height needs to be one smaller than font size to avoid the central part of the button getting bloated */
-	line-height: 19px;
+}
+div.multiButtonMain > p {
+	margin: 0;
+	line-height: 1.5rem;
 }
 
-/* The 'progress dots' should display in their proper place inside the main part of the button. */
-.multiButtonContainer {
-	position: relative;
-	margin: 0;
-	left: 50%;
-	transform: translateX(-50%);
-	/* line height needs to be one smaller than dot height to avoid the central part of the button getting bloated */
-	line-height: 9px;
+/* The 'next' and 'previous' buttons need to be properly positioned and highlight their contents on hover. */
+div.multiButtonSide {
+	display: inline-block;
+	height: 100%;
+	vertical-align: top;
+	width: 12%;
 }
+div.multiButtonSide > i {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	line-height: 1rem;
+	vertical-align: top;
+}
+div.multiButtonSideRandomChance { cursor: pointer; }
+div.multiButtonSideButton:hover > i { color: black; }
+div.multiButtonSideRandomChance:hover > i { color: white; }
 
 /* The 'progress dot' itself should be small but easily visible. Only one at a time will be active and differ in background color. */
 .multiButtonProgressDot {
@@ -105,8 +101,29 @@
 }
 .multiListItemChosen {
 	color: black;
-	background-color: #adc2eb;
+	background-color: #9cb4e4;
 }
 
-/* The div containing the multi needs this property to keep all its elements same height. */
-.multiCell { height: 100%; }
+/* Random chance should be styled differently than normal multiState. */
+/* COLORS SUBJECT TO CHANGE with proper tools. */
+.randomChanceBar {
+	width: 15%;
+	height: 10px;
+	margin: 0 -1px;
+	display: inline-block;
+	border: 0;
+	border-top: 2px solid #666;
+	border-bottom: 2px solid #666;
+}
+
+.randomChanceBarActive { background-color: #ccc; }
+.randomChanceBarInactive { background-color: #333; }
+
+.randomChanceBarSlot0 {
+	border-left: 2px solid #666;
+	border-radius: 25px 0 0 25px;
+}
+.randomChanceBarSlot4 { 
+	border-right: 2px solid #666;
+	border-radius: 0 25px 25px 0;
+ }

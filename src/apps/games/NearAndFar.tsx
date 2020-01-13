@@ -1,19 +1,22 @@
 import React from 'react';
-import { Game, GameProps, GameState } from '../Game';
+import { Game, GameProps, ComponentBehaviors } from '../Game';
 import General from '../../general/General';
-import {Line} from '../../components/Line';
+import { Line } from '../../components/Line';
 
 interface NearAndFarResults {
-	map: number;
-	dawnDusk: number;
-	addCamps: number;
-	bosses: number[];
-	quests: (string | number)[];
+	map: number
+	dawnDusk: number
+	addCamps: number
+	bosses: number[]
+	quests: (string | number)[]
+	playerOrder: string[]
 }
 
 class NearAndFar extends Game {
 	//==================================================================================================================================
 	//#region === additional variables
+
+	playerColors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00']
 
 	questBase = [
 		[["B", "D", "H", "M"], ["A", "C", "E", "F", "G", "I", "J", "K", "L", "N", "O", "P"]],
@@ -37,19 +40,33 @@ class NearAndFar extends Game {
 		super(props);
 		this.state = {
 			showResults: false,
-			opts: {
-				longerGV: false,
-				randMap: true,
-				prioritizeNS: false,
-				randBosses: true,
-				randCamps: true,
-				mapSubset: 1,
-				mapSubsetList: false,
-				map: 0,
-				mapList: false,
-				playerCount: [2, 4, 2],
-				addCampsMin: [0, 3, 0],
-				addCampsMax: [1, 4, 4],
+			yesno: {
+				longerGV: [{ yes: false }],
+				randMap: [{
+					yes: true,
+					behaviors: [
+						{ type: ComponentBehaviors.HIDELIST, target: 'mapSubset', index: 0 },
+						{ type: ComponentBehaviors.HIDELIST, target: 'map', index: 0 }
+					]
+				}],
+				prioritizeNS: [{ yes: false }],
+				randBosses: [{ yes: true }],
+				randCamps: [{ yes: true }],
+			},
+			plusminus: {
+				playerCount: [{ minMaxCurr: { min: 2, max: 4, current: 2 } }],
+				addCampsMin: [{
+					minMaxCurr: { min: 0, max: 3, current: 0 },
+					behaviors: [{ type: ComponentBehaviors.MINMAX_MIN, target: 'addCampsMax', index: 0 }]
+				}],
+				addCampsMax: [{
+					minMaxCurr: { min: 1, max: 4, current: 4 },
+					behaviors: [{ type: ComponentBehaviors.MINMAX_MAX, target: 'addCampsMin', index: 0 }],
+				}],
+			},
+			multistate: {
+				mapSubset: [{ current: 1, showList: false }],
+				map: [{ current: 0, showList: false }],
 			}
 		};
 		this.setLanguage();
@@ -60,7 +77,8 @@ class NearAndFar extends Game {
 		dawnDusk: 0,
 		addCamps: 0,
 		bosses: [],
-		quests: []
+		quests: [],
+		playerOrder: []
 	};
 
 	//#endregion
@@ -69,10 +87,10 @@ class NearAndFar extends Game {
 
 	renderOptions() {
 		let lastRuinVisible;
-		if (this.state.opts.randMap) {
-			lastRuinVisible = this.state.opts.mapSubset > 1;
+		if (this.state.yesno.randMap[0].yes) {
+			lastRuinVisible = this.multiStateValue('mapSubset').current > 1;
 		} else {
-			lastRuinVisible = this.state.opts.map === 10;
+			lastRuinVisible = this.multiStateValue('map').current === 10;
 		}
 
 		return (
@@ -82,169 +100,39 @@ class NearAndFar extends Game {
 				<Line {...this.shortYesNo('longerGV')} />
 				<Line {...this.shortCategory('map')} />
 				<Line {...this.shortYesNo('randMap')} />
-				<Line {...this.shortMultiState('mapSubset', this.state.opts.randMap)} />
-				<Line {...this.shortMultiState('map', !this.state.opts.randMap)} />
+				<Line {...this.shortMultiState('mapSubset', this.yesNoValue('randMap'))} />
+				<Line {...this.shortMultiState('map', !this.yesNoValue('randMap'))} />
 				<Line {...this.shortYesNo('prioritizeNS')} />
 				<Line {...this.shortYesNo('randBosses', lastRuinVisible)} />
 				<Line {...this.shortCategory('camps')} />
 				<Line {...this.shortYesNo('randCamps')} />
-				<Line {...this.shortPlusMinus('addCampsMin', this.state.opts.randCamps)} />
-				<Line {...this.shortPlusMinus('addCampsMax', this.state.opts.randCamps)} />
-				{this.createMainButtons()}
+				<Line {...this.shortPlusMinus('addCampsMin', this.yesNoValue('randCamps'))} />
+				<Line {...this.shortPlusMinus('addCampsMax', this.yesNoValue('randCamps'))} />
+				{this.createOptionsButtons()}
 			</>
 		);
 
 	}
 
 	renderResults() {
-		let resMap: string = this.language.optArrays.maps[this.results.map - 1];
-		let resTown: string = this.language.specificArrays.dawnDusk[this.results.dawnDusk];
-		let resQuests: string = this.results.quests.join(', ');
-		let resBosses: string = General.listWithIndices(this.language.specificArrays.bosses, this.results.bosses);
-		let visBosses: boolean = this.results.map === 11;
-		let resAddCamps: string = String(this.results.addCamps);
+		const resMap: string = this.language.multistate.map[0].contents[this.results.map - 1]
+		const resTown: string = this.language.specificArrays.dawnDusk[this.results.dawnDusk].content
+		const resQuests: string = this.results.quests.join(', ')
+		const resBosses: string = this.results.bosses.map(e => this.language.specificArrays.bosses[e].content).join(', ')
+		const visBosses: boolean = this.results.map === 11
+		const resAddCamps: string = String(this.results.addCamps)
 
 		return (
 			<>
-				<Line {...this.shortCategory(this.language.results.map, resMap)} />
-				<Line {...this.shortCategory(this.language.results.town, resTown)} />
-				<Line {...this.shortCategory(this.language.results.addCamps, resAddCamps,  false, this.state.opts.randCamps)} />
-				<Line {...this.shortCategory(this.language.results.quests, resQuests)} />
-				<Line {...this.shortCategory(this.language.results.bosses, resBosses, false, visBosses)} />
-				{this.createAllButtons()}
+				<Line {...this.colorsResult(this.commonLanguage.playerOrder[0], this.results.playerOrder)} />
+				<Line {...this.shortResult(this.language.results.map[0], resMap)} />
+				<Line {...this.shortResult(this.language.results.town[0], resTown)} />
+				<Line {...this.shortResult(this.language.results.addCamps[0], resAddCamps, this.yesNoValue('randCamps'))} />
+				<Line {...this.shortResult(this.language.results.quests[0], resQuests)} />
+				<Line {...this.shortResult(this.language.results.bosses[0], resBosses, visBosses)} />
+				{this.createResultsButtons()}
 			</>
 		);
-	}
-
-	//#endregion
-	//==================================================================================================================================
-	//#region === language
-
-	setLanguage() {
-		this.setCommonLanguage();
-		switch (this.props.language.name) {
-			case 'Polski':
-				this.language.categories = {
-					general: 'Ogólne',
-					map: 'Mapa',
-					camps: 'Dodatkowe obozowiska'
-				}
-				this.language.opts = {
-					playerCount: 'Liczba graczy',
-					longerGV: 'Wariant: dłuższa gra',
-					randMap: 'Losować mapę?',
-					mapSubset: 'Zestaw map do wyboru',
-					map: 'Wybrana mapa',
-					prioritizeNS: 'Wybierać w pierwszej kolejności nazwane pola?',
-					randBosses: 'Ostatnia Ruina: losować bossów?',
-					randCamps: 'Dodatkowe losowe obozowiska?',
-					addCampsMin: 'Minimum',
-					addCampsMax: 'Maksimum',
-					randomize: 'Losuj',
-					rerandomize: 'Losuj ponownie',
-					home: 'Powrót do menu',
-					options: 'Zmień opcje',
-				}
-				this.language.optArrays = {
-					mapSubsets: ['Wstęp (mapa 1)',
-						'Podróż (mapy 2-10)',
-						'Ostatnia Ruina (mapa 11)',
-						'Wszystkie mapy'],
-					maps: ['1: Glogo Caverns',
-						'2: Broken Plains',
-						'3: Crimson Forest',
-						'4: Meteor Mountain',
-						'5: Toxic Desert',
-						'6: Cloudy Valley',
-						'7: Dried Sea',
-						'8: Fire Delta',
-						'9: Rocktooth Isles',
-						'10: Mammoth Jungle',
-						'11: The Last Ruin'],
-				};
-				//this.language.yesNo = ['TAK', 'NIE'];
-				this.language.specificArrays = {
-					dawnDusk: ['świt', 'zmierzch'],
-					bosses: ['Captain Shreya', 'Zag the Treasure Hunter', 'The Ivory Queen', ' The Red King'],
-				}
-				this.language.results = {
-					map: 'Mapa:',
-					town: 'Wariant miasta:',
-					addCamps: 'Dodatkowe obozowiska:',
-					quests: 'Misje:',
-					bosses: 'Bossowie:'
-				};
-				break;
-
-			case 'English':
-			default:
-				this.language.categories = {
-					general: 'General',
-					map: 'Map',
-					camps: 'Additional camps'
-				};
-				this.language.opts = {
-					playerCount: 'Player count',
-					longerGV: 'Longer game variant',
-					randMap: 'Randomize map?',
-					mapSubset: 'Map subset',
-					map: 'Chosen map',
-					prioritizeNS: 'Prioritize named spaces?',
-					randBosses: 'Last Ruin: randomize bosses?',
-					randCamps: 'Randomize additional camps?',
-					addCampsMin: 'Minimum additional camps',
-					addCampsMax: 'Maximum additional camps',
-					randomize: 'Randomize',
-					rerandomize: 'Randomize again',
-					home: 'Home',
-					options: 'Back to options',
-				};
-				this.language.optArrays = {
-					mapSubsets: ['Introductory (1)',
-						'Journey (2-10)',
-						'Last Ruin (11)',
-						'All maps'],
-					maps: ['1: Glogo Caverns',
-						'2: Broken Plains',
-						'3: Crimson Forest',
-						'4: Meteor Mountain',
-						'5: Toxic Desert',
-						'6: Cloudy Valley',
-						'7: Dried Sea',
-						'8: Fire Delta',
-						'9: Rocktooth Isles',
-						'10: Mammoth Jungle',
-						'11: The Last Ruin'],
-				};
-				//this.language.yesNo = ['YES', 'NO'];
-				this.language.specificArrays = {
-					dawnDusk: ['dawn', 'dusk'],
-					bosses: ['Captain Shreya', 'Zag the Treasure Hunter', 'The Ivory Queen', ' The Red King'],
-				}
-				this.language.results = {
-					map: 'Map:',
-					town: 'Town:',
-					addCamps: 'Additional camps:',
-					quests: 'Quests:',
-					bosses: 'Bosses:'
-				};
-				break;
-		}
-		this.currentLanguage = this.props.language;
-	}
-
-	//#endregion
-	//==================================================================================================================================
-	//#region === special handlers for components
-
-	handleYesNoClickSpecial(newState: GameState, varName: string) {
-		switch (varName) {
-			case "randMap":
-				newState.opts.mapSubsetList = false;
-				newState.opts.mapList = false;
-				break;
-		}
-		return newState;
 	}
 
 	//#endregion
@@ -254,27 +142,17 @@ class NearAndFar extends Game {
 	randomize() {
 		// select map
 		let map: number = 0;
-		if (this.state.opts.randMap) {
-			switch (this.state.opts.mapSubset) {
-				case 0:
-					map = 1;
-					break;
-				case 1:
-					map = General.random(2, 10);
-					break;
-				case 2:
-					map = 11;
-					break;
-				case 3:
-					map = General.random(1, 11);
-					break;
-				default:
-					alert("Unexpected value of mapSubset!");
-					break;
+		if (this.yesNoValue('randMap')) {
+			switch (this.multiStateValue('mapSubset').current) {
+				case 0: map = 1; break;
+				case 1: map = General.random(2, 10); break;
+				case 2: map = 11; break;
+				case 3: map = General.random(1, 11); break;
+				default: alert("Unexpected value of mapSubset!"); break;
 			}
 		}
 		else {
-			map = this.state.opts.map;
+			map = this.multiStateValue('map').current;
 		}
 
 		// select town variant
@@ -282,26 +160,26 @@ class NearAndFar extends Game {
 
 		// select additional camps
 		let addCamps: number = General.random(
-			this.state.opts.addCampsMin[2],
-			this.state.opts.addCampsMax[2]
+			this.plusMinusValue('addCampsMin').current,
+			this.plusMinusValue('addCampsMax').current,
 		);
 
 		// select bosses
 		let choice: (string | number)[] = [0, 1, 2, 3];
-		let bosses: number[] = General.randomFromArray(choice, this.state.opts.playerCount[2]);
+		let bosses: number[] = General.randomFromArray(choice, this.plusMinusValue('playerCount').current);
 
 		// select quests
 		let totalQuests: number = 0;
 		let quests: (number | string)[] = [];
-		switch (this.state.opts.playerCount[2]) {
+		switch (this.plusMinusValue('playerCount').current) {
 			case 2: totalQuests = 7; break;
 			case 3: totalQuests = 9; break;
 			case 4: totalQuests = 11; break;
 			default: alert('Unexpected value of playerCount!'); break;
 		}
-		if (this.state.opts.longerGV) { totalQuests += 2; }
+		if (this.yesNoValue('longerGV')) { totalQuests += 2; }
 
-		if (this.state.opts.prioritizeNS) {
+		if (this.yesNoValue('prioritizeNS')) {
 			quests = [...this.questBase[map - 1][0]];
 			choice = [...this.questBase[map - 1][1]];
 		}
@@ -321,9 +199,10 @@ class NearAndFar extends Game {
 		this.results.bosses = bosses;
 		this.results.quests = quests;
 
-		// show 'em
-		let newState = Object.assign({}, this.state, { showResults: true });
-		this.setState(newState);
+		// randomize player order
+		this.results.playerOrder = General.randomizeArray(this.playerColors.slice())
+
+		this.showResults()
 	}
 
 	//#endregion
@@ -331,6 +210,147 @@ class NearAndFar extends Game {
 	//#region === additional functions
 
 	// n/a
+
+	//#endregion
+	//==================================================================================================================================
+	//#region === language
+
+	setLanguage() {
+		this.setCommonLanguage();
+		switch (this.props.language.name) {
+			case 'Polski':
+				this.language = {
+					categories: {
+						general: 'Ogólne',
+						map: 'Mapa',
+						camps: 'Dodatkowe obozowiska'
+					},
+					yesno: {
+						longerGV: [{ title: 'Wariant: dłuższa gra' }],
+						randMap: [{ title: 'Losować mapę?' }],
+						prioritizeNS: [{ title: 'Wybierać w pierwszej kolejności nazwane pola?' }],
+						randBosses: [{ title: 'Ostatnia Ruina: losować bossów?' }],
+						randCamps: [{ title: 'Dodatkowe losowe obozowiska?' }],
+					},
+					plusminus: {
+						playerCount: [{ title: 'Liczba graczy' }],
+						addCampsMin: [{ title: 'Minimum' }],
+						addCampsMax: [{ title: 'Maksimum' }],
+					},
+					multistate: {
+						mapSubset: [{
+							title: 'Zestaw map do wyboru',
+							contents: ['Wstęp (mapa 1)',
+								'Podróż (mapy 2-10)',
+								'Ostatnia Ruina (mapa 11)',
+								'Wszystkie mapy']
+						}],
+						map: [{
+							title: 'Wybrana mapa',
+							contents: ['1: Glogo Caverns',
+								'2: Broken Plains',
+								'3: Crimson Forest',
+								'4: Meteor Mountain',
+								'5: Toxic Desert',
+								'6: Cloudy Valley',
+								'7: Dried Sea',
+								'8: Fire Delta',
+								'9: Rocktooth Isles',
+								'10: Mammoth Jungle',
+								'11: The Last Ruin']
+						}]
+					},
+					specifics: {},
+					specificArrays: {
+						dawnDusk: [
+							{content: 'świt',  tag:''},
+							{content: 'zmierzch', tag:''},
+						],
+						bosses: [
+							{content: 'Captain Shreya',  tag:''},
+							{content: 'Zag the Treasure Hunter',  tag:''},
+							{content: 'The Ivory Queen',  tag:''},
+							{content: ' The Red King', tag:''},
+						],
+					},
+					results: {
+						map: ['Mapa:'],
+						town: ['Wariant miasta:'],
+						addCamps: ['Dodatkowe obozowiska:'],
+						quests: ['Misje:'],
+						bosses: ['Bossowie:']
+					}
+				};
+				break;
+
+			case 'English':
+			default:
+				this.language = {
+					categories: {
+						general: 'General',
+						map: 'Map',
+						camps: 'Additional camps'
+					},
+					yesno: {
+						longerGV: [{ title: 'Longer game variant' }],
+						randMap: [{ title: 'Randomize map?' }],
+						prioritizeNS: [{ title: 'Prioritize named spaces?' }],
+						randBosses: [{ title: 'Last Ruin: randomize bosses?' }],
+						randCamps: [{ title: 'Randomize additional camps?' }],
+					},
+					plusminus: {
+						playerCount: [{ title: 'Player count' }],
+						addCampsMin: [{ title: 'Minimum' }],
+						addCampsMax: [{ title: 'Maximum' }],
+					},
+					multistate: {
+						mapSubset: [{
+							title: 'Map subset',
+							contents: ['Introductory (1)',
+								'Journey (2-10)',
+								'Last Ruin (11)',
+								'All maps']
+						}],
+						map: [{
+							title: 'Chosen map',
+							contents: ['1: Glogo Caverns',
+								'2: Broken Plains',
+								'3: Crimson Forest',
+								'4: Meteor Mountain',
+								'5: Toxic Desert',
+								'6: Cloudy Valley',
+								'7: Dried Sea',
+								'8: Fire Delta',
+								'9: Rocktooth Isles',
+								'10: Mammoth Jungle',
+								'11: The Last Ruin']
+						}]
+					},
+					specifics: {},
+					specificArrays: {
+						dawnDusk: [
+							{content: 'dawn',  tag:''},
+							{content: 'dusk', tag:''},
+						],
+						bosses: [
+							{content: 'Captain Shreya',  tag:''},
+							{content: 'Zag the Treasure Hunter', tag:''},
+							{content:  'The Ivory Queen', tag:''},
+							{content:  ' The Red King', tag:''},
+						],
+					},
+					results: {
+						map: ['Map:'],
+						town: ['Town:'],
+						addCamps: ['Additional camps:'],
+						quests: ['Quests:'],
+						bosses: ['Bosses:']
+					}
+				};
+				break;
+		}
+		this.currentLanguage = this.props.language;
+	}
 
 	//#endregion
 	//==================================================================================================================================

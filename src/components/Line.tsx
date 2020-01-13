@@ -1,10 +1,10 @@
-import React from 'react';
-import { Cell, CellProps } from './cell/Cell';
-import { Text, TextProps } from './text/Text';
-import { MultiState, MultiStateProps } from './multiState/MultiState';
-import { PlusMinus, PlusMinusProps } from './plusMinus/PlusMinus';
-import { YesNo, YesNoProps } from './yesNo/YesNo';
-import './Line.css';
+import React from 'react'
+import { Cell, CellProps } from './cell/Cell'
+import { Text, TextProps } from './text/Text'
+import { MultiState, MultiStateProps } from './multiState/MultiState'
+import { PlusMinus, PlusMinusProps } from './plusMinus/PlusMinus'
+import { YesNo, YesNoProps } from './yesNo/YesNo'
+import './Line.css'
 
 /**
  * The single 'row' of a randomizing application.
@@ -12,21 +12,20 @@ import './Line.css';
  */
 
 export interface ComponentProps {
-   name: string;
-}
-
-export interface BigButtonProps extends ComponentProps {
-   color: string;
-   onClick: () => void;
-   text: string;
-   first: boolean;
+   name: string
+   index: number
 }
 
 export interface CategoryProps extends ComponentProps {
-   subtext: string[];
-   text: string;
-   error: boolean;
-   list: boolean;
+   text: string[]
+   text_category: string[]
+   tag_color: string[]
+   title: string
+   error: boolean
+   result: boolean
+   colors: string[]
+   hiddenMessage: string
+   unhideFunction: () => void
 }
 
 export enum LineTypes {
@@ -35,24 +34,22 @@ export enum LineTypes {
    PLUSMINUS,
    YESNO,
    CATEGORY,
-   BIGBUTTON
 }
 
 export interface LineProps {
-   visible: boolean;
-   title: TextProps | null;
-   lineType: LineTypes;
-   insideProps: ComponentProps;
+   visible: boolean
+   title: TextProps | null
+   lineType: LineTypes
+   insideProps: ComponentProps
 }
 
 export class Line extends React.Component<LineProps> {
    render() {
       switch (this.props.lineType) {
          case LineTypes.CATEGORY:
-         case LineTypes.BIGBUTTON:
-            return this.renderSingle();
+            return this.renderSingle()
          default:
-            return this.renderDouble();
+            return this.renderDouble()
       }
    }
 
@@ -60,75 +57,113 @@ export class Line extends React.Component<LineProps> {
       let titleCellProps: CellProps = {
          title: true,
          center: false,
-         visible: this.props.visible,
+         visible: true, // this.props.visible,
          inside: <Text {...this.props.title!} />,
-      };
+      }
 
-      let titleCell: JSX.Element = <Cell key={this.props.insideProps.name + '-title'} {...titleCellProps} />;
+      let titleCell: JSX.Element = <Cell key={this.props.insideProps.name + '-title'} {...titleCellProps} />
 
-      let insideComponent: JSX.Element | null = null;
+      let insideComponent: JSX.Element | null = null
 
       switch (this.props.lineType) {
          case LineTypes.TEXT:
-            insideComponent = <Text {...this.props.insideProps as TextProps} />;
-            break;
+            insideComponent = <Text {...this.props.insideProps as TextProps} />
+            break
          case LineTypes.MULTISTATE:
-            insideComponent = <MultiState {...this.props.insideProps as MultiStateProps} />;
-            break;
+            insideComponent = <MultiState {...this.props.insideProps as MultiStateProps} />
+            break
          case LineTypes.YESNO:
-            insideComponent = <YesNo {...this.props.insideProps as YesNoProps} />;
-            break;
+            insideComponent = <YesNo {...this.props.insideProps as YesNoProps} />
+            break
          case LineTypes.PLUSMINUS:
-            insideComponent = <PlusMinus {...this.props.insideProps as PlusMinusProps} />;
-            break;
-      };
+            insideComponent = <PlusMinus {...this.props.insideProps as PlusMinusProps} />
+            break
+      }
 
       let contentCellProps: CellProps = {
          title: false,
          center: true,
-         visible: this.props.visible,
+         visible: true, // this.props.visible,
          inside: insideComponent,
-      };
+      }
 
-      let contentCell: JSX.Element = <Cell key={this.props.insideProps.name + '-content'} {...contentCellProps} />;
+      let contentCell: JSX.Element = <Cell key={this.props.insideProps.name + '-content'} {...contentCellProps} />
+
+      let VERYTEMP = this.props.visible ? ' rowShown' : ' rowHidden'
 
       return (
-         <div className='row no-gutters justify-content-center'>
-            {titleCell}
-            {contentCell}
+         <div className={VERYTEMP}>
+            <div className='row no-gutters justify-content-center'>
+               {titleCell}
+               {contentCell}
+            </div>
          </div>
-      );
+      )
+   }
+
+   categoryColorText(category: string, categoryLength: number, color: string, text: string): JSX.Element {
+      if (color.indexOf('/') === -1) {
+         return (<>
+            <span className='resultCategory' style={{ minWidth: (categoryLength + 0.3) + 'rem' }}>{category}:</span>
+            <div className='resultColor' style={{ backgroundColor: color }}></div>
+            <span className='resultText'>{text}</span>
+         </>)
+      }
+      else {
+         const colors = color.split('/')
+         return (<>
+            <span className='resultCategory' style={{ minWidth: (categoryLength + 0.3) + 'rem' }}>{category}:</span>
+            <div className='resultColor' style={{ background: `linear-gradient(90deg, ${colors[0]} 50%, ${colors[1]} 50%)` }}></div>
+            <span className='resultText'>{text}</span>
+         </>)
+      }
    }
 
    renderSingle() {
-      let content: JSX.Element | null = null;
-      let divClasses: string = '';
+      let content: JSX.Element | null = null
+      let divClasses: string = ''
 
       switch (this.props.lineType) {
-         case LineTypes.BIGBUTTON:
-            let bigButtonProps: BigButtonProps = this.props.insideProps as BigButtonProps;
-            let classes: string = 'anyButton bigButton ' + bigButtonProps.color;
-            content = <button className={classes} onClick={bigButtonProps.onClick}>{bigButtonProps.text}</button>;
-            if (bigButtonProps.first) { divClasses = ' mt-5'; }
-            break;
          case LineTypes.CATEGORY:
-            let categoryProps: CategoryProps = this.props.insideProps as CategoryProps;
-            if (!this.props.visible) { divClasses = ' hidden'; }
-            let subText: JSX.Element | null = null;
-            if (categoryProps.subtext) {
-               if (categoryProps.list) {
-                  let items: JSX.Element[] = categoryProps.subtext.map((e, index) => <li key={categoryProps.name + '-' + index}>{e}</li>);
-                  subText = <ul className='separatorList'>{items}</ul>;
-               } else {
-                  let classes: string = 'separatorText' + (categoryProps.error ? ' separatorError' : '');
-                  subText = <p className={classes}>{categoryProps.subtext}</p>;
+            let categoryProps: CategoryProps = this.props.insideProps as CategoryProps
+            if (!this.props.visible) { divClasses = ' hidden' }
+            let text: JSX.Element | null = null
+            if (categoryProps.hiddenMessage) {
+               text = (<>
+                  <div onClick={categoryProps.unhideFunction} className='hiddenLink'><p>{categoryProps.hiddenMessage}</p></div>
+               </>)
+            }
+            else {
+               if (categoryProps.text.length || categoryProps.colors.length) {
+                  if (categoryProps.result) {
+                     let items: JSX.Element[] = []
+                     let ulClass: string = ''
+                     if (categoryProps.text.length) {
+                        if (categoryProps.tag_color.length || categoryProps.text_category.length) {
+                           const category_length = Math.max(...categoryProps.text_category.map(e => e.length))
+                           const inside = (i: number, e: string) => this.categoryColorText(categoryProps.text_category[i], category_length, categoryProps.tag_color[i], e)
+                           items = categoryProps.text.map((e, index) => <li key={categoryProps.name + '-' + index}>{inside(index, e)}</li>)
+                        } else {
+                           items = categoryProps.text.map((e, index) => <li key={categoryProps.name + '-' + index}>{e}</li>)
+                        }
+                        ulClass = 'separatorList'
+                     }
+                     if (categoryProps.colors.length) {
+                        items = categoryProps.colors.map((e, index) => <li key={categoryProps.name + '-' + index}><div style={{ backgroundColor: e }}></div></li>)
+                        ulClass = 'colorList'
+                     }
+                     text = <ul className={ulClass}>{items}</ul>
+                  } else {
+                     let classes: string = 'separatorText' + (categoryProps.error ? ' separatorError' : '')
+                     text = <p className={classes}>{categoryProps.text}</p>
+                  }
                }
             }
             content = (<>
-               <p className='separatorTitle'>{categoryProps.text}</p>
+               <p className='separatorTitle'>{categoryProps.title}</p>
                <hr className='separator' />
-               {subText}
-            </>);
+               {text}
+            </>)
       }
 
       return (
@@ -137,6 +172,6 @@ export class Line extends React.Component<LineProps> {
                {content}
             </div>
          </div>
-      );
+      )
    }
 }

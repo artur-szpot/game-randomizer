@@ -69,11 +69,75 @@
 	font-weight: bold;
 }
 
-/* Lists should be easily readable and undecorated. */
+/* When it shows a result, separator text should be easily readable and take the form of a list. */
 .separatorList {
 	list-style: none;
 	margin: 0;
 	margin-top: -0.8rem;
 	padding-left: 25px;
 	text-align: left;
+	font-size: 1.2rem;
+}
+
+/* When it shows a result, color priority should display neat squares of the appropriate color. */
+.colorList {
+	list-style: none;
+	margin: 0;
+	padding-left: 25px;
+	text-align: left;
+	font-size: 1.2rem;
+	margin-bottom: -1rem;
+}
+.colorList > li {
+	display: inline;
+	margin-right: 1rem;
+}
+.colorList > li > div {
+	display: inline-block;
+	width: 5rem;
+	height: 3rem;
+	margin-bottom: 1rem;
+	border-radius: 10px;
+	background-clip: content-box;
+	padding: 5px;
+	border: 1px solid white;
+}
+
+/* Link to unhide hidden information should fit with the overall style. */
+.hiddenLink {
+	width: 100%;
+	margin: 0;
+	padding: 16px;
+	cursor: pointer;
+}
+.hiddenLink > p {
+	margin: 0;
+}
+.hiddenLink:hover {
+	color: rgb(122, 202, 255);
+	text-decoration: none;
+}
+
+/* Some results are displayed as category - color - text. */
+.resultCategory {
+	display: inline-block;
+	margin: 0;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.resultColor {
+	height: 1.8rem;
+	width: 1.8rem;
+	border: 2px solid white;
+	border-radius: 20px;
+	display: inline-block;
+	margin: 0 10px;
+	vertical-align: middle;
+}
+
+.resultText {
+	display: inline-block;
+	margin: 0;
+	vertical-align: middle;
 }

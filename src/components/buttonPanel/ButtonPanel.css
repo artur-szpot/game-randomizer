@@ -2,11 +2,59 @@
 
 
 
-.overalldiv {
+/* The button panel should be always at the bottom, with nicely styled background and border. */
+.button-container {
    position: fixed;
    z-index: 1;
-   height: 1rem;
+   padding-top: 3px;
+   padding-bottom: 3px;
    bottom: 0;
-   background-color: red;
-   width: 100%;
+   background-color: #222;
+   border: 3px solid #444;
+   border-bottom: 0;
+   border-radius: 10px 10px 0 0;
+   width: 90%;
+   text-align: center;
 }
+
+/* The button panel should never obscure other content. */
+.button-container-fake {
+   visibility: hidden;
+   padding-top: 1rem;
+   padding-bottom: 1rem;
+   margin-top: 2rem;
+}
+
+/* The buttons should have a wide click area. */
+.nice-button {
+   cursor: pointer;
+   border-radius: 4px;
+   padding-top:0.5rem;
+}
+.nice-button-2 { width: 47%; }
+.nice-button-3 { width: 32%; }
+.nice-button-4 { width: 24%; }
+.nice-button-5 { width: 19%; }
+.nice-button-6 { width: 16%; }
+
+.nice-button-label {
+   font-size: 0.8rem;
+   text-transform: uppercase;
+}
+
+/* The buttons should react to mouse movement. */
+.nice-button:hover > p { color: white;}
+.nice-button:hover > i { color: white;}
+
+/* The buttons should have vivid colors. */
+.nice-button-green > p { color: #30b830;}
+.nice-button-green > i { color: #30b830;}
+.nice-button-green:hover { background-color: #30b830;}
+
+.nice-button-red > p { color: #e64814;}
+.nice-button-red > i { color: #e64814;}
+.nice-button-red:hover { background-color: #e64814;}
+
+.nice-button-blue > p { color: #18689e;}
+.nice-button-blue > i { color: #18689e;}
+.nice-button-blue:hover { background-color: #18689e;}

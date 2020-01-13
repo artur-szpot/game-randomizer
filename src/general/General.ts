@@ -13,24 +13,6 @@ class General {
         return result;
     }
 
-    /** Checks whether applying the change will not result in overflow - if so, sets the value back to 0. */
-    static validateNewChosen(current: number, change: number, max: number): number {
-        let retval: number = current + change;
-        if (retval < 0) {
-            retval = max - 1;
-        } else if (retval >= max) {
-            retval = 0;
-        }
-        return retval;
-    }
-
-    /** Checks whether applying a given change to the current value of the [min, max, current] array would cause it to be invalid. */
-    static validateMinMaxCurr(values: number[], change: number): boolean {
-        if (values[2] + change < values[0]) { return false; }
-        if (values[2] + change > values[1]) { return false; }
-        return true;
-    }
-
     /** Returns a random intiger from between min and max, inclusive on both ends. */
     static random(min: number, max: number): number {
         return min + Math.floor(Math.random() * (max - min + 1));
@@ -45,7 +27,7 @@ class General {
      * The portion is most probable to be 0 and increasingly less probable for higher numbers, up to variation itself.
      * The variation part also has a random sign.
      * The result must be at greater that or equal to zero. */
-    static randomNormal(base: number, variation: number): number {
+    static randomNormal(base: number, variation: number, min: number, max:number): number {
         let binaryTotal: number = [...Array(variation + 1).keys()].reduce((a, b) => a + 2 ** b);
         let weights: number[] = [...Array(variation + 1).keys()].map(value => binaryTotal / (2 ** value));
         let weightTotal: number = weights.reduce((a, b) => a + b);
@@ -56,7 +38,7 @@ class General {
         let percent: number = this.random(1, 100);
         for (let i = breakpoints.length - 1; i > -1; i--) {
             if (percent > breakpoints[i]) {
-                return Math.max(0, base + i * (this.randomBool() ? 1 : -1));
+                return Math.min(Math.max(min, base + i * (this.randomBool() ? 1 : -1)), max);
             }
         }
         return -1;
@@ -71,6 +53,11 @@ class General {
             source.splice(chosen, 1);
         }
         return result;
+    }
+
+    /** Rearranges the whole array into a random order. */
+    static randomizeArray(source: any[]):any[] {
+        return this.randomFromArray(source, source.length)
     }
 }
 

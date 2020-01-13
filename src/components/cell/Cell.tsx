@@ -1,29 +1,29 @@
-import React from 'react';
-import './Cell.css';
+import React from 'react'
+import './Cell.css'
 
 /**
  * A single cell making up one part of a line.
  */
 
 export interface CellProps {
-	title: boolean;
-	center: boolean;
-	visible: boolean;
-	inside: JSX.Element|null;
+	title: boolean
+	center: boolean
+	visible: boolean
+	inside: JSX.Element | null
 }
 
 export class Cell extends React.Component<CellProps> {
 
 	render() {
 		/* basic classes */
-		let outerClasses = 'col-xs-12 col-md-6 col-lg-5 col-xl-3 p-2 p-md-3';
-		let innerClasses = 'cellContents';
+		let outerClasses = 'col-xs-12 col-md-6 col-lg-5 col-xl-3 p-2 p-md-3'
+		let innerClasses = 'cellContents'
 
 		/* modify classes as necessary */
 		if (this.props.visible) {
-			if (this.props.title) { innerClasses += ' cellTitle text-md-right'; }
-			if (this.props.center) { innerClasses += ' cellCenter'; }
-		} else { outerClasses += ' hidden'; }
+			if (this.props.title) { innerClasses += ' cellTitle text-md-right' }
+			if (this.props.center) { innerClasses += ' cellCenter' }
+		} else { outerClasses += ' hidden' }
 
 		/* generate output */
 		return (
@@ -32,6 +32,6 @@ export class Cell extends React.Component<CellProps> {
 					{this.props.inside}
 				</div>
 			</div>
-		);
+		)
 	}
 }
