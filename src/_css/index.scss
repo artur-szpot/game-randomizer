@@ -1,0 +1,35 @@
+@import '_general.scss';
+
+button.super-button {
+   width: 95%;
+   height: 15%;
+   margin: 5% 2.5%;
+   padding: 0.5rem;
+   font-size: 2rem;
+   border-radius: 50px;
+   border: 4px solid #333;
+}
+
+p.info {
+   width: 95%;
+   margin: 2.5%;
+   font-size: 2rem;
+   color: white;
+   &.info-left { text-align: left; }
+   &.info-center { text-align: center; }
+}
+
+div.info-block-container {
+   width: 95%;
+   margin: 2.5%;
+   font-size: 2rem;
+   text-align: center;
+}
+
+div.info-block {
+   width: 15%;
+   margin: 1%;
+   display: inline-block;
+   border-radius: 3px;
+   border: 2px solid black;
+}

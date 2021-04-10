@@ -1,0 +1,227 @@
+[
+   {
+      "id": 0,
+      "text": {
+         "default": "rodzaj żeński"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 1,
+      "text": {
+         "default": "rodzaj męski"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 2,
+      "text": {
+         "default": "rodzaj nijaki"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 3,
+      "text": {
+         "default": "zawiera polską literę"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 4,
+      "text": {
+         "default": "rzeczownik + przymiotnik"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 5,
+      "text": {
+         "default": "dokładnie 1 sylaba"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 6,
+      "text": {
+         "default": "dokładnie 2 sylaby"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 7,
+      "text": {
+         "default": "dokładnie 3 sylaby"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 8,
+      "text": {
+         "default": "więcej niż 5 liter"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 9,
+      "text": {
+         "default": "mniej niż 6 liter"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 10,
+      "text": {
+         "default": "bez powtarzających się liter"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 11,
+      "text": {
+         "default": "parzysta liczba liter"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 12,
+      "text": {
+         "default": "nieparzysta liczba liter"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 13,
+      "text": {
+         "default": "wyraz na ostatnią literę z poprzedniego hasła"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 14,
+      "text": {
+         "default": "zachowaj pierwszą literę z poprzedniego hasła"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 15,
+      "text": {
+         "default": "prosty obrazek zamiast słowa"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 16,
+      "text": {
+         "default": "miejsce"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 17,
+      "text": {
+         "default": "pierwsza litera jest samogłoską"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 18,
+      "text": {
+         "default": "ostatnia litera jest spółgłoską"
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 19,
+      "text": {
+         "default": "S..."
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 20,
+      "text": {
+         "default": "K..."
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 21,
+      "text": {
+         "default": "W..."
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 22,
+      "text": {
+         "default": "T..."
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 23,
+      "text": {
+         "default": "R..."
+      },
+      "include": [
+         "polski"
+      ]
+   },
+   {
+      "id": 24,
+      "text": {
+         "default": "M..."
+      },
+      "include": [
+         "polski"
+      ]
+   }
+]

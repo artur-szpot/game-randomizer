@@ -1,0 +1,1749 @@
+[
+   {
+       "id": 0,
+       "name": {
+           "default": "Abraham"
+       }
+   },
+   {
+       "id": 1,
+       "name": {
+           "default": "Abraham Lincoln"
+       }
+   },
+   {
+       "id": 2,
+       "name": {
+           "default": "Achaja"
+       }
+   },
+   {
+       "id": 3,
+       "name": {
+           "default": "Achilles"
+       }
+   },
+   {
+       "id": 4,
+       "name": {
+           "default": "Adam Mickiewicz"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 5,
+       "name": {
+           "default": "Adolf Hitler"
+       }
+   },
+   {
+       "id": 6,
+       "name": {
+           "default": "Agatha Christie"
+       }
+   },
+   {
+       "id": 7,
+       "name": {
+           "default": "Agnieszka Osiecka"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 8,
+       "name": {
+           "default": "Al Capone"
+       }
+   },
+   {
+       "id": 9,
+       "name": {
+           "default": "Alan Turing"
+       }
+   },
+   {
+       "id": 10,
+       "name": {
+           "default": "Albert Einstein"
+       }
+   },
+   {
+       "id": 11,
+       "name": {
+           "default": "Aleksander the Great",
+           "polski": "Aleksander Wielki"
+       }
+   },
+   {
+       "id": 12,
+       "name": {
+           "default": "Wolfgang Amadeus Mozart",
+           "polski": "Wolfgang Amadeusz Mozart"
+       }
+   },
+   {
+       "id": 13,
+       "name": {
+           "default": "Anastasia",
+           "polski": "Anastazja"
+       }
+   },
+   {
+       "id": 14,
+       "name": {
+           "default": "Andrzej Wajda"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 15,
+       "name": {
+           "default": "Andy Warhol"
+       }
+   },
+   {
+       "id": 16,
+       "name": {
+           "default": "Anna German"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 17,
+       "name": {
+           "default": "Anna Karenina"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 18,
+       "name": {
+           "default": "Archimedes"
+       }
+   },
+   {
+       "id": 19,
+       "name": {
+           "default": "Baba Yaga",
+           "polski": "Baba Jaga"
+       }
+   },
+   {
+       "id": 20,
+       "name": {
+           "default": "Balladyna"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 21,
+       "name": {
+           "default": "Bill"
+       },
+       "hint": {
+           "default": "Kill Bill"
+       }
+   },
+   {
+       "id": 22,
+       "name": {
+           "default": "Bob Marley"
+       }
+   },
+   {
+       "id": 23,
+       "name": {
+           "default": "Bob Ross"
+       }
+   },
+   {
+       "id": 24,
+       "name": {
+           "default": "Bolesław Chrobry"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 25,
+       "name": {
+           "default": "Bona Sforza"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 26,
+       "name": {
+           "default": "Boromir"
+       }
+   },
+   {
+       "id": 27,
+       "name": {
+           "default": "Wright Brothers",
+           "polski": "Bracia Wright"
+       }
+   },
+   {
+       "id": 28,
+       "name": {
+           "default": "Bruce Lee"
+       }
+   },
+   {
+       "id": 29,
+       "name": {
+           "default": "Budda"
+       }
+   },
+   {
+       "id": 30,
+       "name": {
+           "default": "Buffalo Bill"
+       }
+   },
+   {
+       "id": 31,
+       "name": {
+           "default": "Cezary Baryka"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 32,
+       "name": {
+           "default": "Charlie Chaplin"
+       }
+   },
+   {
+       "id": 33,
+       "name": {
+           "default": "Claude Monet"
+       }
+   },
+   {
+       "id": 34,
+       "name": {
+           "default": "Coco Chanel"
+       }
+   },
+   {
+       "id": 35,
+       "name": {
+           "default": "Cicero",
+           "polski": "Cyceron"
+       }
+   },
+   {
+       "id": 36,
+       "name": {
+           "default": "Blackbeard",
+           "polski": "Czarnobrody"
+       }
+   },
+   {
+       "id": 37,
+       "name": {
+           "default": "Czesław Śliwa"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 38,
+       "name": {
+           "default": "Genghis Khan",
+           "polski": "Czyngis-chan"
+       }
+   },
+   {
+       "id": 39,
+       "name": {
+           "default": "Daenerys Targaryen"
+       },
+       "hint": {
+           "default": "Game of Thrones",
+           "polski": "Gra o Tron"
+       }
+   },
+   {
+       "id": 40,
+       "name": {
+           "default": "Daniel Jackson"
+       },
+       "hint": {
+           "default": "Stargate SG-1"
+       }
+   },
+   {
+       "id": 41,
+       "name": {
+           "default": "Dante Alighieri"
+       }
+   },
+   {
+       "id": 42,
+       "name": {
+           "default": "Darth Vader"
+       }
+   },
+   {
+       "id": 43,
+       "name": {
+           "default": "Dmitrij Mendelejew"
+       }
+   },
+   {
+       "id": 44,
+       "name": {
+           "default": "Dr Emmett Brown"
+       }
+   },
+   {
+       "id": 45,
+       "name": {
+           "default": "Don Quixote",
+           "polski": "Don Kichote"
+       }
+   },
+   {
+       "id": 46,
+       "name": {
+           "default": "Don Vito Corleone"
+       }
+   },
+   {
+       "id": 47,
+       "name": {
+           "default": "Dracula"
+       }
+   },
+   {
+       "id": 48,
+       "name": {
+           "default": "Dumbledore"
+       }
+   },
+   {
+       "id": 49,
+       "name": {
+           "default": "Little match girl",
+           "polski": "Dziewczynka z zapałkami"
+       }
+   },
+   {
+       "id": 50,
+       "name": {
+           "default": "Ebenezer Scrooge"
+       }
+   },
+   {
+       "id": 51,
+       "name": {
+           "default": "Edgar Allen Poe"
+       }
+   },
+   {
+       "id": 52,
+       "name": {
+           "default": "Édith Piaf"
+       }
+   },
+   {
+       "id": 53,
+       "name": {
+           "default": "Elvis Presley"
+       }
+   },
+   {
+       "id": 54,
+       "name": {
+           "default": "Elżbieta Zawacka"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 55,
+       "name": {
+           "default": "Ernest Hemingway"
+       }
+   },
+   {
+       "id": 56,
+       "name": {
+           "default": "Esmeralda"
+       }
+   },
+   {
+       "id": 57,
+       "name": {
+           "default": "Fidel Castro"
+       }
+   },
+   {
+       "id": 58,
+       "name": {
+           "default": "Fiodor Dostojewski"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 59,
+       "name": {
+           "default": "Saint Francis of Assisi",
+           "polski": "Franciszek z Asyżu"
+       }
+   },
+   {
+       "id": 60,
+       "name": {
+           "default": "Freddie Mercury"
+       }
+   },
+   {
+       "id": 61,
+       "name": {
+           "default": "Frida Kahlo"
+       }
+   },
+   {
+       "id": 62,
+       "name": {
+           "default": "Friedrich Nietzsche"
+       }
+   },
+   {
+       "id": 63,
+       "name": {
+           "default": "Frédéric Chopin",
+           "polski": "Fryderyk Chopin"
+       }
+   },
+   {
+       "id": 64,
+       "name": {
+           "default": "Galileo Galilei"
+       },
+       "hint": {
+           "default": "",
+           "polski": "Galileusz"
+       }
+   },
+   {
+       "id": 65,
+       "name": {
+           "default": "Gandalf the Gray",
+           "polski": "Gandalf Szary"
+       }
+   },
+   {
+       "id": 66,
+       "name": {
+           "default": "Gene Roddenberry"
+       }
+   },
+   {
+       "id": 67,
+       "name": {
+           "default": "General McArthur",
+           "polski": "Generał McArthur"
+       }
+   },
+   {
+       "id": 68,
+       "name": {
+           "default": "George Orwell"
+       }
+   },
+   {
+       "id": 69,
+       "name": {
+           "default": "Geronimo"
+       }
+   },
+   {
+       "id": 70,
+       "name": {
+           "default": "Godzilla"
+       }
+   },
+   {
+       "id": 71,
+       "name": {
+           "default": "Gollum"
+       }
+   },
+   {
+       "id": 72,
+       "name": {
+           "default": "Greta Garbo"
+       }
+   },
+   {
+       "id": 73,
+       "name": {
+           "default": "H.P. Lovecraft"
+       }
+   },
+   {
+       "id": 74,
+       "name": {
+           "default": "Hamlet"
+       }
+   },
+   {
+       "id": 75,
+       "name": {
+           "default": "Han Solo"
+       }
+   },
+   {
+       "id": 76,
+       "name": {
+           "default": "Hedwig",
+           "polski": "Hedwiga"
+       }
+   },
+   {
+       "id": 77,
+       "name": {
+           "default": "Helena Modrzejewska"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 78,
+       "name": {
+           "default": "Henry Ford"
+       }
+   },
+   {
+       "id": 79,
+       "name": {
+           "default": "Henryk Sienkiewicz"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 80,
+       "name": {
+           "default": "Henry VIII",
+           "polski": "Henryk VIII"
+       }
+   },
+   {
+       "id": 81,
+       "name": {
+           "default": "Hercules",
+           "polski": "Herkules"
+       }
+   },
+   {
+       "id": 82,
+       "name": {
+           "default": "Hernán Cortés"
+       }
+   },
+   {
+       "id": 83,
+       "name": {
+           "default": "Hippocrates",
+           "polski": "Hipokrates"
+       }
+   },
+   {
+       "id": 84,
+       "name": {
+           "default": "Homer"
+       }
+   },
+   {
+       "id": 85,
+       "name": {
+           "default": "Ikar"
+       }
+   },
+   {
+       "id": 86,
+       "name": {
+           "default": "Irena Kwiatkowska"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 87,
+       "name": {
+           "default": "Irena Szewińska"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 88,
+       "name": {
+           "default": "Isaac Newton"
+       }
+   },
+   {
+       "id": 89,
+       "name": {
+           "default": "J.R.R. Tolkien"
+       }
+   },
+   {
+       "id": 90,
+       "name": {
+           "default": "Jabba"
+       }
+   },
+   {
+       "id": 91,
+       "name": {
+           "default": "Jacek Soplica"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 92,
+       "name": {
+           "default": "Jack Dawson"
+       },
+       "hint": {
+           "default": "Titanic"
+       }
+   },
+   {
+       "id": 93,
+       "name": {
+           "default": "James Cook"
+       }
+   },
+   {
+       "id": 94,
+       "name": {
+           "default": "James Potter"
+       }
+   },
+   {
+       "id": 95,
+       "name": {
+           "default": "Jan Brzechwa"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 96,
+       "name": {
+           "default": "Johannes Gutenberg",
+           "polski": "Jan Gutenberg"
+       }
+   },
+   {
+       "id": 97,
+       "name": {
+           "default": "Jan III Sobieski"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 98,
+       "name": {
+           "default": "John Paul II",
+           "polski": "Jan Paweł II"
+       }
+   },
+   {
+       "id": 99,
+       "name": {
+           "default": "Jan Szpot"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 100,
+       "name": {
+           "default": "Jan Twardowski"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 101,
+       "name": {
+           "default": "Jan Zamoyski"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 102,
+       "name": {
+           "default": "Janosik"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 103,
+       "name": {
+           "default": "Jesus Christ",
+           "polski": "Jezus Chrystus"
+       }
+   },
+   {
+       "id": 104,
+       "name": {
+           "default": "Jimi Hendrix"
+       }
+   },
+   {
+       "id": 105,
+       "name": {
+           "default": "Joan D'Arc",
+           "polski": "Joanna D'Arc"
+       }
+   },
+   {
+       "id": 106,
+       "name": {
+           "default": "John Lennon"
+       }
+   },
+   {
+       "id": 107,
+       "name": {
+           "default": "John Rockefeller"
+       }
+   },
+   {
+       "id": 108,
+       "name": {
+           "default": "John Wayne"
+       }
+   },
+   {
+       "id": 109,
+       "name": {
+           "default": "Joker"
+       },
+       "hint": {
+           "default": "Batman"
+       }
+   },
+   {
+       "id": 110,
+       "name": {
+           "default": "Saint Thomas Aquinas",
+           "polski": "Św. Tomasz z Akwinu"
+       }
+   },
+   {
+       "id": 111,
+       "name": {
+           "default": "Joseph Haydn"
+       }
+   },
+   {
+       "id": 112,
+       "name": {
+           "default": "Józef Piłsudski"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 113,
+       "name": {
+           "default": "Joseph Stalin",
+           "polski": "Józef Stalin"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 114,
+       "name": {
+           "default": "Juliet",
+           "polski": "Julia"
+       },
+       "hint": {
+           "default": "Romeo & Juliet",
+           "polski": "Romeo i Julia"
+       }
+   },
+   {
+       "id": 115,
+       "name": {
+           "default": "Julius Cesar",
+           "polski": "Juliusz Cezar"
+       }
+   },
+   {
+       "id": 116,
+       "name": {
+           "default": "Jurij Gagarin"
+       }
+   },
+   {
+       "id": 117,
+       "name": {
+           "default": "Casper",
+           "polski": "Kacper"
+       },
+       "hint": {
+           "default": "friendly ghost",
+           "polski": "przyjazny duszek"
+       }
+   },
+   {
+       "id": 118,
+       "name": {
+           "default": "Captain Hook",
+           "polski": "Kapitan Hak"
+       }
+   },
+   {
+       "id": 119,
+       "name": {
+           "default": "Catherine the Great",
+           "polski": "Katarzyna Wielka"
+       }
+   },
+   {
+       "id": 120,
+       "name": {
+           "default": "Kazimierz Deyna"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 121,
+       "name": {
+           "default": "Kazimierz Górski"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 122,
+       "name": {
+           "default": "Kazimierz Wielki"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 123,
+       "name": {
+           "default": "Kenny"
+       },
+       "hint": {
+           "default": "South Park"
+       }
+   },
+   {
+       "id": 124,
+       "name": {
+           "default": "King Kong"
+       }
+   },
+   {
+       "id": 125,
+       "name": {
+           "default": "Cleopatra",
+           "polski": "Kleopatra"
+       }
+   },
+   {
+       "id": 126,
+       "name": {
+           "default": "Confucius",
+           "polski": "Konfucjusz"
+       }
+   },
+   {
+       "id": 127,
+       "name": {
+           "default": "Konrad Wallenrod"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 128,
+       "name": {
+           "default": "Kriss de Valnor"
+       },
+       "hint": {
+           "default": "Thorgal"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 129,
+       "name": {
+           "default": "King Arthur",
+           "polski": "Król Artur"
+       }
+   },
+   {
+       "id": 130,
+       "name": {
+           "default": "Król Popiel"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 131,
+       "name": {
+           "default": "Królowa Jadwiga"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 132,
+       "name": {
+           "default": "Krzysztof Kieślowski"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 133,
+       "name": {
+           "default": "Cristopher Columbus",
+           "polski": "Krzysztof Kolumb"
+       }
+   },
+   {
+       "id": 134,
+       "name": {
+           "default": "Krzysztof Krawczyk"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 135,
+       "name": {
+           "default": "Kurt Cobain"
+       }
+   },
+   {
+       "id": 136,
+       "name": {
+           "default": "Lady Diana"
+       }
+   },
+   {
+       "id": 137,
+       "name": {
+           "default": "Laura Palmer"
+       }
+   },
+   {
+       "id": 138,
+       "name": {
+           "default": "Lech Kaczyński"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 139,
+       "name": {
+           "default": "Leonard Nimoy"
+       },
+       "hint": {
+           "default": "Spock"
+       }
+   },
+   {
+       "id": 140,
+       "name": {
+           "default": "Leonardo da Vinci"
+       }
+   },
+   {
+       "id": 141,
+       "name": {
+           "default": "Leslie Nielsen"
+       }
+   },
+   {
+       "id": 142,
+       "name": {
+           "default": "Lew Tołstoj"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 143,
+       "name": {
+           "default": "Lord Farquad"
+       }
+   },
+   {
+       "id": 144,
+       "name": {
+           "default": "Louis Armstrong"
+       }
+   },
+   {
+       "id": 145,
+       "name": {
+           "default": "Louis de Funès"
+       }
+   },
+   {
+       "id": 146,
+       "name": {
+           "default": "Louis Pasteur"
+       }
+   },
+   {
+       "id": 147,
+       "name": {
+           "default": "Ludwig XIV",
+           "polski": "Ludwik XIV"
+       }
+   },
+   {
+       "id": 148,
+       "name": {
+           "default": "Maciek Chełmicki"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 149,
+       "name": {
+           "default": "Mahatma Gandhi"
+       }
+   },
+   {
+       "id": 150,
+       "name": {
+           "default": "Mahomet"
+       }
+   },
+   {
+       "id": 151,
+       "name": {
+           "default": "Macbeth",
+           "polski": "Makbet"
+       }
+   },
+   {
+       "id": 152,
+       "name": {
+           "default": "Little Mermaid",
+           "polski": "Mała Syrenka"
+       }
+   },
+   {
+       "id": 153,
+       "name": {
+           "default": "Bambi's mom",
+           "polski": "Mama Bambi"
+       }
+   },
+   {
+       "id": 154,
+       "name": {
+           "default": "Nemo's mom",
+           "polski": "Mama Nemo"
+       }
+   },
+   {
+       "id": 155,
+       "name": {
+           "default": "Mao Tse-Tung"
+       }
+   },
+   {
+       "id": 156,
+       "name": {
+           "default": "Margaret Thatcher"
+       }
+   },
+   {
+       "id": 157,
+       "name": {
+           "default": "Marie Skłodowska-Curie",
+           "polski": "Maria Skłodowska-Curie"
+       }
+   },
+   {
+       "id": 158,
+       "name": {
+           "default": "Mark Twain"
+       }
+   },
+   {
+       "id": 159,
+       "name": {
+           "default": "Marylin Monroe"
+       }
+   },
+   {
+       "id": 160,
+       "name": {
+           "default": "Marlon Brando"
+       }
+   },
+   {
+       "id": 161,
+       "name": {
+           "default": "Martin Luther King"
+       }
+   },
+   {
+       "id": 162,
+       "name": {
+           "default": "Mary",
+           "polski": "Maryja"
+       }
+   },
+   {
+       "id": 163,
+       "name": {
+           "default": "Mata Hari"
+       }
+   },
+   {
+       "id": 164,
+       "name": {
+           "default": "Mother Teresa",
+           "polski": "Matka Teresa"
+       }
+   },
+   {
+       "id": 165,
+       "name": {
+           "default": "Michael Jackson"
+       }
+   },
+   {
+       "id": 166,
+       "name": {
+           "default": "Michelangelo",
+           "polski": "Michał Anioł"
+       }
+   },
+   {
+       "id": 167,
+       "name": {
+           "default": "Michał Sędziwój"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 168,
+       "name": {
+           "default": "Mieczysław Fogg"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 169,
+       "name": {
+           "default": "Mieszko I"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 170,
+       "name": {
+           "default": "Mikhail Bułhakow"
+       }
+   },
+   {
+       "id": 171,
+       "name": {
+           "default": "Nicolaus Copernicus",
+           "polski": "Mikołaj Kopernik"
+       }
+   },
+   {
+       "id": 172,
+       "name": {
+           "default": "Minotaur"
+       }
+   },
+   {
+       "id": 173,
+       "name": {
+           "default": "Master Oogway",
+           "polski": "Mistrz Oogway"
+       },
+       "hint": {
+           "default": "Kung Fu Panda"
+       }
+   },
+   {
+       "id": 174,
+       "name": {
+           "default": "Master Yoda",
+           "polski": "Mistrz Yoda"
+       }
+   },
+   {
+       "id": 175,
+       "name": {
+           "default": "Mufasa"
+       }
+   },
+   {
+       "id": 176,
+       "name": {
+           "default": "Napoleon Bonaparte"
+       }
+   },
+   {
+       "id": 177,
+       "name": {
+           "default": "Ned Stark"
+       },
+       "hint": {
+           "default": "Game of Thrones",
+           "polski": "Gra o Tron"
+       }
+   },
+   {
+       "id": 178,
+       "name": {
+           "default": "Nefretete"
+       }
+   },
+   {
+       "id": 179,
+       "name": {
+           "default": "Neil Armstrong"
+       }
+   },
+   {
+       "id": 180,
+       "name": {
+           "default": "Nelson Mandela"
+       }
+   },
+   {
+       "id": 181,
+       "name": {
+           "default": "Nero",
+           "polski": "Neron"
+       }
+   },
+   {
+       "id": 182,
+       "name": {
+           "default": "Nicola Tesla"
+       }
+   },
+   {
+       "id": 183,
+       "name": {
+           "default": "Nicolae Ceasescu"
+       }
+   },
+   {
+       "id": 184,
+       "name": {
+           "default": "Nikita Chruszczew"
+       }
+   },
+   {
+       "id": 185,
+       "name": {
+           "default": "Obi-Wan Kenobi"
+       }
+   },
+   {
+       "id": 186,
+       "name": {
+           "default": "Odin",
+           "polski": "Odyn"
+       }
+   },
+   {
+       "id": 187,
+       "name": {
+           "default": "Odysseus",
+           "polski": "Odyseusz"
+       }
+   },
+   {
+       "id": 188,
+       "name": {
+           "default": "Osama Bin-Laden"
+       }
+   },
+   {
+       "id": 189,
+       "name": {
+           "default": "Pablo Escobar"
+       }
+   },
+   {
+       "id": 190,
+       "name": {
+           "default": "Pablo Picasso"
+       }
+   },
+   {
+       "id": 191,
+       "name": {
+           "default": "Pan Wołodyjowski"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 192,
+       "name": {
+           "default": "Percival"
+       }
+   },
+   {
+       "id": 193,
+       "name": {
+           "default": "Phileas Fogg"
+       }
+   },
+   {
+       "id": 194,
+       "name": {
+           "default": "Piotr Czajkowski"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 195,
+       "name": {
+           "default": "Peter the Great",
+           "polski": "Piotr I Wielki"
+       }
+   },
+   {
+       "id": 196,
+       "name": {
+           "default": "Pythagoras",
+           "polski": "Pitagoras"
+       }
+   },
+   {
+       "id": 197,
+       "name": {
+           "default": "Plato",
+           "polski": "Platon"
+       }
+   },
+   {
+       "id": 198,
+       "name": {
+           "default": "Pocahontas"
+       }
+   },
+   {
+       "id": 199,
+       "name": {
+           "default": "Professor Moriarty",
+           "polski": "Profesor Moriarty"
+       },
+       "hint": {
+           "default": "Sherlock Holmes"
+       }
+   },
+   {
+       "id": 200,
+       "name": {
+           "default": "Quasimodo"
+       }
+   },
+   {
+       "id": 201,
+       "name": {
+           "default": "Ramses III",
+           "polski": "Ramzes III"
+       }
+   },
+   {
+       "id": 202,
+       "name": {
+           "default": "Rasputin"
+       }
+   },
+   {
+       "id": 203,
+       "name": {
+           "default": "Rudyard Kipling"
+       }
+   },
+   {
+       "id": 204,
+       "name": {
+           "default": "Richard Lionheart",
+           "polski": "Ryszard Lwie Serce"
+       }
+   },
+   {
+       "id": 205,
+       "name": {
+           "default": "Richard Wagner",
+           "polski": "Ryszard Wagner"
+       }
+   },
+   {
+       "id": 206,
+       "name": {
+           "default": "Salahaddin"
+       }
+   },
+   {
+       "id": 207,
+       "name": {
+           "default": "Salomon"
+       }
+   },
+   {
+       "id": 208,
+       "name": {
+           "default": "Salvador Dali"
+       }
+   },
+   {
+       "id": 209,
+       "name": {
+           "default": "Severus Snape"
+       }
+   },
+   {
+       "id": 210,
+       "name": {
+           "default": "Socrates",
+           "polski": "Sokrates"
+       }
+   },
+   {
+       "id": 211,
+       "name": {
+           "default": "Spartacus",
+           "polski": "Spartakus"
+       }
+   },
+   {
+       "id": 212,
+       "name": {
+           "default": "Stanisław Bareja"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 213,
+       "name": {
+           "default": "Stanisław Lem"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 214,
+       "name": {
+           "default": "Stanisław Moniuszko"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 215,
+       "name": {
+           "default": "Stanisław Witkiewicz"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 216,
+       "name": {
+           "default": "Stanisław Wyspiański"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 217,
+       "name": {
+           "default": "Steve Jobs"
+       }
+   },
+   {
+       "id": 218,
+       "name": {
+           "default": "Superman"
+       }
+   },
+   {
+       "id": 219,
+       "name": {
+           "default": "Santa",
+           "polski": "Święty Mikołaj"
+       }
+   },
+   {
+       "id": 220,
+       "name": {
+           "default": "Tadeusz Kościuszko"
+       }
+   },
+   {
+       "id": 221,
+       "name": {
+           "default": "Tai Lung"
+       },
+       "hint": {
+           "default": "Kung Fu Panda"
+       }
+   },
+   {
+       "id": 222,
+       "name": {
+           "default": "Terminator"
+       }
+   },
+   {
+       "id": 223,
+       "name": {
+           "default": "Terry Pratchett"
+       }
+   },
+   {
+       "id": 224,
+       "name": {
+           "default": "Thorin Oakenshield",
+           "polski": "Thorin Dębowa Tarcza"
+       }
+   },
+   {
+       "id": 225,
+       "name": {
+           "default": "Vincent van Gogh"
+       }
+   },
+   {
+       "id": 226,
+       "name": {
+           "default": "Virion"
+       }
+   },
+   {
+       "id": 227,
+       "name": {
+           "default": "Tom Riddle"
+       },
+       "hint": {
+           "default": "Voldemort"
+       }
+   },
+   {
+       "id": 228,
+       "name": {
+           "default": "Walt Disney"
+       }
+   },
+   {
+       "id": 229,
+       "name": {
+           "default": "Werter"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 230,
+       "name": {
+           "default": "Victor Frankenstein",
+           "polski": "Wiktor Frankenstein"
+       }
+   },
+   {
+       "id": 231,
+       "name": {
+           "default": "William Shakespeare",
+           "polski": "William Szekspir"
+       }
+   },
+   {
+       "id": 232,
+       "name": {
+           "default": "Wisława Szymborska"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 233,
+       "name": {
+           "default": "Vladimir Lenin",
+           "polski": "Włodzimierz Lenin"
+       }
+   },
+   {
+       "id": 234,
+       "name": {
+           "default": "Stephen Hawking"
+       }
+   },
+   {
+       "id": 235,
+       "name": {
+           "default": "Uncle Ben",
+           "polski": "Wujek Ben"
+       },
+       "hint": {
+           "default": "Spider-Man"
+       }
+   },
+   {
+       "id": 236,
+       "name": {
+           "default": "Zaan"
+       }
+   },
+   {
+       "id": 237,
+       "name": {
+           "default": "Zawisza Czarny"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 238,
+       "name": {
+           "default": "Zbigniew Cybulski"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 239,
+       "name": {
+           "default": "Zbigniew Religa"
+       },
+       "include": [
+           "polski"
+       ]
+   },
+   {
+       "id": 240,
+       "name": {
+           "default": "Dobby",
+           "polski": "Zgredek"
+       }
+   },
+   {
+       "id": 241,
+       "name": {
+           "default": "Evil Queen",
+           "polski": "Zła Królowa"
+       },
+       "hint": {
+           "default": "Snow White",
+           "polski": "Królewna Śnieżka"
+       }
+   },
+   {
+       "id": 242,
+       "name": {
+           "default": "Shaka",
+           "polski": "Zulus Czaka"
+       }
+   },
+   {
+       "id": 243,
+       "name": {
+           "default": "Sigmund Freud",
+           "polski": "Zygmunt Freud"
+       }
+   }
+]
