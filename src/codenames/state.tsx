@@ -11,6 +11,6 @@ export const emptyCodenamesState: () => codenamesState = () => {
       settings: emptyGameSettings(),
       memory: {},
       appAction: false,
-      action: CodenamesActions.SHOW
+      action: CodenamesActions.CHOOSE_PLAYERS
    }
 }

@@ -1,6 +1,7 @@
 import { gameLanguages } from "../game/languages"
 
 export interface istanbulLanguage {
+   CHOOSE_PLAYERS: string,
    CHOOSE_PRESET: string,
    presets: {
       VANILLA: string,
@@ -21,6 +22,7 @@ export function getLanguage(language: gameLanguages): istanbulLanguage {
    switch (language) {
       case gameLanguages.POLSKI:
          return {
+            CHOOSE_PLAYERS: 'Wybierz graczy',
             CHOOSE_PRESET: 'Wybierz rodzaj gry',
             presets: {
                VANILLA: 'podstawowa',
@@ -41,6 +43,7 @@ export function getLanguage(language: gameLanguages): istanbulLanguage {
          break
    }
    return {
+      CHOOSE_PLAYERS: 'Choose players',
       CHOOSE_PRESET: 'Choose game preset',
       presets: {
          VANILLA: 'base game only',

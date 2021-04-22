@@ -14,6 +14,6 @@ export const emptyIstanbulState: () => istanbulState = () => {
       settings: emptyIstanbulSettings(),
       memory: emptyIstanbulMemory(),
       appAction: false,
-      action: IstanbulActions.CHOOSE_PRESET
+      action: IstanbulActions.CHOOSE_PLAYERS
    }
 }

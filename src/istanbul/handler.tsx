@@ -3,7 +3,8 @@ import { GameHandler } from "../game/handler"
 import { gameLanguages } from "../game/languages"
 import { gameState } from "../game/state"
 import { arrayEquals, random, randomArrayElement, randomBool } from "../general/general"
-import { numberValue, SuperButtonValue } from "../SuperButton"
+import { getPlayers, getTeams } from "../players/teams"
+import { numberValue, stringValue, SuperButtonValue } from "../SuperButton"
 import { IstanbulActions } from "./actions"
 import { getLanguage, istanbulLanguage } from "./language"
 import { istanbulMemory } from "./memory"
@@ -23,6 +24,12 @@ export class IstanbulHandler extends GameHandler {
       const castState = state as istanbulState
 
       switch (castState.action) {
+         case IstanbulActions.CHOOSE_PLAYERS:
+            // choose which players take part
+            return {
+               info: [infoLeft(this.language.CHOOSE_PLAYERS)],
+               options: getTeams().map(e => stringValue(e, e))
+            }
          case IstanbulActions.CHOOSE_PRESET:
             // choose preset to use
             return {
@@ -57,6 +64,13 @@ export class IstanbulHandler extends GameHandler {
    executeActionIndividual(state: gameState, value?: SuperButtonValue): gameState {
       const castState = state as istanbulState
       switch (castState.action) {
+         case IstanbulActions.CHOOSE_PLAYERS:
+            // choose which players take part
+            this.allPlayers = getPlayers(value!.value.string!)
+            Object.assign(castState, {
+               action: IstanbulActions.CHOOSE_PRESET
+            })
+            break
          case IstanbulActions.CHOOSE_PRESET:
             // chosen preset to use
             const preset = value!.value.number! as istanbulPresets
@@ -139,7 +153,7 @@ export class IstanbulHandler extends GameHandler {
             coffeeTrader: useCoffee ? random(1, 12) : -1,
             courier: useLetters ? random(1, 12) : -1
          },
-         firstPlayer: randomArrayElement(this.allPlayers).name
+         firstPlayer: randomArrayElement(this.allPlayers)
       }
    }
 }

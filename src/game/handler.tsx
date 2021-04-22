@@ -1,19 +1,18 @@
 import { ButtonScreenDisplay, infoCenter } from "../ButtonScreen"
 import { isUndefined } from "../general/general"
-import { player, getPlayers } from "../players/players"
 import { stringValue, SuperButtonValue, SuperButtonValueType } from "../SuperButton"
 import { AppActions } from "./actions"
 import { gameLanguages, gamesLanguage, getLanguage } from "./languages"
 import { gameState } from "./state"
 
 export class GameHandler {
-   allPlayers: player[]
+   allPlayers: string[]
    menuLanguage: gamesLanguage
 
    constructor(){
       const language = gameLanguages.POLSKI
       this.menuLanguage = getLanguage(language)
-      this.allPlayers = getPlayers()
+      this.allPlayers = []
    }
 
    getScreen(state: gameState): ButtonScreenDisplay {

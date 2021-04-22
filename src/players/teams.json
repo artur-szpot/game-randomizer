@@ -1,0 +1,48 @@
+[
+   {
+      "name": "Wszystkie Szpoty",
+      "players": [
+         "Misia",
+         "Beata",
+         "Darek",
+         "Radek",
+         "Artur"
+      ]
+   },
+   {
+      "name": "Bez Radka",
+      "players": [
+         "Misia",
+         "Beata",
+         "Darek",
+         "Artur"
+      ]
+   },
+   {
+      "name": "Bez Misi",
+      "players": [
+         "Beata",
+         "Darek",
+         "Radek",
+         "Artur"
+      ]
+   },
+   {
+      "name": "Bez Mamy",
+      "players": [
+         "Misia",
+         "Darek",
+         "Radek",
+         "Artur"
+      ]
+   },
+   {
+      "name": "Bez Taty",
+      "players": [
+         "Misia",
+         "Beata",
+         "Radek",
+         "Artur"
+      ]
+   }
+]
