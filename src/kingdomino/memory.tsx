@@ -1,14 +1,12 @@
 export interface kingdominoMemory {
-   kingTilesUsed: number[]
-   queenTilesUsed: number[]
-   currentTiles: number[]
-   currentSetKing: boolean
+   kingTiles: number[]
+   queenTiles: number[]
+   currentRound: number
 }
 export const emptyKingdominoMemory: () => kingdominoMemory = () => {
    return {
-      kingTilesUsed: [],
-      queenTilesUsed: [],
-      currentTiles: [],
-      currentSetKing: true
+      kingTiles: [],
+      queenTiles: [],
+      currentRound: 0
    }
 }

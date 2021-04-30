@@ -3,7 +3,8 @@ export enum gameLanguages { DEFAULT = 'default', POLSKI = 'polski', DEUTSCH = 'd
 export interface gamesLanguage {
    MUERTOS: string,
    CODENAMES: string,
-   ISTANBUL: string
+   ISTANBUL: string,
+   KINGDOMINO: string,
 }
 
 export function getLanguage(language: gameLanguages): gamesLanguage {
@@ -12,7 +13,8 @@ export function getLanguage(language: gameLanguages): gamesLanguage {
          return {
             MUERTOS: 'Fiesta los Muertos',
             CODENAMES: 'Tajniacy',
-            ISTANBUL: 'Istambuł'
+            ISTANBUL: 'Istambuł',
+            KINGDOMINO: 'Kingdomino',
          }
       case gameLanguages.ENGLISH:
       case gameLanguages.DEUTSCH:
@@ -21,6 +23,7 @@ export function getLanguage(language: gameLanguages): gamesLanguage {
    return {
       MUERTOS: 'Fiesta los Muertos',
       CODENAMES: 'Codenames',
-      ISTANBUL: 'Istanbul'
+      ISTANBUL: 'Istanbul',
+      KINGDOMINO: 'Kingdomino',
    }
 }

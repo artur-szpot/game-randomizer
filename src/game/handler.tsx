@@ -21,7 +21,8 @@ export class GameHandler {
             options: [
                stringValue(this.menuLanguage.MUERTOS, 'muertos'),
                stringValue(this.menuLanguage.CODENAMES, 'codenames'),
-               stringValue(this.menuLanguage.ISTANBUL, 'istanbul')
+               stringValue(this.menuLanguage.ISTANBUL, 'istanbul'),
+               stringValue(this.menuLanguage.KINGDOMINO, 'kingdomino'),
             ]
          }
       }

@@ -6,6 +6,8 @@ import { GameHandler } from './game/handler'
 import { emptyGameState, gameState } from './game/state'
 import { IstanbulHandler } from './istanbul/handler'
 import { emptyIstanbulState } from './istanbul/state'
+import { KingdominoHandler } from './kingdomino/handler'
+import { emptyKingdominoState } from './kingdomino/state'
 import { MuertosHandler } from './muertos/handler'
 import { emptyMuertosState } from './muertos/state'
 import { specialValue, SuperButton, SuperButtonProps, SuperButtonValue, SuperButtonValueType } from './SuperButton'
@@ -65,6 +67,12 @@ export class ButtonScreen extends React.Component<{}, ButtonScreenState> {
                this.setState({
                   handler: new IstanbulHandler(),
                   state: emptyIstanbulState()
+               })
+               break
+            case 'kingdomino':
+               this.setState({
+                  handler: new KingdominoHandler(),
+                  state: emptyKingdominoState()
                })
                break
          }
