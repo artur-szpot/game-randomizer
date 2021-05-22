@@ -1,0 +1,114 @@
+[
+    {
+        "id": 0,
+        "name": {
+            "default": "Sentinel Wood",
+            "polski": "Zagajnik"
+        }
+    },
+    {
+        "id": 1,
+        "name": {
+            "default": "Greenbough",
+            "polski": "Górskie ostępy"
+        }
+    },
+    {
+        "id": 2,
+        "name": {
+            "default": "Treetower",
+            "polski": "Leśna wieża"
+        }
+    },
+    {
+        "id": 3,
+        "name": {
+            "default": "Stoneside Forest",
+            "polski": "Leśna warta"
+        }
+    },
+    {
+        "id": 4,
+        "name": {
+            "default": "Shieldgate",
+            "polski": "Umocnienia"
+        }
+    },
+    {
+        "id": 5,
+        "name": {
+            "default": "Greengold Plains",
+            "polski": "Żyzne równiny"
+        }
+    },
+    {
+        "id": 6,
+        "name": {
+            "default": "Wildholds",
+            "polski": "Kolonia"
+        }
+    },
+    {
+        "id": 7,
+        "name": {
+            "default": "Great City",
+            "polski": "Wielkie miasto"
+        }
+    },
+    {
+        "id": 8,
+        "name": {
+            "default": "Canal Lake",
+            "polski": "Polny staw"
+        }
+    },
+    {
+        "id": 9,
+        "name": {
+            "default": "The Golden Granary",
+            "polski": "Złoty spichlerz"
+        }
+    },
+    {
+        "id": 10,
+        "name": {
+            "default": "Shoreside Expanse",
+            "polski": "Rozległe nabrzeże"
+        }
+    },
+    {
+        "id": 11,
+        "name": {
+            "default": "Mages Valley",
+            "polski": "Dolina magów"
+        }
+    },
+    {
+        "id": 12,
+        "name": {
+            "default": "Lost Barony",
+            "polski": "Utracone włości"
+        }
+    },
+    {
+        "id": 13,
+        "name": {
+            "default": "The Cauldrons",
+            "polski": "Kryjówki"
+        }
+    },
+    {
+        "id": 14,
+        "name": {
+            "default": "Borderlands",
+            "polski": "Pogranicze"
+        }
+    },
+    {
+        "id": 15,
+        "name": {
+            "default": "The Broken Road",
+            "polski": "Trakt handlowy"
+        }
+    }
+]

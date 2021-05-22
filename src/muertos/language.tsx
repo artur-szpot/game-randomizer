@@ -1,62 +1,52 @@
-import { gameLanguages } from "../game/languages"
+import { Language, languageEnum } from "../Language"
 
-export interface muertosLanguage {
-   info: {
-      CHOOSE_RULES_NUMBER: string,
-      PASS_DEVICE: string,
-      ACCEPT_OR_NOT: string,
-      RULES_LIST_HEADER: string,
-      CHARACTER_LIST_HEADER: string,
-      NO_RULE: string
-   },
-   options: {
-      OK: string,
-      PLAYERS: string,
-      ACCEPT: string,
-      REJECT: string,
-      SHOW_CHARACTERS: string,
-   }
+export enum LANG {
+   CHOOSE_RULES_NUMBER,
+   PASS_DEVICE,
+   ACCEPT_OR_NOT,
+   RULES_LIST_HEADER,
+   CHARACTER_LIST_HEADER,
+   NO_RULE,
+   OK,
+   PLAYERS,
+   ACCEPT,
+   REJECT,
+   SHOW_CHARACTERS,
 }
 
-export function getLanguage(language: gameLanguages): muertosLanguage {
-   switch (language) {
-      case gameLanguages.POLSKI:
-         return {
-            info: {
-               CHOOSE_RULES_NUMBER: 'Ile zasad wybrać?',
-               PASS_DEVICE: 'Podaj urządzenie następnemu graczowi',
-               ACCEPT_OR_NOT: 'Twoja postać:',
-               RULES_LIST_HEADER: 'Obowiązujące zasady:',
-               CHARACTER_LIST_HEADER: 'Pula postaci:',
-               NO_RULE: 'brak zasady'
-            },
-            options: {
-               OK: 'OK',
-               PLAYERS: 'graczy', // as in "choose X players who will play"
-               ACCEPT: 'OK',
-               REJECT: 'Zmień',
-               SHOW_CHARACTERS: 'Pokaż postaci'
+export class GameLanguage extends Language {
+   getValue(value: LANG): string | undefined {
+      switch (this.language) {
+         case languageEnum.POLSKI:
+            switch (value) {
+               case LANG.CHOOSE_RULES_NUMBER: return 'Ile zasad wybrać?'
+               case LANG.PASS_DEVICE: return 'Podaj urządzenie następnemu graczowi'
+               case LANG.ACCEPT_OR_NOT: return 'Twoja postać:'
+               case LANG.RULES_LIST_HEADER: return 'Obowiązujące zasady:'
+               case LANG.CHARACTER_LIST_HEADER: return 'Pula postaci:'
+               case LANG.NO_RULE: return 'brak zasady'
+               case LANG.OK: return 'OK'
+               case LANG.PLAYERS: return 'graczy'
+               case LANG.ACCEPT: return 'OK'
+               case LANG.REJECT: return 'Zmień'
+               case LANG.SHOW_CHARACTERS: return 'Pokaż postaci'
             }
-         }
-      case gameLanguages.ENGLISH:
-      case gameLanguages.DEUTSCH:
-         break
-   }
-   return {
-      info: {
-         CHOOSE_RULES_NUMBER: 'How many rules should be used?',
-         PASS_DEVICE: 'Pass the device to next player',
-         ACCEPT_OR_NOT: 'Your character:',
-         RULES_LIST_HEADER: 'The rules:',
-         CHARACTER_LIST_HEADER: 'The possible characters:',
-         NO_RULE: 'no rule'
-      },
-      options: {
-         OK: 'OK',
-         PLAYERS: 'players', // as in "choose X players who will play"
-         ACCEPT: 'OK',
-         REJECT: 'Change',
-         SHOW_CHARACTERS: 'Show characters'
+            break
+         case languageEnum.ENGLISH:
+            switch (value) {
+               case LANG.CHOOSE_RULES_NUMBER: return 'How many rules should be used?'
+               case LANG.PASS_DEVICE: return 'Pass the device to next player'
+               case LANG.ACCEPT_OR_NOT: return 'Your character:'
+               case LANG.RULES_LIST_HEADER: return 'The rules:'
+               case LANG.CHARACTER_LIST_HEADER: return 'The possible characters:'
+               case LANG.NO_RULE: return 'no rule'
+               case LANG.OK: return 'OK'
+               case LANG.PLAYERS: return 'players'
+               case LANG.ACCEPT: return 'OK'
+               case LANG.REJECT: return 'Change'
+               case LANG.SHOW_CHARACTERS: return 'Show characters'
+            }
+            break
       }
    }
 }

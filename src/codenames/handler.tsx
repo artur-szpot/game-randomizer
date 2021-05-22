@@ -1,51 +1,57 @@
-import { ButtonScreenDisplay, ButtonScreenInfo, infoLeft } from "../ButtonScreen"
-import { GameHandler } from "../game/handler"
-import { gameLanguages } from "../game/languages"
-import { gameState } from "../game/state"
+import { IBBScreenProps } from "../BBScreen"
+import { BBValue } from "../BigButton"
+import { GameHandler } from "../GameHandler"
 import { randomBool, randomizeArray } from "../general/general"
-import { getPlayers, getTeams } from "../players/teams"
-import { stringValue, SuperButtonValue } from "../SuperButton"
-import { CodenamesActions } from "./actions"
-import { codenamesLanguage, getLanguage } from "./language"
-import { codenamesState } from "./state"
+import { infoLeft, InfoProps } from "../Info"
+import { GameLanguage, LANG } from "./language"
+
+export enum ACTION {
+   CHOOSE_PLAYERS,// choose which players take part
+   SHOW,          // show results
+}
+
+class gameState {
+   action: ACTION=ACTION.CHOOSE_PLAYERS
+   // settings
+   players: string[]=[]
+}
 
 export class CodenamesHandler extends GameHandler {
-   language: codenamesLanguage
+   state: gameState
 
    constructor() {
-      super()
-      const language = gameLanguages.POLSKI
-      this.language = getLanguage(language)
+      super(new GameLanguage())
+      this.state = new gameState()
    }
 
-   getScreenIndividual(state: gameState): ButtonScreenDisplay | undefined {
-      const castState = state as codenamesState
-      switch (castState.action) {
-         case CodenamesActions.CHOOSE_PLAYERS:
-            // choose which players take part
-            return {
-               info: [infoLeft(this.language.CHOOSE_PLAYERS)],
-               options: getTeams().map(e => stringValue(e, e))
-            }
-         case CodenamesActions.SHOW:
-            const sortedPlayers = randomizeArray(this.allPlayers)
+   getScreen(): IBBScreenProps {
+      const lang = (value: LANG) => this.language.get(value)
+
+      switch (this.state.action) {
+         case ACTION.CHOOSE_PLAYERS:
+            this.players.min = 4
+            this.players.max = -1
+            return this.getPlayersScreen()
+
+         case ACTION.SHOW:
+            const sortedPlayers = randomizeArray(this.players.chosen)
             const blueFirst = randomBool()
-            let info: ButtonScreenInfo[] = []
+            let info: InfoProps[] = []
             let team: string[] = []
             if (blueFirst) {
-               info.push(infoLeft(`${this.language.BLUE_LEADER}: ${sortedPlayers[0]}`))
+               info.push(infoLeft(`${lang(LANG.BLUE_LEADER)}: ${sortedPlayers[0]}`))
                team = sortedPlayers.slice(2).filter((_, i) => i % 2 === 0)
-               info.push(infoLeft(`${this.language.BLUE_TEAM}: ${team.join(', ')}`))
-               info.push(infoLeft(`${this.language.RED_LEADER}: ${sortedPlayers[1]}`))
+               info.push(infoLeft(`${lang(LANG.BLUE_TEAM)}: ${team.join(', ')}`))
+               info.push(infoLeft(`${lang(LANG.RED_LEADER)}: ${sortedPlayers[1]}`))
                team = sortedPlayers.slice(2).filter((_, i) => i % 2 !== 0)
-               info.push(infoLeft(`${this.language.RED_TEAM}: ${team.join(', ')}`))
+               info.push(infoLeft(`${lang(LANG.RED_TEAM)}: ${team.join(', ')}`))
             } else {
-               info.push(infoLeft(`${this.language.RED_LEADER}: ${sortedPlayers[0]}`))
+               info.push(infoLeft(`${lang(LANG.RED_LEADER)}: ${sortedPlayers[0]}`))
                team = sortedPlayers.slice(2).filter((_, i) => i % 2 === 0)
-               info.push(infoLeft(`${this.language.RED_TEAM}: ${team.join(', ')}`))
-               info.push(infoLeft(`${this.language.BLUE_LEADER}: ${sortedPlayers[1]}`))
+               info.push(infoLeft(`${lang(LANG.RED_TEAM)}: ${team.join(', ')}`))
+               info.push(infoLeft(`${lang(LANG.BLUE_LEADER)}: ${sortedPlayers[1]}`))
                team = sortedPlayers.slice(2).filter((_, i) => i % 2 !== 0)
-               info.push(infoLeft(`${this.language.BLUE_TEAM}: ${team.join(', ')}`))
+               info.push(infoLeft(`${lang(LANG.BLUE_TEAM)}: ${team.join(', ')}`))
             }
             return {
                info: info,
@@ -54,17 +60,18 @@ export class CodenamesHandler extends GameHandler {
       }
    }
 
-   executeActionIndividual(state: gameState, value?: SuperButtonValue): gameState {
-      const castState = state as codenamesState
-      switch (castState.action) {
-         case CodenamesActions.CHOOSE_PLAYERS:
-            // choose which players take part
-            this.allPlayers = getPlayers(value!.value.string!)
-            Object.assign(castState, {
-               action: CodenamesActions.SHOW
-            })
+   executeAction(value: BBValue): void {
+      const setAction = (action: ACTION) => this.state.action = action
+
+      switch (this.state.action) {
+         case ACTION.CHOOSE_PLAYERS:
+            // chosen which players take part
+            this.executePlayersAction(value)
+            if (this.players.chosen.length) {
+               setAction(ACTION.SHOW)
+               return
+            }
             break
       }
-      return state
    }
 }

@@ -1,58 +1,74 @@
-import { ButtonScreenDisplay, ButtonScreenInfo, infoBlock, infoLeft } from "../ButtonScreen"
-import { GameHandler } from "../game/handler"
-import { gameLanguages } from "../game/languages"
-import { gameState } from "../game/state"
+import { GameHandler } from "../GameHandler"
+import { BBValue, numberBB } from "../BigButton"
+import { IBBScreenProps } from "../BBScreen"
+import { GameLanguage, LANG } from "./language"
+import { infoLeft, infoBlock, InfoProps } from "../Info"
 import { arrayEquals, random, randomArrayElement, randomBool } from "../general/general"
-import { getPlayers, getTeams } from "../players/teams"
-import { numberValue, stringValue, SuperButtonValue } from "../SuperButton"
-import { IstanbulActions } from "./actions"
-import { getLanguage, istanbulLanguage } from "./language"
-import { istanbulMemory } from "./memory"
-import { istanbulPresets } from "./settings"
-import { istanbulState } from "./state"
+
+enum ACTION {
+   CHOOSE_PLAYERS,// choose which players take part
+   CHOOSE_PRESET, // choose which preset to generate
+   SHOW,          // show results
+}
+
+export enum istanbulPresets { NONE, VANILLA, COFFEE, LETTERS, GREAT_BAZAAR }
+
+class gameState {
+   action: ACTION = ACTION.CHOOSE_PLAYERS
+   // settings
+   players: string[] = []
+   preset: istanbulPresets = istanbulPresets.NONE
+   // memory
+   chosenLocations: number[][] = []
+   neutrals: { mayor: number, smuggler: number, coffeeTrader: number, courier: number } = {
+      mayor: -1,
+      smuggler: -1,
+      coffeeTrader: -1,
+      courier: -1
+   }
+   firstPlayer: string = ''
+}
 
 export class IstanbulHandler extends GameHandler {
-   language: istanbulLanguage
+   state: gameState
 
    constructor() {
-      super()
-      const language = gameLanguages.POLSKI
-      this.language = getLanguage(language)
+      super(new GameLanguage())
+      this.state = new gameState()
    }
 
-   getScreenIndividual(state: gameState): ButtonScreenDisplay | undefined {
-      const castState = state as istanbulState
+   getScreen(): IBBScreenProps {
+      const lang = (value: LANG) => this.language.get(value)
 
-      switch (castState.action) {
-         case IstanbulActions.CHOOSE_PLAYERS:
-            // choose which players take part
-            return {
-               info: [infoLeft(this.language.CHOOSE_PLAYERS)],
-               options: getTeams().map(e => stringValue(e, e))
-            }
-         case IstanbulActions.CHOOSE_PRESET:
+      switch (this.state.action) {
+         case ACTION.CHOOSE_PLAYERS:
+            this.players.min = 2
+            this.players.max = 5
+            return this.getPlayersScreen()
+
+         case ACTION.CHOOSE_PRESET:
             // choose preset to use
             return {
-               info: [infoLeft(this.language.CHOOSE_PRESET)],
+               info: [infoLeft(lang(LANG.CHOOSE_PRESET))],
                options: [
-                  numberValue(this.language.presets.VANILLA, istanbulPresets.VANILLA),
-                  numberValue(this.language.presets.COFFEE, istanbulPresets.COFFEE),
-                  numberValue(this.language.presets.LETTERS, istanbulPresets.LETTERS),
-                  numberValue(this.language.presets.GREAT_BAZAAR, istanbulPresets.GREAT_BAZAAR)
+                  numberBB(lang(LANG.PRESET_VANILLA), istanbulPresets.VANILLA),
+                  numberBB(lang(LANG.PRESET_COFFEE), istanbulPresets.COFFEE),
+                  numberBB(lang(LANG.PRESET_LETTERS), istanbulPresets.LETTERS),
+                  numberBB(lang(LANG.PRESET_GREAT_BAZAAR), istanbulPresets.GREAT_BAZAAR)
                ]
             }
-         case IstanbulActions.SHOW:
-            let info: ButtonScreenInfo[] = [
-               ...castState.memory.chosenLocations.map(row => infoBlock(row.map(e => `${e}`))),
-               infoLeft(`${this.language.FIRST_PLAYER}: ${state.memory.firstPlayer}`),
-               infoLeft(`${this.language.neutrals.MAYOR}: ${state.memory.neutrals.mayor}`),
-               infoLeft(`${this.language.neutrals.SMUGGLER}: ${state.memory.neutrals.smuggler}`)
+         case ACTION.SHOW:
+            let info: InfoProps[] = [
+               ...this.state.chosenLocations.map(row => infoBlock(row.map(e => `${e}`))),
+               infoLeft(`${lang(LANG.FIRST_PLAYER)}: ${this.state.firstPlayer}`),
+               infoLeft(`${lang(LANG.NEUTRAL_MAYOR)}: ${this.state.neutrals.mayor}`),
+               infoLeft(`${lang(LANG.NEUTRAL_SMUGGLER)}: ${this.state.neutrals.smuggler}`)
             ]
-            if (state.memory.neutrals.coffeeTrader !== -1) {
-               info.push(infoLeft(`${this.language.neutrals.COFFEE_TRADER}: ${state.memory.neutrals.coffeeTrader}`))
+            if (this.state.neutrals.coffeeTrader !== -1) {
+               info.push(infoLeft(`${lang(LANG.NEUTRAL_COFFEE_TRADER)}: ${this.state.neutrals.coffeeTrader}`))
             }
-            if (state.memory.neutrals.courier !== -1) {
-               info.push(infoLeft(`${this.language.neutrals.COURIER}: ${state.memory.neutrals.courier}`))
+            if (this.state.neutrals.courier !== -1) {
+               info.push(infoLeft(`${lang(LANG.NEUTRAL_COURIER)}: ${this.state.neutrals.courier}`))
             }
             return {
                info: info,
@@ -61,30 +77,29 @@ export class IstanbulHandler extends GameHandler {
       }
    }
 
-   executeActionIndividual(state: gameState, value?: SuperButtonValue): gameState {
-      const castState = state as istanbulState
-      switch (castState.action) {
-         case IstanbulActions.CHOOSE_PLAYERS:
-            // choose which players take part
-            this.allPlayers = getPlayers(value!.value.string!)
-            Object.assign(castState, {
-               action: IstanbulActions.CHOOSE_PRESET
-            })
+   executeAction(value: BBValue): void {
+      const setAction = (action: ACTION) => this.state.action = action
+
+      switch (this.state.action) {
+         case ACTION.CHOOSE_PLAYERS:
+            this.executePlayersAction(value)
+            if (this.players.chosen.length) {
+               setAction(ACTION.CHOOSE_PRESET)
+               return
+            }
             break
-         case IstanbulActions.CHOOSE_PRESET:
+
+         case ACTION.CHOOSE_PRESET:
             // chosen preset to use
-            const preset = value!.value.number! as istanbulPresets
-            Object.assign(castState, {
-               settings: { preset: preset },
-               memory: this.generateBoard(preset),
-               action: IstanbulActions.SHOW
-            })
+            this.state.preset = value.getNumber() as istanbulPresets
+            this.generateBoard()
+            setAction(ACTION.SHOW)
             break
       }
-      return state
    }
 
-   generateBoard(preset: istanbulPresets): istanbulMemory {
+   generateBoard(): void {
+      const preset = this.state.preset
       const useCoffee = preset === istanbulPresets.COFFEE || preset === istanbulPresets.GREAT_BAZAAR
       const useLetters = preset === istanbulPresets.LETTERS || preset === istanbulPresets.GREAT_BAZAAR
       const useGreatBazaar = preset === istanbulPresets.GREAT_BAZAAR
@@ -145,15 +160,13 @@ export class IstanbulHandler extends GameHandler {
          }
          chosenLocations.push(row)
       }
-      return {
-         chosenLocations: chosenLocations,
-         neutrals: {
-            mayor: random(1, 12),
-            smuggler: random(1, 12),
-            coffeeTrader: useCoffee ? random(1, 12) : -1,
-            courier: useLetters ? random(1, 12) : -1
-         },
-         firstPlayer: randomArrayElement(this.allPlayers)
+      this.state.chosenLocations = chosenLocations
+      this.state.neutrals = {
+         mayor: random(1, 12),
+         smuggler: random(1, 12),
+         coffeeTrader: useCoffee ? random(1, 12) : -1,
+         courier: useLetters ? random(1, 12) : -1
       }
+      this.state.firstPlayer = randomArrayElement(this.players.chosen)
    }
 }

@@ -11,7 +11,7 @@ export function getTeams(): string[] {
 
 export function getPlayers(teamName: string): string[] {
    for (let team of (teams as team[])) {
-      if (team.name == teamName) { return team.players }
+      if (team.name === teamName) { return team.players }
    }
    return []
 }

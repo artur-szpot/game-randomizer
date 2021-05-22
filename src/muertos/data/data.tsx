@@ -1,4 +1,4 @@
-import { gameLanguages } from '../../game/languages'
+import { languageEnum } from '../../Language'
 import characters from './characters.json'
 import rules from './rules.json'
 
@@ -20,7 +20,7 @@ interface muertosRuleRaw {
 }
 
 export class dataHandler {
-   getCharacters(language: gameLanguages): muertosCharacter[] {
+   getCharacters(language: languageEnum): muertosCharacter[] {
       let retval: muertosCharacter[] = []
       const values = characters as muertosCharacterRaw[]
       values.forEach(e => {
@@ -34,7 +34,7 @@ export class dataHandler {
       })
       return retval
    }
-   getRules(language: gameLanguages): string[] {
+   getRules(language: languageEnum): string[] {
       let retval: string[] = []
       const values = rules as muertosRuleRaw[]
       values.forEach(e => {

@@ -1,32 +1,34 @@
-import { gameLanguages } from "../game/languages"
+import { Language, languageEnum } from "../Language"
 
-export interface codenamesLanguage {
-   CHOOSE_PLAYERS: string,
-   BLUE_LEADER: string,
-   RED_LEADER: string,
-   BLUE_TEAM: string,
-   RED_TEAM: string
+export enum LANG {
+   CHOOSE_PLAYERS,
+   BLUE_LEADER,
+   RED_LEADER,
+   BLUE_TEAM,
+   RED_TEAM,
 }
 
-export function getLanguage(language: gameLanguages): codenamesLanguage {
-   switch (language) {
-      case gameLanguages.POLSKI:
-         return {
-            CHOOSE_PLAYERS: 'Wybierz graczy',
-            BLUE_LEADER: 'Niebieski mistrz',
-            RED_LEADER: 'Czerwony mistrz',
-            BLUE_TEAM: 'Drużyna niebieskich',
-            RED_TEAM: 'Drużyna czerwonych'
-         }
-      case gameLanguages.ENGLISH:
-      case gameLanguages.DEUTSCH:
-         break
-   }
-   return {
-      CHOOSE_PLAYERS: 'Choose players',
-      BLUE_LEADER: 'Blue leader',
-      RED_LEADER: 'Red leader',
-      BLUE_TEAM: 'Blue team',
-      RED_TEAM: 'Red team'
+export class GameLanguage extends Language {
+   getValue(value: LANG) {
+      switch (this.language) {
+         case languageEnum.POLSKI:
+            switch (value) {
+               case LANG.CHOOSE_PLAYERS: return 'Wybierz graczy'
+               case LANG.BLUE_LEADER: return 'Niebieski mistrz'
+               case LANG.RED_LEADER: return 'Czerwony mistrz'
+               case LANG.BLUE_TEAM: return 'Drużyna niebieskich'
+               case LANG.RED_TEAM: return 'Drużyna czerwonych'
+            }
+            break
+         case languageEnum.ENGLISH:
+            switch (value) {
+               case LANG.CHOOSE_PLAYERS: return 'Choose players'
+               case LANG.BLUE_LEADER: return 'Blue leader'
+               case LANG.RED_LEADER: return 'Red leader'
+               case LANG.BLUE_TEAM: return 'Blue team'
+               case LANG.RED_TEAM: return 'Red team'
+            }
+            break
+      }
    }
 }

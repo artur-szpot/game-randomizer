@@ -1,62 +1,52 @@
-import { gameLanguages } from "../game/languages"
+import { Language, languageEnum } from "../Language"
 
-export interface istanbulLanguage {
-   CHOOSE_PLAYERS: string,
-   CHOOSE_PRESET: string,
-   presets: {
-      VANILLA: string,
-      COFFEE: string,
-      LETTERS: string,
-      GREAT_BAZAAR: string
-   },
-   FIRST_PLAYER: string,
-   neutrals: {
-      MAYOR: string,
-      SMUGGLER: string,
-      COFFEE_TRADER: string,
-      COURIER: string
-   }
+export enum LANG {
+   CHOOSE_PLAYERS,
+   CHOOSE_PRESET,
+   PRESET_VANILLA,
+   PRESET_COFFEE,
+   PRESET_LETTERS,
+   PRESET_GREAT_BAZAAR,
+   FIRST_PLAYER,
+   NEUTRAL_MAYOR,
+   NEUTRAL_SMUGGLER,
+   NEUTRAL_COFFEE_TRADER,
+   NEUTRAL_COURIER,
 }
 
-export function getLanguage(language: gameLanguages): istanbulLanguage {
-   switch (language) {
-      case gameLanguages.POLSKI:
-         return {
-            CHOOSE_PLAYERS: 'Wybierz graczy',
-            CHOOSE_PRESET: 'Wybierz rodzaj gry',
-            presets: {
-               VANILLA: 'podstawowa',
-               COFFEE: 'z kawą',
-               LETTERS: 'z listami',
-               GREAT_BAZAAR: 'Wielki Bazar'
-            },
-            FIRST_PLAYER: 'Pierwszy gracz',
-            neutrals: {
-               MAYOR: 'Burmistrz',
-               SMUGGLER: 'Szmugler',
-               COFFEE_TRADER: 'Handlarz kawą',
-               COURIER: 'Kurier'
+export class GameLanguage extends Language {
+   getValue(value: LANG): string | undefined {
+      switch (this.language) {
+         case languageEnum.POLSKI:
+            switch (value) {
+               case LANG.CHOOSE_PLAYERS: return 'Wybierz graczy'
+               case LANG.CHOOSE_PRESET: return 'Wybierz rodzaj gry'
+               case LANG.PRESET_VANILLA: return 'podstawowa'
+               case LANG.PRESET_COFFEE: return 'z kawą'
+               case LANG.PRESET_LETTERS: return 'z listami'
+               case LANG.PRESET_GREAT_BAZAAR: return 'Wielki Bazar'
+               case LANG.FIRST_PLAYER: return 'Pierwszy gracz'
+               case LANG.NEUTRAL_MAYOR: return 'Burmistrz'
+               case LANG.NEUTRAL_SMUGGLER: return 'Szmugler'
+               case LANG.NEUTRAL_COFFEE_TRADER: return 'Handlarz kawą'
+               case LANG.NEUTRAL_COURIER: return 'Kurier'
             }
-         }
-      case gameLanguages.ENGLISH:
-      case gameLanguages.DEUTSCH:
-         break
-   }
-   return {
-      CHOOSE_PLAYERS: 'Choose players',
-      CHOOSE_PRESET: 'Choose game preset',
-      presets: {
-         VANILLA: 'base game only',
-         COFFEE: 'with coffee',
-         LETTERS: 'with letters',
-         GREAT_BAZAAR: 'the Great Bazaar'
-      },
-      FIRST_PLAYER: 'First player',
-      neutrals: {
-         MAYOR: 'Mayor',
-         SMUGGLER: 'Smuggler',
-         COFFEE_TRADER: 'Coffee trader',
-         COURIER: 'Courier'
+            break
+         case languageEnum.ENGLISH:
+            switch (value) {
+               case LANG.CHOOSE_PLAYERS: return 'Choose players'
+               case LANG.CHOOSE_PRESET: return 'Choose game preset'
+               case LANG.PRESET_VANILLA: return 'base game only'
+               case LANG.PRESET_COFFEE: return 'with coffee'
+               case LANG.PRESET_LETTERS: return 'with letters'
+               case LANG.PRESET_GREAT_BAZAAR: return 'the Great Bazaar'
+               case LANG.FIRST_PLAYER: return 'First player'
+               case LANG.NEUTRAL_MAYOR: return 'Mayor'
+               case LANG.NEUTRAL_SMUGGLER: return 'Smuggler'
+               case LANG.NEUTRAL_COFFEE_TRADER: return 'Coffee trader'
+               case LANG.NEUTRAL_COURIER: return 'Courier'
+            }
+            break
       }
    }
 }

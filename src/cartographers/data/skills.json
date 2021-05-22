@@ -1,0 +1,57 @@
+[
+    {
+        "id": 0,
+        "name": {
+            "default": "Cure Wounds",
+            "polski": "Leczenie ran"
+        }
+    },
+    {
+        "id": 1,
+        "name": {
+            "default": "Acrobatics",
+            "polski": "Akrobatyka"
+        }
+    },
+    {
+        "id": 2,
+        "name": {
+            "default": "Concentrate",
+            "polski": "Koncentracja"
+        }
+    },
+    {
+        "id": 3,
+        "name": {
+            "default": "tag",
+            "polski": "Wiedza"
+        }
+    },
+    {
+        "id": 4,
+        "name": {
+            "default": "Diplomacy",
+            "polski": "Dyplomacja"
+        }
+    },
+    {
+        "id": 5,
+        "name": {
+            "default": "Move Silently",
+            "polski": "Skradanie się"
+        }
+    },
+    {
+        "id": 6,
+        "name": {
+            "default": "Negotiate",
+            "polski": "Negocjacje"
+        }
+    },
+    {
+        "id": 7,
+        "name": {
+            "default": "Search",
+            "polski": "Przeszukiwanie"
+        }
+    }]

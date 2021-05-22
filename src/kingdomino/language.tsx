@@ -1,47 +1,43 @@
-import { gameLanguages } from "../game/languages"
+import { Language, languageEnum } from "../Language"
 
-export interface kingdominoLanguage {
-   CHOOSE_PLAYERS: string,
-   CHOOSE_GAME: string,
-   PLAYER_ORDER: string,
-   TILES_USED: string,
-   NEXT_ROUND: string,
-   sets: {
-      KING: string,
-      QUEEN: string,
-      BOTH: string
-   }
+export enum LANG {
+   CHOOSE_PLAYERS,
+   CHOOSE_GAME,
+   PLAYER_ORDER,
+   TILES_USED,
+   NEXT_ROUND,
+   SET_KING,
+   SET_QUEEN,
+   SET_BOTH
 }
 
-export function getLanguage(language: gameLanguages): kingdominoLanguage {
-   switch (language) {
-      case gameLanguages.POLSKI:
-         return {
-            CHOOSE_PLAYERS: 'Wybierz graczy',
-            CHOOSE_GAME: 'Wybierz grę',
-            PLAYER_ORDER: 'Kolejność graczy',
-            TILES_USED: 'Użyte płytki',
-            NEXT_ROUND: 'Następna runda',
-            sets: {
-               KING: 'Kingdomino',
-               QUEEN: 'Queendomino',
-               BOTH: 'Obie'
+export class GameLanguage extends Language {
+   getValue(value: LANG): string | undefined {
+      switch (this.language) {
+         case languageEnum.POLSKI:
+            switch (value) {
+               case LANG.CHOOSE_PLAYERS: return 'Wybierz graczy'
+               case LANG.CHOOSE_GAME: return 'Wybierz grę'
+               case LANG.PLAYER_ORDER: return 'Kolejność graczy'
+               case LANG.TILES_USED: return 'Użyte płytki'
+               case LANG.NEXT_ROUND: return 'Następna runda'
+               case LANG.SET_KING: return 'Kingdomino'
+               case LANG.SET_QUEEN: return 'Queendomino'
+               case LANG.SET_BOTH: return 'Obie'
             }
-         }
-      case gameLanguages.ENGLISH:
-      case gameLanguages.DEUTSCH:
-         break
-   }
-   return {
-      CHOOSE_PLAYERS: 'Choose players',
-      CHOOSE_GAME: 'Choose game',
-      PLAYER_ORDER: 'Player order',
-      TILES_USED: 'Tiles used',
-      NEXT_ROUND: 'Next round',
-      sets: {
-         KING: 'Kingdomino',
-         QUEEN: 'Queendomino',
-         BOTH: 'Both'
+            break
+         case languageEnum.ENGLISH:
+            switch (value) {
+               case LANG.CHOOSE_PLAYERS: return 'Choose players'
+               case LANG.CHOOSE_GAME: return 'Choose game'
+               case LANG.PLAYER_ORDER: return 'Player order'
+               case LANG.TILES_USED: return 'Tiles used'
+               case LANG.NEXT_ROUND: return 'Next round'
+               case LANG.SET_KING: return 'Kingdomino'
+               case LANG.SET_QUEEN: return 'Queendomino'
+               case LANG.SET_BOTH: return 'Both'
+            }
+            break
       }
    }
 }
