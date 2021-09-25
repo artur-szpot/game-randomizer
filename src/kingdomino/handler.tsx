@@ -75,7 +75,7 @@ export class KingdominoHandler extends GameHandler {
             }
 
             let totalTiles = 4
-            if (this.players.chosen.length === 3) {
+            if (this.state.gamesUsed === kingdominoGamesUsed.KING && this.players.chosen.length === 3) {
                totalTiles = 3
             } else if (this.state.gamesUsed === kingdominoGamesUsed.BOTH) {
                totalTiles = 8

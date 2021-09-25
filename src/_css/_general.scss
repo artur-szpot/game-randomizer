@@ -4,25 +4,10 @@ body {
     background-color: #666;
     color: #ddd;
     margin: 0;
-    margin-top: 4%;
     font-family: Arial;
 }
 
 button:focus { outline: none; }
-
-div.container {
-    padding: 0;
-    height: 100vh;
-    width: 100vw;
-    overflow-y: scroll;
-}
-
-div.main {
-    margin: 0;
-    width: 100%;
-    height: 93.7%;
-    text-align: center;
-}
 
 .executable {
     cursor: pointer;

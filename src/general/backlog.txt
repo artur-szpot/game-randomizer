@@ -1,1 +1,2 @@
 hello there
+aws s3 sync . s3://wz-game-randomizer-master-bucket

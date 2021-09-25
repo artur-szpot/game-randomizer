@@ -1,0 +1,554 @@
+[
+    {
+        "id": 0,
+        "name": {
+            "default": "Tichu"
+        },
+        "min": 4,
+        "max": 4,
+        "tags": ["cards"]
+    },
+    {
+        "id": 1,
+        "name": {
+            "default": "Kanasta"
+        },
+        "min": 4,
+        "max": 4,
+        "tags": ["cards"]
+    },
+    {
+        "id": 2,
+        "name": {
+            "default": "Konigsrufen"
+        },
+        "min": 4,
+        "max": 4,
+        "exclude": [
+            "S/M"
+        ],
+        "tags": ["cards"]
+    },
+    {
+        "id": 3,
+        "name": {
+            "default": "Mahjong"
+        },
+        "min": 4,
+        "max": 4,
+        "exclude": [
+            "S/D"
+        ],
+        "tags": ["cards"]
+    },
+    {
+        "id": 4,
+        "name": {
+            "default": "Istanbul"
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["board"]
+    },
+    {
+        "id": 5,
+        "name": {
+            "default": "Zendo"
+               },
+        "min": 3,
+        "max": 5,
+        "tags": ["logic"]
+    },
+    {
+        "id": 6,
+        "name": {
+            "default": "Szeryf z Nottingham"
+        },
+        "min": 3,
+        "max": 5,
+        "tags": ["bluff"]
+    },
+    {
+        "id": 7,
+        "name": {
+            "default": "Azul"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["board"]
+    },
+    {
+        "id": 8,
+        "name": {
+            "default": "Azul: Witraże Sintry"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["board"]
+    },
+    {
+        "id": 9,
+        "name": {
+            "default": "Hanabi"
+        },
+        "min": 3,
+        "max": 5,
+        "tags": ["coop"]
+    },
+    {
+        "id": 10,
+        "name": {
+            "default": "Azul: Letni pawilon"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["board"]
+    },
+    {
+        "id": 11,
+        "name": {
+            "default": "Fasolki"
+        },
+        "min": 3,
+        "max": 5
+    },
+    {
+        "id": 14,
+        "name": {
+            "default": "Red7"
+        },
+        "min": 2,
+        "max": 4
+    },
+    {
+        "id": 15,
+        "name": {
+            "default": "Origami"
+        },
+        "min": 2,
+        "max": 5
+    },
+    {
+        "id": 16,
+        "name": {
+            "default": "Bukiet"
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["roll-and-write", "dice"]
+    },
+    {
+        "id": 17,
+        "name": {
+            "default": "Imago"
+        },
+        "min": 5,
+        "max": 5,
+        "tags": ["drawing"]
+    },
+    {
+        "id": 18,
+        "name": {
+            "default": "Fiesta de los Muertos"
+        },
+        "min": 4,
+        "max": 5
+    },
+    {
+        "id": 19,
+        "name": {
+            "default": "Park Niedźwiedzi"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["board"]
+    },
+    {
+        "id": 20,
+        "name": {
+            "default": "Sagrada"
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["board", "dice"]
+    },
+    {
+        "id": 21,
+        "name": {
+            "default": "Rummy"
+        },
+        "min": 4,
+        "max": 4,
+        "tags": ["cards"]
+    },
+    {
+        "id": 22,
+        "name": {
+            "default": "Dżem dobry"
+        },
+        "min": 4,
+        "max": 5,
+        "tags": ["words"]
+    },
+    {
+        "id": 23,
+        "name": {
+            "default": "Labirynt słów"
+        },
+        "min": 4,
+        "max": 5,
+        "tags": ["words"]
+    },
+    {
+        "id": 24,
+        "name": {
+            "default": "Sushi Go!"
+        },
+        "min": 3,
+        "max": 5,
+        "tags": ["cards"]
+    },
+    {
+        "id": 25,
+        "name": {
+            "default": "Skat"
+        },
+        "min": 3,
+        "max": 3,
+        "exclude": ["S/B"],
+        "tags": ["cards"]
+    },
+    {
+        "id": 26,
+        "name": {
+            "default": "Da Bai Fen"
+        },
+        "min": 4,
+        "max": 4,
+        "tags": ["cards"]
+    },
+    {
+        "id": 27,
+        "name": {
+            "default": "Droggn"
+        },
+        "min": 3,
+        "max": 3,
+        "tags": ["cards"]
+    },
+    {
+        "id": 28,
+        "name": {
+            "default": "Bawarka"
+        },
+        "min": 3,
+        "max": 3,
+        "tags": ["cards"]
+    },
+    {
+        "id": 29,
+        "name": {
+            "default": "Trefle"
+        },
+        "min": 3,
+        "max": 3,
+        "tags": ["cards"]
+    },
+    {
+        "id": 30,
+        "name": {
+            "default": "99"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["cards"]
+    },
+    {
+        "id": 31,
+        "name": {
+            "default": "Łamisłówka"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["words"]
+    },
+    {
+        "id": 32,
+        "name": {
+            "default": "Kingdomino/Queendomino"
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["board"]
+    },
+    {
+        "id": 33,
+        "name": {
+            "default": "Domek"
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["board"]
+    },
+    {
+        "id": 34,
+        "name": {
+            "default": "Welcome to..."
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["roll-and-write"]
+    },
+    {
+        "id": 35,
+        "name": {
+            "default": "Ucieczka z więzienia"
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["roll-and-write", "dice"]
+    },
+    {
+        "id": 36,
+        "name": {
+            "default": "Roll Village!"
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["roll-and-write", "dice"]
+    },
+    {
+        "id": 37,
+        "name": {
+            "default": "Ganz schon clever"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["roll-and-write", "dice"]
+    },
+    {
+        "id": 38,
+        "name": {
+            "default": "Doppelt so clever"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["roll-and-write", "dice"]
+    },
+    {
+        "id": 39,
+        "name": {
+            "default": "Clever hoch drei"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["roll-and-write", "dice"]
+    },
+    {
+        "id": 40,
+        "name": {
+            "default": "Dixit"
+        },
+        "min": 3,
+        "max": 5
+    },
+    {
+        "id": 41,
+        "name": {
+            "default": "Einfach genial"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["board"]
+    },
+    {
+        "id": 42,
+        "name": {
+            "default": "Kartografowie"
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["roll-and-write"]
+    },
+    {
+        "id": 43,
+        "name": {
+            "default": "Dizzle"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["roll-and-write"]
+    },
+    {
+        "id": 44,
+        "name": {
+            "default": "Criss Cross"
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["roll-and-write", "dice"]
+    },
+    {
+        "id": 45,
+        "name": {
+            "default": "Gra ze śliwką"
+        },
+        "min": 3,
+        "max": 5,
+        "tags": ["cards"]
+    },
+    {
+        "id": 46,
+        "name": {
+            "default": "Noch mal so gut"
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["roll-and-write", "dice"]
+    },
+    {
+        "id": 47,
+        "name": {
+            "default": "Noch mal"
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["roll-and-write", "dice"]
+    },
+    {
+        "id": 48,
+        "name": {
+            "default": "Man muss auch gonnen konnen"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["roll-and-write", "dice"]
+    },
+    {
+        "id": 49,
+        "name": {
+            "default": "Tajniacy"
+        },
+        "min": 2,
+        "max": 5,
+        "impossible": [3],
+        "tags": ["words"]
+    },
+    {
+        "id": 50,
+        "name": {
+            "default": "Potęga słowa"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["words"]
+    },
+    {
+        "id": 51,
+        "name": {
+            "default": "Dopasowani"
+        },
+        "min": 4,
+        "max": 5,
+        "tags": ["words"]
+    },
+    {
+        "id": 52,
+        "name": {
+            "default": "Reef"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["board"]
+    },
+    {
+        "id": 53,
+        "name": {
+            "default": "Mleczarka"
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["dice"]
+    },
+    {
+        "id": 54,
+        "name": {
+            "default": "Indian summer"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["board"]
+    },
+    {
+        "id": 55,
+        "name": {
+            "default": "Zakazana wyspa"
+        },
+        "min": 2,
+        "max": 4,
+        "tags": ["coop"]
+    },
+    {
+        "id": 56,
+        "name": {
+            "default": "Eat poop you cat!"
+        },
+        "min": 4,
+        "max": 5,
+        "tags": ["drawing"]
+    },
+    {
+        "id": 57,
+        "name": {
+            "default": "Mizerka"
+        },
+        "min": 3,
+        "max": 3,
+        "tags": ["cards"]
+    },
+    {
+        "id": 58,
+        "name": {
+            "default": "Wist polski"
+        },
+        "min": 2,
+        "max": 2,
+        "tags": ["cards"]
+    },
+    {
+        "id": 59,
+        "name": {
+            "default": "Wist norweski"
+        },
+        "min": 2,
+        "max": 2,
+        "tags": ["cards"]
+    },
+    {
+        "id": 60,
+        "name": {
+            "default": "WYSIWYG"
+        },
+        "min": 2,
+        "max": 2,
+        "tags": ["cards"]
+    },
+    {
+        "id": 61,
+        "name": {
+            "default": "Sabotażysta"
+        },
+        "min": 3,
+        "max": 5,
+        "tags": ["bluff"]
+    },
+    {
+        "id": 62,
+        "name": {
+            "default": "5. bierze!"
+        },
+        "min": 2,
+        "max": 5,
+        "tags": ["cards"]
+    }
+]

@@ -5,6 +5,10 @@ export enum GAME {
    ISTANBUL = 'istanbul',
    KINGDOMINO = 'kingdomino',
    CARTOGRAPHERS='cartographers',
+   ESCAPE='escape',
+   PROPOSER='proposer',   
+   NEARFAR='nearfar'
+
 }
 export const allGames = [
    GAME.FIRST,
@@ -13,6 +17,9 @@ export const allGames = [
    GAME.ISTANBUL,
    GAME.KINGDOMINO,
    GAME.CARTOGRAPHERS,
+   GAME.ESCAPE,
+   GAME.PROPOSER,
+   GAME.NEARFAR,
 ]
 
 export enum languageEnum { ENGLISH = 'english', POLSKI = 'polski' }
@@ -28,11 +35,11 @@ export enum baseLanguage {
 export class Language {
    language: languageEnum = languageEnum.POLSKI
 
-   get(value: any): string {
-      return this.getValue(value) ?? `"${value}" ${this.getBaseValue(baseLanguage.MISSING)}!`
+   get(value: any, index?: number): string {
+      return this.getValue(value, index) ?? `"${value}" ${this.getBaseValue(baseLanguage.MISSING)}!`
    }
 
-   getValue(value: any): string | undefined {
+   getValue(value: any, index?: number): string | undefined {
       return value
    }
 
@@ -75,6 +82,9 @@ export class Language {
                case GAME.ISTANBUL: return 'Istanbul'
                case GAME.KINGDOMINO: return 'Kingdomino'
                case GAME.CARTOGRAPHERS: return 'Kartografowie'
+               case GAME.ESCAPE: return 'Ucieczka z więzienia'
+               case GAME.PROPOSER: return 'Zaproponuj gry'
+               case GAME.NEARFAR: return 'Near and Far'
             }
             break
          case languageEnum.ENGLISH:
@@ -85,6 +95,9 @@ export class Language {
                case GAME.ISTANBUL: return 'Istanbul'
                case GAME.KINGDOMINO: return 'Kingdomino'
                case GAME.CARTOGRAPHERS: return 'Cartographers'
+               case GAME.ESCAPE: return 'Escape from prison'
+               case GAME.PROPOSER: return 'Propose games'
+               case GAME.NEARFAR: return 'Near and Far'
             }
             break
       }

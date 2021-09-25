@@ -61,9 +61,11 @@ export function randomArraySlice(source: any[], count: number = 1): any[] {
    let result: any[] = []
    let sourceCopy = [...source]
    for (let i = 0; i < count; i++) {
-      let chosen: number = random(0, sourceCopy.length - 1)
-      result.push(sourceCopy[chosen])
-      sourceCopy.splice(chosen, 1)
+      if (sourceCopy.length > 0) {
+         let chosen: number = random(0, sourceCopy.length - 1)
+         result.push(sourceCopy[chosen])
+         sourceCopy.splice(chosen, 1)
+      }
    }
    return result
 }
@@ -73,9 +75,11 @@ export function randomArrayElement(source: any[]): any { return randomArraySlice
 export function randomArraySplice(source: any[], count: number = 1): any[] {
    let result: any[] = []
    for (let i = 0; i < count; i++) {
-      let chosen: number = random(0, source.length - 1)
-      result.push(source[chosen])
-      source.splice(chosen, 1)
+      if (source.length > 0) {
+         let chosen: number = random(0, source.length - 1)
+         result.push(source[chosen])
+         source.splice(chosen, 1)
+      }
    }
    return result
 }

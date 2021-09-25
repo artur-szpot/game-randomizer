@@ -21,12 +21,12 @@ export const infoCenter: (value: string) => InfoProps = (value: string) => { ret
 export function Info(props: InfoProps) {
    switch (props.type) {
       case InfoType.TEXT_LEFT:
-         return <p className='info info-left'>{props.value}</p>
+         return <p className='bb info info-left'>{props.value}</p>
       case InfoType.TEXT_CENTER:
-         return <p className='info info-center'>{props.value}</p>
+         return <p className='bb info info-center'>{props.value}</p>
       case InfoType.BLOCK_CONTAINER:
-         return <div className='info info-block-container'>
-            {props.blocks?.map(e => <div className='info info-block'>{e.value}</div>)}
+         return <div className='bb info info-block-container'>
+            {props.blocks?.map(e => <div className='bb info info-block'>{e.value}</div>)}
          </div>
    }
    return null

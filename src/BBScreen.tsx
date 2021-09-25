@@ -24,7 +24,7 @@ export class BBScreen extends React.Component<BBScreenProps, {}> {
 
    render() {
       return (
-         <div className='button-screen'>
+         <div>
             {this.props.info?.map(e => <Info {...e} />)}
             {this.props.options.map(e => <BigButton {...e} onClick={this.handleOnClick} />)}
             {!this.props.mainMenu &&
