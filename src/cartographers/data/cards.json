@@ -1,0 +1,35 @@
+[
+    {
+        "id": -1,
+        "shapes": [],
+        "types": [],
+        "time": 0
+    },
+    {
+        "id": -2,
+        "shapes": [],
+        "types": [],
+        "time": 0
+    },
+    {
+        "id": -3,
+        "shapes": [],
+        "types": [],
+        "time": 0
+    },
+    {
+        "id": -4,
+        "shapes": [],
+        "types": [],
+        "time": 0
+    },
+    {
+        "id": 0,
+        "shapes": [{
+           "fields": [[true, false], [false, true]],
+           "coin": true
+        }],
+        "types": [0],
+        "time": 1
+    }
+]

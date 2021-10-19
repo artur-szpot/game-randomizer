@@ -1,14 +1,15 @@
 import { GameHandler } from "../GameHandler"
-import { BBValue, BB_STYLE_ON_OFF, okBB, stringBB, styledBB } from "../BigButton"
+import { BBValue, BB_STYLE_ON_OFF, IBBProps, okBB, stringBB, styledBB } from "../BigButton"
 import { IBBScreenProps } from "../BBScreen"
 import { GameLanguage, LANG } from "./language"
-import { infoCenter, infoLeft } from "../Info"
+import { infoCenter, infoLeft, InfoProps } from "../Info"
 import { random, randomArraySlice, randomizeArray } from "../general/general"
-import { dataHandler } from "./data/data"
+import { cartographersCard, dataHandler } from "./data/data"
 
 enum ACTION {
    CHOOSE_EXTENSIONS,
-   SHOW,
+   INITIAL_SETUP,
+   GAME,
 }
 
 enum OPTIONS {
@@ -23,6 +24,10 @@ class gameState {
    boardSide: string = 'A'
    decrees: { [key: string]: string } = {}
    skills: string[] = []
+   cards: number[] = []
+   time: number = 0
+   season: number = 0
+   currentCard: number = 0
 }
 
 const DECREE_LIST = ['A', 'B', 'C', 'D']
@@ -31,6 +36,8 @@ export class CartographersHandler extends GameHandler {
    state: gameState
    decrees: string[]
    skills: string[]
+   cards: { [key: number]: cartographersCard }
+   maxSeasonTime = [8, 8, 7, 6]
 
    constructor() {
       super(new GameLanguage())
@@ -38,23 +45,25 @@ export class CartographersHandler extends GameHandler {
       const data = new dataHandler()
       this.skills = data.getSkills(this.language.language)
       this.decrees = data.getDecrees(this.language.language)
+      this.cards = data.getCards()
    }
 
    getScreen(): IBBScreenProps {
-      const lang = (value: LANG) => this.language.get(value)
+      const lang = (value: LANG, index?: number) => this.language.get(value, index)
+      let info: InfoProps[] = []
+      let options: IBBProps[] = []
 
       switch (this.state.action) {
          case ACTION.CHOOSE_EXTENSIONS:
-            return {
-               info: [infoLeft(lang(LANG.CHOOSE_EXTENSIONS))],
-               options: [
-                  styledBB(stringBB(lang(LANG.SKILLS), OPTIONS.SKILLS), BB_STYLE_ON_OFF(this.state.useSkills)),
-                  okBB(lang(LANG.OK))
-               ]
-            }
+            info = [infoLeft(lang(LANG.CHOOSE_EXTENSIONS))]
+            options = [
+               styledBB(stringBB(lang(LANG.SKILLS), OPTIONS.SKILLS), BB_STYLE_ON_OFF(this.state.useSkills)),
+               okBB(lang(LANG.OK))
+            ]
+            break
 
-         case ACTION.SHOW:
-            let info = [
+         case ACTION.INITIAL_SETUP:
+            info = [
                infoLeft(`${lang(LANG.BOARD_SIDE)}: ${this.state.boardSide}`),
                infoLeft(`${lang(LANG.DECREES)}:`),
                ...DECREE_LIST.map(e => infoCenter(`${e}: ${this.state.decrees[e]}`))
@@ -63,11 +72,31 @@ export class CartographersHandler extends GameHandler {
                info.push(infoLeft(`${lang(LANG.SKILLS)}:`))
                this.state.skills.forEach(e => info.push(infoCenter(e)))
             }
-            return {
-               info: info,
-               options: []
+            options = [
+               okBB(lang(LANG.START))
+            ]
+            break
+
+         case ACTION.GAME:
+            if (this.state.season < 4) {
+               options = [okBB(lang(LANG.NEXT))]
+               info = [
+                  infoLeft(`${lang(LANG.SEASON, this.state.season)} (${this.state.time}/${this.maxSeasonTime[this.state.season]})`),
+                  infoCenter(lang(LANG.CARD, this.state.currentCard)),
+               ]
+               const card = this.cards[this.state.currentCard]
+               card.types.forEach(e=>info.push(infoCenter(lang(LANG.TERRAIN, e))))
+               if(card.shapes.length === 1){
+
+               }
+            } else {
+               info = [
+                  infoLeft(lang(LANG.CARD, this.state.currentCard))
+               ]
             }
+            break
       }
+      return { info, options }
    }
 
    executeAction(value: BBValue): void {
@@ -78,13 +107,33 @@ export class CartographersHandler extends GameHandler {
             // toggled/chosen which extensions to use
             if (value.isOK()) {
                this.randomize()
-               setAction(ACTION.SHOW)
+               setAction(ACTION.INITIAL_SETUP)
                return
             }
             switch (value.getString()) {
                case OPTIONS.SKILLS:
                   this.state.useSkills = !this.state.useSkills
                   return
+            }
+            break
+
+         case ACTION.INITIAL_SETUP:
+            setAction(ACTION.GAME)
+            break
+
+         case ACTION.GAME:
+            const finishSeason = this.state.time >= this.maxSeasonTime[this.state.season]
+            if (finishSeason) {
+               if (this.state.currentCard >= 0) {
+                  this.state.currentCard = -(this.state.season + 1)
+               } else {
+                  this.state.season += 1
+                  this.state.currentCard = 0
+                  this.state.time = this.cards[this.state.currentCard].time
+               }
+            } else {
+               this.state.currentCard = 0
+               this.state.time += this.cards[this.state.currentCard].time
             }
             break
       }

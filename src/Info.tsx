@@ -4,19 +4,49 @@ export enum InfoType { NONE, TEXT_LEFT, TEXT_CENTER, BLOCK_CONTAINER, BLOCK }
 
 export interface InfoProps {
    type: InfoType
-   value: string
+   values: JSX.Element[]
    blocks?: InfoProps[]
 }
 
 export const infoBlock: (values: string[]) => InfoProps = (values: string[]) => {
    return {
       type: InfoType.BLOCK_CONTAINER,
-      value: '',
+      values: [],
       blocks: values.map(e => { return { type: InfoType.BLOCK, value: e } })
    }
 }
-export const infoLeft: (value: string) => InfoProps = (value: string) => { return { type: InfoType.TEXT_LEFT, value: value } }
-export const infoCenter: (value: string) => InfoProps = (value: string) => { return { type: InfoType.TEXT_CENTER, value: value } }
+export const infoLeft: (value: string) => InfoProps = (value: string) => { 
+   return { type: InfoType.TEXT_LEFT, values: renderInfo(value) } 
+}
+export const infoCenter: (value: string) => InfoProps = (value: string) => { 
+   return { type: InfoType.TEXT_CENTER, values: renderInfo(value) } 
+}
+
+function regexExactMatch(input: string, regex: RegExp): boolean {
+   const regexResult = regex.exec(input)
+   return (regexResult && regexResult[0] === input) as boolean
+}
+
+const renderInfo: (value:string)=>JSX.Element[] = (value:string) => {
+   const words = value.split(' ')
+   let spanWords: string[] = []
+   let retval: JSX.Element[] = []
+   const colorBoxRegex = /\[.*\]/
+   const pushSpanWords: ()=>void = () => {
+      if(spanWords.length){
+         retval.push(<span>{spanWords.join(' ')}</span>)
+         spanWords = []
+      }
+   }
+   words.forEach(e=>{
+      if(regexExactMatch(e, colorBoxRegex)){
+         pushSpanWords()
+         const color = e.substr(1, e.length-2)
+         retval.push(<div className='color-box' style={{backgroundColor: 'abc'}}></div>)
+      }
+   })
+   return []
+}
 
 export function Info(props: InfoProps) {
    switch (props.type) {

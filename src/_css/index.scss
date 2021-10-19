@@ -14,6 +14,10 @@ button.super-button {
    border: 4px solid #333;
 }
 
+button:hover {
+   background-color: rgb(184, 206, 177);
+}
+
 button.disabled {
    border-color: rgb(163, 37, 37);
    cursor: default;
@@ -24,12 +28,18 @@ button.toggler-off {
    background-color: #FFF;
    border-color: #BBB;
    color: #666;
+   &:hover {
+      background-color: #DDD;
+   }
 }
 
 button.toggler-on {
    background-color: rgb(110, 186, 221);
    border-color: rgb(39, 39, 141);
    color: rgb(7, 7, 116);
+   &:hover {
+      background-color: rgb(157, 205, 228);
+   }
 }
 
 p.info {
