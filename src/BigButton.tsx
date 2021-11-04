@@ -68,6 +68,7 @@ export const BB_STYLE_ON_OFF = (state: boolean) => state ? BB_STYLE.ON : BB_STYL
 
 export interface IBBProps {
    displayText: string
+   isIcon?: boolean
    value: BBValue
    styles?: BB_STYLE[]
 }
@@ -94,9 +95,26 @@ export function booleanBB(displayText: string, value: boolean): IBBProps {
       value: BBValue.booleanValue(value)
    }
 }
-export function specialBB(displayText: string, value: BBValueType): IBBProps {
+export enum BBICon { HOME, NEXT, PREV, RESTART }
+export function iconBB(icon: BBICon, value: BBValueType): IBBProps {
+   let displayText = ''
+   switch (icon) {
+      case BBICon.HOME:
+         displayText = 'fas fa-home'
+         break
+      case BBICon.NEXT:
+         displayText = 'fas fa-angle-double-right'
+         break
+      case BBICon.PREV:
+         displayText = 'fas fa-angle-double-left'
+         break
+      case BBICon.RESTART:
+         displayText = 'fas fa-redo-alt'
+         break
+   }
    return {
       displayText: displayText,
+      isIcon: true,
       value: new BBValue(value, {})
    }
 }
@@ -119,9 +137,14 @@ export function BigButton(props: BBProps) {
       'bb super-button',
       props.styles?.includes(BB_STYLE.DISABLED) && 'disabled',
       props.styles?.includes(BB_STYLE.OFF) && 'toggler-off',
-      props.styles?.includes(BB_STYLE.ON) && 'toggler-on'
+      props.styles?.includes(BB_STYLE.ON) && 'toggler-on',
+      props.isIcon && 'icon'
    )
+   let inside: JSX.Element = <span>{props.displayText}</span>
+   if (props.isIcon) {
+      inside = <i className={props.displayText}></i>
+   }
    return (
-      <button className={classes} onClick={onClick}>{props.displayText}</button>
+      <button className={classes} onClick={onClick}>{inside}</button>
    )
 }

@@ -2,7 +2,7 @@ import { GameHandler } from "../GameHandler"
 import { BBValue, numberBB } from "../BigButton"
 import { IBBScreenProps } from "../BBScreen"
 import { GameLanguage, LANG } from "./language"
-import { infoLeft, infoBlock, InfoProps } from "../Info"
+import { infoLeft, infoBlock, InfoProps, BlockContainerType, BlockType } from "../Info"
 import { arrayEquals, random, randomArrayElement, randomBool } from "../general/general"
 
 enum ACTION {
@@ -59,7 +59,7 @@ export class IstanbulHandler extends GameHandler {
             }
          case ACTION.SHOW:
             let info: InfoProps[] = [
-               ...this.state.chosenLocations.map(row => infoBlock(row.map(e => `${e}`))),
+               ...this.state.chosenLocations.map(row => infoBlock(row.map(e => `${e}`),BlockContainerType.FULL,BlockType.LOOSE_5_BY_5)),
                infoLeft(`${lang(LANG.FIRST_PLAYER)}: ${this.state.firstPlayer}`),
                infoLeft(`${lang(LANG.NEUTRAL_MAYOR)}: ${this.state.neutrals.mayor}`),
                infoLeft(`${lang(LANG.NEUTRAL_SMUGGLER)}: ${this.state.neutrals.smuggler}`)

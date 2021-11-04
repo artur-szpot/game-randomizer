@@ -11,6 +11,8 @@ export enum LANG {
    NEXT,
    START,
    TERRAIN,
+   TERRAIN_NAME,
+   GAME_OVER,
 }
 
 export class GameLanguage extends Language {
@@ -19,6 +21,7 @@ export class GameLanguage extends Language {
          case LANG.SEASON: return this.getSeason(index!)
          case LANG.CARD: return this.getCard(index!)
          case LANG.TERRAIN: return this.getTerrain(index!)
+         case LANG.TERRAIN_NAME: return this.getTerrainName(index!)
       }
       switch (this.language) {
          case languageEnum.POLSKI:
@@ -30,6 +33,7 @@ export class GameLanguage extends Language {
                case LANG.OK: return 'OK'
                case LANG.NEXT: return 'Dalej'
                case LANG.START: return 'Start'
+               case LANG.GAME_OVER: return 'Koniec gry'
             }
             break
          case languageEnum.ENGLISH:
@@ -41,6 +45,7 @@ export class GameLanguage extends Language {
                case LANG.OK: return 'OK'
                case LANG.NEXT: return 'Next'
                case LANG.START: return 'Begin'
+               case LANG.GAME_OVER: return 'Game over'
             }
             break
       }
@@ -68,7 +73,8 @@ export class GameLanguage extends Language {
    }
 
    getTerrain(index: number) {
-      return `[${this.getTerrainColor(index)}] ${this.getTerrainName(index)}`
+      return `[${this.getTerrainColor(index)}]`
+      // return `[${this.getTerrainColor(index)}] ${this.getTerrainName(index)}`
    }
 
    getTerrainName(index: number) {
@@ -96,11 +102,11 @@ export class GameLanguage extends Language {
 
    getTerrainColor(index: number) {
       switch (index) {
-         case 0: return 'green'
-         case 1: return 'red'
-         case 2: return 'blue'
-         case 3: return 'yellow'
-         case 4: return 'magenta'
+         case 0: return '#2fb42f'
+         case 1: return '#e23c3c'
+         case 2: return '#445ce4'
+         case 3: return '#d4b83b'
+         case 4: return '#8b338b'
       }
    }
 
@@ -113,7 +119,19 @@ export class GameLanguage extends Language {
                case -3: return 'Podlicz karty C i D'
                case -4: return 'Podlicz karty D i A'
                case -5: return 'Koniec gry'
-               case 0: return 'Zapomniany las'
+               case 0: return 'Gospodarstwo'
+               case 1: return 'Wielka rzeka'
+               case 2: return 'Wiejski strumień'
+               case 3: return 'Pole uprawne'
+               case 4: return 'Sad'
+               case 5: return 'Zapomniany las'
+               case 6: return 'Mokradła'
+               case 7: return 'Szczeliny'
+               case 8: return 'Wioska rybacka'
+               case 9: return 'Nadrzewna osada'
+               case 10: return 'Miasto'
+               case 11: return 'Ruiny twierdzy'
+               case 12: return 'Ruiny świątyni'
             }
             break
          case languageEnum.ENGLISH:

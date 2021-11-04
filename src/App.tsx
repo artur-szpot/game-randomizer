@@ -42,16 +42,30 @@ export default class App extends React.Component<{}, AppState> {
 
    render() {
       return (
-         <div id='mainContainer' className='container'>
-            <div className='row'>
-            <div className='col-lg-3'></div>
-            <div className='col-lg-6'>
-               {/* <div className='container'> */}
-               <BBScreen {...this.state.handler.getScreen()} onClick={this.handleOnClick} />
+         <>
+            <div id='mainContainer' className='container'>
+               <div className='row'>
+                  <div className='col-lg-3'></div>
+                  <div className='col-lg-6'>
+                     {/* <div className='container'> */}
+                     <BBScreen {...this.state.handler.getScreen()} onClick={this.handleOnClick} />
+                  </div>
+                  <div className='col-lg-3'></div>
+               </div>
             </div>
-            <div className='col-lg-3'></div>
-            </div>
-         </div>
+            <footer>
+               <div className='container'>
+               <div className='row'>
+                  <div className='col-lg-3'></div>
+                  <div className='col-lg-6'>
+                     {/* <div className='container'> */}
+                     <BBScreen {...this.state.handler.getBottomMenu()} onClick={this.handleOnClick} />
+                  </div>
+                  <div className='col-lg-3'></div>
+               </div>
+               </div>
+            </footer>
+         </>
       )
    }
 }

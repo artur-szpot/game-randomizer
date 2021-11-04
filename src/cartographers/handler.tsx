@@ -1,10 +1,10 @@
 import { GameHandler } from "../GameHandler"
-import { BBValue, BB_STYLE_ON_OFF, IBBProps, okBB, stringBB, styledBB } from "../BigButton"
+import { BBICon, BBValue, BB_STYLE_ON_OFF, IBBProps, okBB, stringBB, styledBB } from "../BigButton"
 import { IBBScreenProps } from "../BBScreen"
 import { GameLanguage, LANG } from "./language"
-import { infoCenter, infoLeft, InfoProps } from "../Info"
-import { random, randomArraySlice, randomizeArray } from "../general/general"
-import { cartographersCard, dataHandler } from "./data/data"
+import { BlockContainerType, BlockType, infoBlock, infoCenter, infoLeft, InfoProps } from "../Info"
+import { random, randomArraySlice, randomArraySplice, randomizeArray } from "../general/general"
+import { cartographersCard, cartographersShape, dataHandler } from "./data/data"
 
 enum ACTION {
    CHOOSE_EXTENSIONS,
@@ -28,6 +28,8 @@ class gameState {
    time: number = 0
    season: number = 0
    currentCard: number = 0
+   deck: number[] = []
+   discard: number[] = []
 }
 
 const DECREE_LIST = ['A', 'B', 'C', 'D']
@@ -49,9 +51,25 @@ export class CartographersHandler extends GameHandler {
    }
 
    getScreen(): IBBScreenProps {
+      const data = this.getScreenAndMenu()
+      return {
+         info: data.info,
+         options: data.options,
+      }
+   }
+
+   getBottomMenu(): IBBScreenProps {
+      const data = this.getScreenAndMenu()
+      return {
+         bottomMenu: data.bottomMenu
+      }
+   }
+
+   getScreenAndMenu(): IBBScreenProps {
       const lang = (value: LANG, index?: number) => this.language.get(value, index)
       let info: InfoProps[] = []
       let options: IBBProps[] = []
+      let bottomMenu: BBICon[] = [BBICon.HOME]
 
       switch (this.state.action) {
          case ACTION.CHOOSE_EXTENSIONS:
@@ -82,21 +100,34 @@ export class CartographersHandler extends GameHandler {
                options = [okBB(lang(LANG.NEXT))]
                info = [
                   infoLeft(`${lang(LANG.SEASON, this.state.season)} (${this.state.time}/${this.maxSeasonTime[this.state.season]})`),
-                  infoCenter(lang(LANG.CARD, this.state.currentCard)),
                ]
                const card = this.cards[this.state.currentCard]
-               card.types.forEach(e=>info.push(infoCenter(lang(LANG.TERRAIN, e))))
-               if(card.shapes.length === 1){
-
+               if (this.state.currentCard >= 0) {
+                  info.push(infoCenter(card.types.map(e => lang(LANG.TERRAIN_NAME, e)).join(', ')))
+                  info.push(infoCenter(card.types.map(e => lang(LANG.TERRAIN, e)).join(' ')))
                }
+               // card.types.forEach(e => info.push(infoCenter(lang(LANG.TERRAIN, e))))
+               if (card.shapes.length === 1) {
+                  info.push(infoBlock(this.parseFields(card.shapes[0]), BlockContainerType.FULL, BlockType.CONCISE))
+               } else if (card.shapes.length === 2) {
+                  info.push(infoBlock(this.parseFields(card.shapes[0]), BlockContainerType.HALF, BlockType.CONCISE))
+                  info.push(infoBlock(this.parseFields(card.shapes[1]), BlockContainerType.HALF, BlockType.CONCISE))
+               }
+               info.push(infoCenter(lang(LANG.CARD, this.state.currentCard)))
             } else {
                info = [
-                  infoLeft(lang(LANG.CARD, this.state.currentCard))
+                  infoLeft(lang(LANG.GAME_OVER))
                ]
             }
             break
       }
-      return { info, options }
+      return { info, options, bottomMenu }
+   }
+
+   parseFields(shape: cartographersShape): number[][] {
+      const goldRatio = shape.coin ? 2 : 1
+      const fields = shape.fields.map(e => e.map(el => el * goldRatio))
+      return fields
    }
 
    executeAction(value: BBValue): void {
@@ -118,21 +149,29 @@ export class CartographersHandler extends GameHandler {
             break
 
          case ACTION.INITIAL_SETUP:
+            this.state.deck = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // temp
+            this.state.discard = []
             setAction(ACTION.GAME)
+            this.executeAction(BBValue.noValue())
             break
 
          case ACTION.GAME:
             const finishSeason = this.state.time >= this.maxSeasonTime[this.state.season]
+            let drawNewCard = true
             if (finishSeason) {
                if (this.state.currentCard >= 0) {
                   this.state.currentCard = -(this.state.season + 1)
+                  drawNewCard = false
                } else {
                   this.state.season += 1
-                  this.state.currentCard = 0
-                  this.state.time = this.cards[this.state.currentCard].time
+                  this.state.time = 0
+                  this.state.deck = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // temp
                }
-            } else {
-               this.state.currentCard = 0
+            }
+            if (drawNewCard) {
+               const chosenCard = randomArraySplice(this.state.deck, 1)[0]
+               this.state.currentCard = chosenCard
+               this.state.discard.push(chosenCard)
                this.state.time += this.cards[this.state.currentCard].time
             }
             break

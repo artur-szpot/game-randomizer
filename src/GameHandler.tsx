@@ -1,5 +1,5 @@
 import { Language, baseLanguage as LANG, allGames, GAME } from "./Language"
-import { stringBB, BBValue, styledBB, BB_STYLE, okBB, BB_STYLE_ON_OFF } from "./BigButton"
+import { stringBB, BBValue, styledBB, BB_STYLE, okBB, BB_STYLE_ON_OFF, iconBB, BBICon, BBValueType } from "./BigButton"
 import { IBBScreenProps } from "./BBScreen"
 import { getPlayers, getTeams } from "./players/teams"
 import { infoLeft } from "./Info"
@@ -29,9 +29,13 @@ export class GameHandler {
       const game = (value: GAME) => this.language.getGame(value)
 
       return {
-         mainMenu: true,
+         // mainMenu: true,
          options: allGames.map(e => stringBB(game(e), e))
       }
+   }
+
+   getBottomMenu(): IBBScreenProps {
+      return { bottomMenu: [BBICon.HOME] }
    }
 
    getPlayersScreen(): IBBScreenProps {

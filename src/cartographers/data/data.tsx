@@ -13,8 +13,8 @@ interface cartographersSkillRaw {
    name: { [key: string]: string }
 }
 
-interface cartographersShape {
-   fields: boolean[][]
+export interface cartographersShape {
+   fields: number[][]
    coin: boolean
 }
 
