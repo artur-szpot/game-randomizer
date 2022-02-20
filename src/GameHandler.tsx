@@ -65,7 +65,7 @@ export class GameHandler {
    executePlayersAction(value: BBValue): void {
       if (!this.players.team.length) {
          this.players.team = value.getString()
-         this.players.available = getPlayers(this.players.team).map(e => { return { name: e, chosen: true } })
+         this.players.available = getPlayers(this.players.team).map(e => { return { name: e, chosen: this.players.team === 'S' } })
          return
       }
       if (value.isOK()) {

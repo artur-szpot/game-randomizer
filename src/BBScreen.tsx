@@ -9,7 +9,7 @@ export interface IBBScreenProps {
 }
 
 export interface BBScreenProps extends IBBScreenProps {
-   onClick: (event: MouseEvent, value: BBValue)=>void
+   onClick: (event: MouseEvent, value: BBValue) => void
 }
 
 export class BBScreen extends React.Component<BBScreenProps, {}> {
@@ -24,9 +24,9 @@ export class BBScreen extends React.Component<BBScreenProps, {}> {
 
    render() {
       return (
-         <div>
-            {this.props.info?.map(e => <Info {...e} />)}
-            {this.props.options.map(e => <BigButton {...e} onClick={this.handleOnClick} />)}
+         <div key='screen'>
+            {this.props.info?.map((e, i) => <Info {...e} key={`${i}`} />)}
+            {this.props.options.map((e, i) => <BigButton {...e} key={`${i}`} onClick={this.handleOnClick} />)}
             {!this.props.mainMenu &&
                <BigButton {...specialBB('MENU', BBValueType.MENU)} onClick={this.handleOnClick} />
             }

@@ -43,13 +43,13 @@ export default class App extends React.Component<{}, AppState> {
    render() {
       return (
          <div id='mainContainer' className='container'>
-            <div className='row'>
-            <div className='col-lg-3'></div>
-            <div className='col-lg-6'>
+            <div className='row' key='mainRow'>
+            <div className='col-lg-3' key='leftGap'></div>
+            <div className='col-lg-6' key='center'>
                {/* <div className='container'> */}
-               <BBScreen {...this.state.handler.getScreen()} onClick={this.handleOnClick} />
+               <BBScreen {...this.state.handler.getScreen()} onClick={this.handleOnClick} key='screen'/>
             </div>
-            <div className='col-lg-3'></div>
+            <div className='col-lg-3' key='rightGap'></div>
             </div>
          </div>
       )

@@ -9,6 +9,7 @@ import { GAME } from "./Language"
 import { MuertosHandler } from "./muertos/handler"
 import { NearFarHandler } from "./nearfar/handler"
 import { ProposerHandler } from "./proposer/handler"
+import { GhostHandler } from "./ghost/handler"
 
 export function getGameHandler(value: GAME): GameHandler {
    switch (value) {
@@ -30,5 +31,7 @@ export function getGameHandler(value: GAME): GameHandler {
          return new ProposerHandler()
       case GAME.NEARFAR:
          return new NearFarHandler()
+      case GAME.GHOST:
+         return new GhostHandler()
    }
 }

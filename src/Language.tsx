@@ -7,8 +7,8 @@ export enum GAME {
    CARTOGRAPHERS='cartographers',
    ESCAPE='escape',
    PROPOSER='proposer',   
-   NEARFAR='nearfar'
-
+   NEARFAR='nearfar',
+   GHOST='ghost'
 }
 export const allGames = [
    GAME.FIRST,
@@ -20,6 +20,7 @@ export const allGames = [
    GAME.ESCAPE,
    GAME.PROPOSER,
    GAME.NEARFAR,
+   GAME.GHOST,
 ]
 
 export enum languageEnum { ENGLISH = 'english', POLSKI = 'polski' }
@@ -85,6 +86,7 @@ export class Language {
                case GAME.ESCAPE: return 'Ucieczka z więzienia'
                case GAME.PROPOSER: return 'Zaproponuj gry'
                case GAME.NEARFAR: return 'Near and Far'
+               case GAME.GHOST: return 'Phantom Ink'
             }
             break
          case languageEnum.ENGLISH:
@@ -98,6 +100,7 @@ export class Language {
                case GAME.ESCAPE: return 'Escape from prison'
                case GAME.PROPOSER: return 'Propose games'
                case GAME.NEARFAR: return 'Near and Far'
+               case GAME.GHOST: return 'Phantom Ink'
             }
             break
       }
