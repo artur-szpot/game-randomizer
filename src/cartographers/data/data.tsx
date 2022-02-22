@@ -14,7 +14,7 @@ interface cartographersSkillRaw {
 }
 
 interface cartographersShape {
-   fields: boolean[][]
+   fields: number[][]
    coin: boolean
 }
 

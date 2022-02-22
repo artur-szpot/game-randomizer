@@ -56,12 +56,39 @@ div.info-block-container {
    text-align: center;
 }
 
+div.info-block-container-split {
+   display: inline-block;
+   width: 45%;
+   margin: 2.5%;
+   font-size: 2rem;
+   text-align: center;
+}
+
 div.info-block {
    width: 15%;
    margin: 1%;
    display: inline-block;
    border-radius: 3px;
    border: 2px solid black;
+}
+
+div.info-block-shape {
+   width: 40px;
+   height: 40px;
+   margin: 2px;
+   display: inline-block;
+   border-radius: 3px;
+   border: 2px solid black;
+
+   &.hidden { border: 1px dotted black; }
+   &.full { background-color: #CCC; }
+   &.gold { background-color: #FFAA00; }
+}
+
+div.block-row {
+   margin: 0;
+   margin-bottom: -13px;
+   padding: 0;
 }
 
 span.color-box {
